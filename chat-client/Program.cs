@@ -1,12 +1,20 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace Critical.Chat.Client.Example.TCP
 {
     internal static class Program
     {
-        private static void Main()
+        private static Task Main(string[] args)
         {
-            Console.WriteLine("Starting client.");
+            return Host.CreateDefaultBuilder(args)
+                       .ConfigureServices((builder, services) =>
+                       {
+                           services.AddChatClient()
+                                   .AddClientLogging()
+                                   .AddConfiguration(builder.Configuration);
+                       })
+                       .RunConsoleAsync();
         }
     }
 }
