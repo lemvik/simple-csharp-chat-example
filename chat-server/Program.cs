@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Critical.Chat.Server
+namespace Critical.Chat.Server.Examples.TCP
 {
     internal static class Program
     {
