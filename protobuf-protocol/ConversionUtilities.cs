@@ -6,12 +6,40 @@ namespace Critical.Chat.Protocol.Protobuf
 {
     internal static class ConversionUtilities
     {
-        internal static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsRequest listRoomsRequest)
+        private static Protobuf.ChatRoom ToProtobuf(this IChatRoom chatRoom)
+        {
+            return new Protobuf.ChatRoom()
+            {
+                Id = chatRoom.Id,
+                Name = chatRoom.Name
+            };
+        }
+
+        private static Protobuf.ChatUser ToProtobuf(this IChatUser chatUser)
+        {
+            return new Protobuf.ChatUser()
+            {
+                UserId = chatUser.Id,
+                UserName = chatUser.Name
+            };
+        }
+
+        private static UserMessage ToProtobuf(this IChatMessage chatMessage)
+        {
+            return new UserMessage()
+            {
+                User = chatMessage.Sender.ToProtobuf(),
+                Room = chatMessage.Room.ToProtobuf(),
+                Message = chatMessage.Body
+            };
+        }
+
+        private static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsRequest listRoomsRequest)
         {
             return new ProtocolMessage {Id = listRoomsRequest.Id, ListRoomRequest = new ListRoomsRequest()};
         }
 
-        internal static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsResponse listRoomsResponse)
+        private static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsResponse listRoomsResponse)
         {
             return new ProtocolMessage()
             {
@@ -30,7 +58,7 @@ namespace Critical.Chat.Protocol.Protobuf
             };
         }
 
-        internal static ProtocolMessage ToProtocolMessage(this Messages.HandshakeRequest handshakeRequest)
+        private static ProtocolMessage ToProtocolMessage(this Messages.HandshakeRequest handshakeRequest)
         {
             return new ProtocolMessage()
             {
@@ -42,7 +70,7 @@ namespace Critical.Chat.Protocol.Protobuf
             };
         }
 
-        internal static ProtocolMessage ToProtocolMessage(this Messages.HandshakeResponse handshakeResponse)
+        private static ProtocolMessage ToProtocolMessage(this Messages.HandshakeResponse handshakeResponse)
         {
             return new ProtocolMessage()
             {
@@ -73,8 +101,59 @@ namespace Critical.Chat.Protocol.Protobuf
                 Id = createRoomResponse.Id,
                 CreateRoomResponse = new CreateRoomResponse()
                 {
-                    RoomId = createRoomResponse.Room.Id,
-                    RoomName = createRoomResponse.Room.Name
+                    Room = createRoomResponse.Room.ToProtobuf()
+                }
+            };
+        }
+
+        private static ProtocolMessage ToProtocolMessage(this Messages.JoinRoomRequest joinRoomRequest)
+        {
+            return new ProtocolMessage()
+            {
+                Id = joinRoomRequest.Id,
+                JoinRoomRequest = new JoinRoomRequest()
+                {
+                    RoomId = joinRoomRequest.RoomId
+                }
+            };
+        }
+
+        private static ProtocolMessage ToProtocolMessage(this Messages.JoinRoomResponse joinRoomResponse)
+        {
+            return new ProtocolMessage()
+            {
+                Id = joinRoomResponse.Id,
+                JoinRoomResponse = new JoinRoomResponse()
+                {
+                    Room = joinRoomResponse.Room.ToProtobuf(),
+                    Messages =
+                    {
+                        joinRoomResponse.Messages.Select(message => message.ToProtobuf())
+                    }
+                }
+            };
+        }
+
+        private static ProtocolMessage ToProtocolMessage(this Messages.LeaveRoomRequest leaveRoomRequest)
+        {
+            return new ProtocolMessage()
+            {
+                Id = leaveRoomRequest.Id,
+                LeaveRoomRequest = new LeaveRoomRequest()
+                {
+                    Room = leaveRoomRequest.Room.ToProtobuf()
+                }
+            };
+        }
+
+        private static ProtocolMessage ToProtocolMessage(this Messages.LeaveRoomResponse leaveRoomResponse)
+        {
+            return new ProtocolMessage()
+            {
+                Id = leaveRoomResponse.Id,
+                LeaveRoomResponse = new LeaveRoomResponse()
+                {
+                    Room = leaveRoomResponse.Room.ToProtobuf()
                 }
             };
         }
@@ -95,8 +174,33 @@ namespace Critical.Chat.Protocol.Protobuf
                     return message.Cast<Messages.CreateRoomRequest>().ToProtocolMessage();
                 case MessageType.CreateRoomResponse:
                     return message.Cast<Messages.CreateRoomResponse>().ToProtocolMessage();
+                case MessageType.JoinRoomRequest:
+                    return message.Cast<Messages.JoinRoomRequest>().ToProtocolMessage();
+                case MessageType.JoinRoomResponse:
+                    return message.Cast<Messages.JoinRoomResponse>().ToProtocolMessage();
+                case MessageType.LeaveRoomRequest:
+                    return message.Cast<Messages.LeaveRoomRequest>().ToProtocolMessage();
+                case MessageType.LeaveRoomResponse:
+                    return message.Cast<Messages.LeaveRoomResponse>().ToProtocolMessage();
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private class ChatUser : IChatUser
+        {
+            public string Id { get; }
+            public string Name { get; }
+
+            private ChatUser(string id, string name)
+            {
+                Id = id;
+                Name = name;
+            }
+
+            public static ChatUser FromProtobuf(Protobuf.ChatUser user)
+            {
+                return new ChatUser(user.UserId, user.UserName);
             }
         }
 
@@ -105,7 +209,7 @@ namespace Critical.Chat.Protocol.Protobuf
             public string Id { get; }
             public string Name { get; }
 
-            public ChatRoom(string id, string name)
+            private ChatRoom(string id, string name)
             {
                 Id = id;
                 Name = name;
@@ -115,6 +219,13 @@ namespace Critical.Chat.Protocol.Protobuf
             {
                 return new ChatRoom(chatRoom.Id, chatRoom.Name);
             }
+        }
+
+        private static IChatMessage FromProtobuf(UserMessage message)
+        {
+            return new ChatMessage(ChatUser.FromProtobuf(message.User),
+                ChatRoom.FromProtobuf(message.Room),
+                message.Message);
         }
 
         internal static IMessage FromProtocolMessage(this ProtocolMessage message)
@@ -137,7 +248,19 @@ namespace Critical.Chat.Protocol.Protobuf
                     return new Messages.CreateRoomRequest(message.Id, message.CreateRoomRequest.RoomName);
                 case ProtocolMessage.MessageOneofCase.CreateRoomResponse:
                     return new Messages.CreateRoomResponse(message.Id,
-                        new ChatRoom(message.CreateRoomResponse.RoomId, message.CreateRoomResponse.RoomName));
+                        ChatRoom.FromProtobuf(message.CreateRoomResponse.Room));
+                case ProtocolMessage.MessageOneofCase.JoinRoomRequest:
+                    return new Messages.JoinRoomRequest(message.Id, message.JoinRoomRequest.RoomId);
+                case ProtocolMessage.MessageOneofCase.JoinRoomResponse:
+                    return new Messages.JoinRoomResponse(message.Id,
+                        ChatRoom.FromProtobuf(message.JoinRoomResponse.Room),
+                        message.JoinRoomResponse.Messages.Select(FromProtobuf).ToList());
+                case ProtocolMessage.MessageOneofCase.LeaveRoomRequest:
+                    return new Messages.LeaveRoomRequest(message.Id,
+                        ChatRoom.FromProtobuf(message.LeaveRoomResponse.Room));
+                case ProtocolMessage.MessageOneofCase.LeaveRoomResponse:
+                    return new Messages.LeaveRoomResponse(message.Id,
+                        ChatRoom.FromProtobuf(message.LeaveRoomResponse.Room));
 
                 default:
                     throw new ArgumentOutOfRangeException();

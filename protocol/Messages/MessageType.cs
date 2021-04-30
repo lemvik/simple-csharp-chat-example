@@ -8,8 +8,10 @@ namespace Critical.Chat.Protocol.Messages
         ListRoomsResponse,
         CreateRoomRequest,
         CreateRoomResponse,
-        JoinRoom,
-        LeaveRoom,
+        JoinRoomRequest,
+        JoinRoomResponse,
+        LeaveRoomRequest,
+        LeaveRoomResponse,
         SendMessage,
         ReceiveMessage
     }

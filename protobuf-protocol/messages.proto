@@ -7,6 +7,11 @@ message ChatRoom {
   string name = 2;
 }
 
+message ChatUser {
+  string userId = 1;
+  string userName = 2;
+}
+
 message ListRoomsRequest {}
 
 message ListRoomsResponse {
@@ -26,8 +31,35 @@ message CreateRoomRequest {
 }
 
 message CreateRoomResponse {
+  ChatRoom room = 1;
+}
+
+message JoinRoomRequest {
   string roomId = 1;
-  string roomName = 2;
+}
+
+message JoinRoomResponse {
+  ChatRoom room = 1;
+  repeated UserMessage messages = 2;
+}
+
+message LeaveRoomRequest {
+  ChatRoom room = 1;
+}
+
+message LeaveRoomResponse {
+  ChatRoom room = 1;
+}
+
+message SendMessage {
+  string roomId = 1;
+  string message = 2;
+}
+
+message UserMessage {
+  ChatUser user = 1;
+  ChatRoom room = 2;
+  string message = 3;
 }
 
 message ProtocolMessage {
@@ -39,5 +71,11 @@ message ProtocolMessage {
     CreateRoomResponse createRoomResponse = 5;
     ListRoomsRequest listRoomRequest = 6;
     ListRoomsResponse listRoomResponse = 7;
+    JoinRoomRequest joinRoomRequest = 8;
+    JoinRoomResponse joinRoomResponse = 9;
+    LeaveRoomRequest leaveRoomRequest = 10;
+    LeaveRoomResponse leaveRoomResponse = 11;
+    SendMessage sendMessage = 12;
+    UserMessage userMessage = 13;
   }
 }

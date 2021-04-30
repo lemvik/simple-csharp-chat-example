@@ -36,7 +36,16 @@ namespace Critical.Chat.Server.Implementation
             while (await reader.WaitToReadAsync(token))
             {
                 var (client, message) = await reader.ReadAsync(token);
-                await DispatchAsync(client, message, token);
+                try
+                {
+                    await DispatchAsync(client, message, token);
+                }
+                catch (Exception error)
+                {
+                    logger.LogError("Encountered [error={error}] trying to dispatch [message={message}]", 
+                        error,
+                        message);
+                }
             }
 
             logger.LogDebug("Chat server main loop completed.");
@@ -48,7 +57,7 @@ namespace Critical.Chat.Server.Implementation
 
             var chatClient = await HandshakeAsync(transport, token);
             var connectedClient = new ConnectedClient(chatClient, transport);
-            
+
             logger.LogDebug($"Adding chat user [chatClient={chatClient}]");
 
             if (!clients.TryAdd(chatClient.Id, connectedClient))
@@ -77,10 +86,6 @@ namespace Critical.Chat.Server.Implementation
         {
             switch (message.Type)
             {
-                case MessageType.HandshakeRequest:
-                    break;
-                case MessageType.HandshakeResponse:
-                    break;
                 case MessageType.ListRoomsRequest:
                 {
                     var rooms = await roomsRegistry.ListRooms();
@@ -96,10 +101,25 @@ namespace Critical.Chat.Server.Implementation
                     await client.SendMessage(response, token);
                     break;
                 }
-                case MessageType.JoinRoom:
+                case MessageType.JoinRoomRequest:
+                {
+                    var joinRoomRequest = message.Cast<JoinRoomRequest>();
+                    var room = await roomsRegistry.GetRoom(joinRoomRequest.RoomId);
+                    await room.AddUser(client, token);
+                    var mostRecentMessages = await room.MostRecentMessages(5, token);
+                    var response = new JoinRoomResponse(message.Id, room, mostRecentMessages);
+                    await client.SendMessage(response, token);
                     break;
-                case MessageType.LeaveRoom:
+                }
+                case MessageType.LeaveRoomRequest:
+                {
+                    var leaveRoomRequest = message.Cast<LeaveRoomRequest>();
+                    var room = await roomsRegistry.GetRoom(leaveRoomRequest.Room.Id);
+                    await room.RemoveUser(client, token);
+                    var response = new LeaveRoomResponse(message.Id, room);
+                    await client.SendMessage(response, token);
                     break;
+                }
                 case MessageType.SendMessage:
                     break;
                 case MessageType.ReceiveMessage:

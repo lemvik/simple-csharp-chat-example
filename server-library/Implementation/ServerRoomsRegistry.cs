@@ -15,7 +15,7 @@ namespace Critical.Chat.Server.Implementation
         {
             this.logger = logger;
         }
-        
+
         public Task<IServerChatRoom> CreateRoom(string roomName)
         {
             var existing = rooms.Find(room => room.Name.Equals(roomName));
@@ -26,10 +26,18 @@ namespace Critical.Chat.Server.Implementation
 
             var newRoom = new ServerChatRoom(roomName, roomName);
             rooms.Add(newRoom);
-            
+
             logger.LogDebug("Created [room={room}]", newRoom);
-            
+
             return Task.FromResult<IServerChatRoom>(newRoom);
+        }
+
+        public Task<IServerChatRoom> GetRoom(string roomId)
+        {
+            var existing = rooms.Find(room => room.Id.Equals(roomId));
+            return existing == null
+                ? Task.FromException<IServerChatRoom>(new Exception($"Missing room [roomId={roomId}]"))
+                : Task.FromResult<IServerChatRoom>(existing);
         }
 
         public Task<IReadOnlyCollection<IServerChatRoom>> ListRooms()
@@ -46,7 +54,7 @@ namespace Critical.Chat.Server.Implementation
             }
 
             rooms.Remove(ownInstance);
-            
+
             logger.LogDebug("Closed [room={room}]", ownInstance);
 
             return ownInstance.Close();

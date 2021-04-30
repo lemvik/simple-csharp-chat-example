@@ -15,10 +15,11 @@ namespace Critical.Chat.Client
         private readonly IChatTransport transport;
         private readonly IChatClientConfiguration configuration;
         private readonly IDictionary<ulong, TaskCompletionSource<IMessage>> pendingMessages;
+        private readonly IDictionary<string, ClientChatRoom> rooms;
         private ulong sequence;
         private string assignedId = string.Empty;
 
-        internal ChatClient(ILogger<ChatClient> logger, 
+        internal ChatClient(ILogger<ChatClient> logger,
                             IChatTransport transport,
                             IChatClientConfiguration configuration)
         {
@@ -26,14 +27,15 @@ namespace Critical.Chat.Client
             this.transport = transport;
             this.configuration = configuration;
             this.pendingMessages = new Dictionary<ulong, TaskCompletionSource<IMessage>>();
+            this.rooms = new Dictionary<string, ClientChatRoom>();
         }
 
         public async Task RunAsync(CancellationToken token = default)
         {
             await HandshakeAsync(token);
-            
+
             logger.LogDebug("Handshake successful [clientId={clientId}]", assignedId);
-            
+
             while (!token.IsCancellationRequested)
             {
                 var incomingMessage = await transport.Receive(token);
@@ -68,9 +70,27 @@ namespace Critical.Chat.Client
             return response.Room;
         }
 
-        public Task<IChatRoomUser> JoinRoom(IChatRoom room, CancellationToken token = default)
+        public async Task<IClientChatRoom> JoinRoom(IChatRoom room, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            var request = new JoinRoomRequest(++sequence, room.Id);
+
+            var response = await Exchange<JoinRoomResponse>(request, token);
+
+            var chatRoom = new ClientChatRoom(response.Room);
+
+            rooms.Add(chatRoom.Id, chatRoom);
+
+            foreach (var chatMessage in response.Messages)
+            {
+                if (!chatRoom.ReceiveMessage(chatMessage))
+                {
+                    logger.LogWarning("Failed to deliver [message={message}] to chat [room={room}]", 
+                        chatMessage,
+                        chatRoom);
+                }
+            }
+
+            return chatRoom;
         }
 
         private async Task HandshakeAsync(CancellationToken token = default)
@@ -114,10 +134,6 @@ namespace Critical.Chat.Client
 
             switch (message.Type)
             {
-                case MessageType.JoinRoom:
-                    break;
-                case MessageType.LeaveRoom:
-                    break;
                 case MessageType.SendMessage:
                     break;
                 case MessageType.ReceiveMessage:

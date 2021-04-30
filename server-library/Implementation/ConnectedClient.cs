@@ -11,13 +11,13 @@ namespace Critical.Chat.Server.Implementation
     {
         public IChatUser User { get; }
         private readonly IChatTransport transport;
-        
+
         public ConnectedClient(IChatUser user, IChatTransport transport)
         {
             User = user;
             this.transport = transport;
         }
-        
+
         public async Task RunAsync(ChannelWriter<(IConnectedClient, IMessage)> sink, CancellationToken token = default)
         {
             while (!token.IsCancellationRequested)

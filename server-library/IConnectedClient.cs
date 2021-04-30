@@ -10,7 +10,8 @@ namespace Critical.Chat.Server
     {
         IChatUser User { get; } 
         
-        Task RunAsync(ChannelWriter<(IConnectedClient, IMessage)> sink, CancellationToken token = default);
+        Task RunAsync(ChannelWriter<(IConnectedClient, IMessage)> messageSink,
+                      CancellationToken token = default);
         
         Task SendMessage(IMessage message, CancellationToken token = default);
     }

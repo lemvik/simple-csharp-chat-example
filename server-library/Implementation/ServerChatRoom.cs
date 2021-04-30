@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Critical.Chat.Protocol;
 
@@ -8,21 +12,56 @@ namespace Critical.Chat.Server.Implementation
     {
         public string Id { get; }
         public string Name { get; }
-        
+
+        private readonly ConcurrentDictionary<string, IConnectedClient> clients;
+        private readonly Channel<IChatMessage> messages;
+
         internal ServerChatRoom(string id, string name)
         {
             Id = id;
             Name = name;
-        }
-        
-        public Task<IChatRoomUser> AddUser(IChatUser user)
-        {
-            throw new System.NotImplementedException();
+            this.clients = new ConcurrentDictionary<string, IConnectedClient>();
+            this.messages = Channel.CreateUnbounded<IChatMessage>();
         }
 
-        public Task<IReadOnlyCollection<IChatRoomUser>> ListUsers()
+        public async Task AddMessage(IChatMessage message, CancellationToken token = default)
+        {
+            await messages.Writer.WriteAsync(message, token);
+        }
+
+        public Task AddUser(IConnectedClient connectedClient, CancellationToken token = default)
+        {
+            if (!clients.TryAdd(connectedClient.User.Id, connectedClient))
+            {
+                throw new Exception($"Cannot add [client={connectedClient}] to chat [room={this}]");
+            }
+            
+            return Task.CompletedTask;
+        }
+
+        public Task RemoveUser(IConnectedClient connectedClient, CancellationToken token = default)
+        {
+            if (!clients.TryRemove(connectedClient.User.Id, out var _))
+            {
+                throw new Exception($"Cannot remove [client={connectedClient}] to chat [room={this}]");
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task<IReadOnlyCollection<IChatRoomUser>> ListUsers(CancellationToken token = default)
         {
             throw new System.NotImplementedException();
+        }
+        
+        public Task<IReadOnlyCollection<IChatMessage>> MostRecentMessages(
+            int maxMessages, CancellationToken token = default)
+        {
+            var chatMessages = new List<IChatMessage>
+            {
+                new ChatMessage(new ChatUser("1", "Test"), this, "Some message")
+            };
+            return Task.FromResult<IReadOnlyCollection<IChatMessage>>(chatMessages);
         }
 
         public Task Close()

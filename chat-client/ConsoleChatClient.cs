@@ -67,6 +67,13 @@ namespace Critical.Chat.Client.Example.TCP
             }
             
             logger.LogDebug("Joining [room={room}]", roomToJoin);
+
+            var chatRoom = await chatClient.JoinRoom(roomToJoin, stoppingToken);
+
+            var presentMessage = await chatRoom.GetMessage(stoppingToken);
+            
+            logger.LogDebug("Received [messages={presentMessage}]", presentMessage);
+            
             await Delay(1000, stoppingToken);
         }
     }
