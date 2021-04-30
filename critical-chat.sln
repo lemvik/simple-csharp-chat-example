@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "protocol", "protocol\protocol.csproj", "{E274B9A8-1C82-4FFF-9A68-5B6662F3BD27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "protocol", "src\protocol\protocol.csproj", "{E274B9A8-1C82-4FFF-9A68-5B6662F3BD27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-client", "chat-client\chat-client.csproj", "{4015F471-38C4-4B50-BB53-C86D69B378EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-client", "examples\chat-client\chat-client.csproj", "{4015F471-38C4-4B50-BB53-C86D69B378EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-server", "chat-server\chat-server.csproj", "{122A2A4C-CD25-4AC6-9F8E-5BA95B45FCA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-server", "examples\chat-server\chat-server.csproj", "{122A2A4C-CD25-4AC6-9F8E-5BA95B45FCA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client-library", "client-library\client-library.csproj", "{3D46E3F1-E02A-4193-BE35-F01716CA1EFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client-library", "src\client-library\client-library.csproj", "{3D46E3F1-E02A-4193-BE35-F01716CA1EFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server-library", "server-library\server-library.csproj", "{4D40249D-E942-4E3A-AF66-96C7F2E97900}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server-library", "src\server-library\server-library.csproj", "{4D40249D-E942-4E3A-AF66-96C7F2E97900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "protobuf-protocol", "protobuf-protocol\protobuf-protocol.csproj", "{29423237-B050-4F78-8817-474315A988EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "protobuf-protocol", "src\protobuf-protocol\protobuf-protocol.csproj", "{29423237-B050-4F78-8817-474315A988EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
