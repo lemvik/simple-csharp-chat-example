@@ -12,9 +12,9 @@ namespace Critical.Chat.Client
             this.loggerFactory = loggerFactory;
         }
 
-        public IChatClient CreateClient(IChatTransport clientTransport)
+        public IChatClient CreateClient(IChatTransport clientTransport, IChatClientConfiguration configuration)
         {
-            return new ChatClient(loggerFactory.CreateLogger<ChatClient>(), clientTransport);
+            return new ChatClient(loggerFactory.CreateLogger<ChatClient>(), clientTransport, configuration);
         }
     }
 }

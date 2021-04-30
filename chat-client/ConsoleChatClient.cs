@@ -17,6 +17,7 @@ namespace Critical.Chat.Client.Example.TCP
         private readonly ILogger<ConsoleChatClient> logger;
         private readonly IChatClientFactory clientFactory;
         private readonly IMessageProtocol messageProtocol;
+        private readonly ClientConfig clientConfig;
         private readonly TcpClient client;
         private readonly IPAddress serverAddress;
         private readonly int serverPort;
@@ -30,6 +31,7 @@ namespace Critical.Chat.Client.Example.TCP
             this.clientFactory = clientFactory;
             this.messageProtocol = messageProtocol;
             this.client = new TcpClient();
+            this.clientConfig = clientConfig.Value;
             var serverConfig = clientConfig.Value.Server;
             this.serverAddress = IPAddress.Parse(serverConfig.Host);
             this.serverPort = serverConfig.Port;
@@ -39,7 +41,8 @@ namespace Critical.Chat.Client.Example.TCP
         {
             await client.ConnectAsync(serverAddress, serverPort, stoppingToken);
             logger.LogDebug("Connected to [server={server}]", client.Client.RemoteEndPoint);
-            var chatClient = clientFactory.CreateClient(new TcpChatTransport(client, messageProtocol));
+            var chatClient =
+                clientFactory.CreateClient(new TcpChatTransport(client, messageProtocol), clientConfig.ChatConfig);
 
             var connectionTask = chatClient.RunAsync(stoppingToken);
             var inputTask = InteractionLoop(chatClient, stoppingToken);

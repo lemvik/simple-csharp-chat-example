@@ -13,10 +13,20 @@ message ListRoomsResponse {
   repeated ChatRoom rooms = 1;
 }
 
+message HandshakeRequest {
+  string userId = 1;
+}
+
+message HandshakeResponse {
+  string userName = 1;
+}
+
 message ProtocolMessage {
   uint64 id = 1;
   oneof message {
-    ListRoomsRequest listRoomRequest = 2;
-    ListRoomsResponse listRoomResponse = 3;
+    HandshakeRequest handshakeRequest = 2;
+    HandshakeResponse handshakeResponse = 3;
+    ListRoomsRequest listRoomRequest = 4;
+    ListRoomsResponse listRoomResponse = 5;
   }
 }

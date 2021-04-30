@@ -15,6 +15,7 @@ namespace Critical.Chat.Server.Examples.TCP
         {
             return serviceCollection
                    .AddSingleton<IChatServer, Implementation.ChatServer>()
+                   .AddSingleton<IServerRoomsRegistry, ServerRoomsRegistry>()
                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>()
                    .AddSingleton<IHostedService, ChatServer>();
         }

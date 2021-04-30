@@ -13,13 +13,18 @@ namespace Critical.Chat.Client
     {
         private readonly ILogger<ChatClient> logger;
         private readonly IChatTransport transport;
+        private readonly IChatClientConfiguration configuration;
         private readonly IDictionary<ulong, TaskCompletionSource<IMessage>> pendingMessages;
         private ulong sequence = 0;
+        private string assignedId = string.Empty;
 
-        internal ChatClient(ILogger<ChatClient> logger, IChatTransport transport)
+        internal ChatClient(ILogger<ChatClient> logger, 
+                            IChatTransport transport,
+                            IChatClientConfiguration configuration)
         {
             this.logger = logger;
             this.transport = transport;
+            this.configuration = configuration;
             this.pendingMessages = new Dictionary<ulong, TaskCompletionSource<IMessage>>();
         }
 
@@ -36,7 +41,7 @@ namespace Critical.Chat.Client
                 }
                 else
                 {
-                    logger.LogDebug("Dispatching [message={message}]", incomingMessage);
+                    await DispatchMessage(incomingMessage, token);
                 }
             }
         }
@@ -71,6 +76,51 @@ namespace Critical.Chat.Client
             }
 
             throw new Exception($"Received unexpected [response={response}] for [request={message}]");
+        }
+
+        private async Task DispatchMessage(IMessage message, CancellationToken token = default)
+        {
+            logger.LogDebug("Dispatching [message={message}]", message);
+
+            switch (message.Type)
+            {
+                case MessageType.HandshakeRequest:
+                {
+                    var handshake = CastMessage<HandshakeRequest>(message);
+                    assignedId = handshake.UserId;
+                    var response = new HandshakeResponse(message.Id, configuration.UserName);
+                    await transport.Send(response, token);
+                    break;
+                }
+                case MessageType.HandshakeResponse:
+                    break;
+                case MessageType.ListRoomsRequest:
+                    break;
+                case MessageType.ListRoomsResponse:
+                    break;
+                case MessageType.CreateRoom:
+                    break;
+                case MessageType.JoinRoom:
+                    break;
+                case MessageType.LeaveRoom:
+                    break;
+                case MessageType.SendMessage:
+                    break;
+                case MessageType.ReceiveMessage:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private TMessage CastMessage<TMessage>(IMessage message) where TMessage : IMessage
+        {
+            if (message is TMessage castMessage)
+            {
+                return castMessage;
+            }
+
+            throw new Exception($"Invalid message type [message={message}][expected={typeof(TMessage)}]");
         }
     }
 }

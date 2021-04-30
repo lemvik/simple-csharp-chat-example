@@ -44,6 +44,10 @@ namespace Critical.Chat.Protocol.Protobuf
                     var listRoomResponse = message.ListRoomResponse;
                     var rooms = listRoomResponse.Rooms.Select(ChatRoom.FromProtobuf).ToList();
                     return new Messages.ListRoomsResponse(message.Id, rooms);
+                case ProtocolMessage.MessageOneofCase.HandshakeRequest:
+                    return new Messages.HandshakeRequest(message.Id, message.HandshakeRequest.UserId);
+                case ProtocolMessage.MessageOneofCase.HandshakeResponse:
+                    return new Messages.HandshakeResponse(message.Id, message.HandshakeResponse.UserName);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -55,40 +59,29 @@ namespace Critical.Chat.Protocol.Protobuf
             {
                 case MessageType.ListRoomsRequest:
                 {
-                    var protoMessage = new ProtocolMessage();
-                    protoMessage.Id = message.Id;
-                    protoMessage.ListRoomRequest = new ListRoomsRequest();
-                    var buffer = protoMessage.ToByteArray();
-                    await targetStream.WriteLengthPrefixedAsync(buffer, token);
+                    var protoMessage = new ProtocolMessage {Id = message.Id, ListRoomRequest = new ListRoomsRequest()};
+                    await WriteProtocolMessage(targetStream, protoMessage, token);
                     break;
                 }
                 case MessageType.ListRoomsResponse:
                 {
-                    if (message is Messages.ListRoomsResponse listRoomsResponse)
+                    var listRoomsResponse = CastMessage<Messages.ListRoomsResponse>(message);
+                    var protoMessage = new ProtocolMessage()
                     {
-                        var protoMessage = new ProtocolMessage()
+                        Id = message.Id,
+                        ListRoomResponse = new ListRoomsResponse()
                         {
-                            Id = message.Id,
-                            ListRoomResponse = new ListRoomsResponse()
+                            Rooms =
                             {
-                                Rooms =
+                                listRoomsResponse.Rooms.Select(room => new Protobuf.ChatRoom()
                                 {
-                                    listRoomsResponse.Rooms.Select(room => new Protobuf.ChatRoom()
-                                    {
-                                        Id = room.Id,
-                                        Name = room.Name
-                                    })
-                                }
+                                    Id = room.Id,
+                                    Name = room.Name
+                                })
                             }
-                        };
-                        var buffer = protoMessage.ToByteArray();
-                        await targetStream.WriteLengthPrefixedAsync(buffer, token);
-                    }
-                    else
-                    {
-                        throw new Exception($"Message type mismatch [message={message}]");
-                    }
-
+                        }
+                    };
+                    await WriteProtocolMessage(targetStream, protoMessage, token);
                     break;
                 }
                 case MessageType.CreateRoom:
@@ -101,9 +94,55 @@ namespace Critical.Chat.Protocol.Protobuf
                     break;
                 case MessageType.ReceiveMessage:
                     break;
+                case MessageType.HandshakeRequest:
+                {
+                    var handshakeRequest = CastMessage<Messages.HandshakeRequest>(message);
+                    var protoMessage = new ProtocolMessage()
+                    {
+                        Id = message.Id,
+                        HandshakeRequest = new HandshakeRequest()
+                        {
+                            UserId = handshakeRequest.UserId
+                        }
+                    };
+                    await WriteProtocolMessage(targetStream, protoMessage, token);
+                    break;
+                }
+                case MessageType.HandshakeResponse:
+                {
+                    var handshakeResponse = CastMessage<Messages.HandshakeResponse>(message);
+                    var protoMessage = new ProtocolMessage()
+                    {
+                        Id = message.Id,
+                        HandshakeResponse = new HandshakeResponse()
+                        {
+                            UserName = handshakeResponse.UserName
+                        }
+                    };
+                    await WriteProtocolMessage(targetStream, protoMessage, token);
+                    break;
+                }
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private TMessage CastMessage<TMessage>(IMessage message) where TMessage : IMessage
+        {
+            if (message is TMessage castMessage)
+            {
+                return castMessage;
+            }
+
+            throw new Exception($"Invalid message cast [message={message}][expected={typeof(TMessage)}]");
+        }
+
+        private static Task WriteProtocolMessage(Stream targetStream,
+                                                 Google.Protobuf.IMessage message,
+                                                 CancellationToken token = default)
+        {
+            var buffer = message.ToByteArray();
+            return targetStream.WriteLengthPrefixedAsync(buffer, token);
         }
     }
 }
