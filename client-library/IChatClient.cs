@@ -11,6 +11,8 @@ namespace Critical.Chat.Client
         
         Task<IReadOnlyCollection<IChatRoom>> ListRooms(CancellationToken token = default);
 
+        Task<IChatRoom> CreateRoom(string roomName, CancellationToken token = default);
+
         Task<IChatRoomUser> JoinRoom(IChatRoom room, CancellationToken token = default);
     }
 }

@@ -6,16 +6,6 @@ namespace Critical.Chat.Protocol.Protobuf
 {
     internal static class ConversionUtilities
     {
-        internal static TMessage CastMessage<TMessage>(this IMessage message) where TMessage : IMessage
-        {
-            if (message is TMessage castMessage)
-            {
-                return castMessage;
-            }
-
-            throw new Exception($"Invalid message cast [message={message}][expected={typeof(TMessage)}]");
-        }
-
         internal static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsRequest listRoomsRequest)
         {
             return new ProtocolMessage {Id = listRoomsRequest.Id, ListRoomRequest = new ListRoomsRequest()};
@@ -64,18 +54,47 @@ namespace Critical.Chat.Protocol.Protobuf
             };
         }
 
-        internal static ProtocolMessage ToProtocolMessage(this Messages.IMessage message)
+        private static ProtocolMessage ToProtocolMessage(this Messages.CreateRoomRequest createRoomRequest)
+        {
+            return new ProtocolMessage()
+            {
+                Id = createRoomRequest.Id,
+                CreateRoomRequest = new CreateRoomRequest()
+                {
+                    RoomName = createRoomRequest.RoomName
+                }
+            };
+        }
+
+        private static ProtocolMessage ToProtocolMessage(this Messages.CreateRoomResponse createRoomResponse)
+        {
+            return new ProtocolMessage()
+            {
+                Id = createRoomResponse.Id,
+                CreateRoomResponse = new CreateRoomResponse()
+                {
+                    RoomId = createRoomResponse.Room.Id,
+                    RoomName = createRoomResponse.Room.Name
+                }
+            };
+        }
+
+        internal static ProtocolMessage ToProtocolMessage(this IMessage message)
         {
             switch (message.Type)
             {
                 case MessageType.ListRoomsRequest:
-                    return message.CastMessage<Messages.ListRoomsRequest>().ToProtocolMessage();
+                    return message.Cast<Messages.ListRoomsRequest>().ToProtocolMessage();
                 case MessageType.ListRoomsResponse:
-                    return message.CastMessage<Messages.ListRoomsResponse>().ToProtocolMessage();
+                    return message.Cast<Messages.ListRoomsResponse>().ToProtocolMessage();
                 case MessageType.HandshakeRequest:
-                    return message.CastMessage<Messages.HandshakeRequest>().ToProtocolMessage();
+                    return message.Cast<Messages.HandshakeRequest>().ToProtocolMessage();
                 case MessageType.HandshakeResponse:
-                    return message.CastMessage<Messages.HandshakeResponse>().ToProtocolMessage();
+                    return message.Cast<Messages.HandshakeResponse>().ToProtocolMessage();
+                case MessageType.CreateRoomRequest:
+                    return message.Cast<Messages.CreateRoomRequest>().ToProtocolMessage();
+                case MessageType.CreateRoomResponse:
+                    return message.Cast<Messages.CreateRoomResponse>().ToProtocolMessage();
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -114,6 +133,12 @@ namespace Critical.Chat.Protocol.Protobuf
                     return new Messages.HandshakeRequest(message.Id, message.HandshakeRequest.UserId);
                 case ProtocolMessage.MessageOneofCase.HandshakeResponse:
                     return new Messages.HandshakeResponse(message.Id, message.HandshakeResponse.UserName);
+                case ProtocolMessage.MessageOneofCase.CreateRoomRequest:
+                    return new Messages.CreateRoomRequest(message.Id, message.CreateRoomRequest.RoomName);
+                case ProtocolMessage.MessageOneofCase.CreateRoomResponse:
+                    return new Messages.CreateRoomResponse(message.Id,
+                        new ChatRoom(message.CreateRoomResponse.RoomId, message.CreateRoomResponse.RoomName));
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

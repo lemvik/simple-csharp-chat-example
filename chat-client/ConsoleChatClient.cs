@@ -1,8 +1,9 @@
-using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Critical.Chat.Protocol;
 using Critical.Chat.Protocol.Messages;
 using Critical.Chat.Protocol.Transport;
 using Microsoft.Extensions.Hosting;
@@ -54,6 +55,18 @@ namespace Critical.Chat.Client.Example.TCP
         {
             var rooms = await chatClient.ListRooms(stoppingToken);
             logger.LogDebug("Enumerated [rooms={rooms}]", rooms);
+
+            IChatRoom roomToJoin;
+            if (rooms.Count == 0)
+            {
+                roomToJoin = await chatClient.CreateRoom(clientConfig.ChatConfig.RoomToCreate, stoppingToken);
+            }
+            else
+            {
+                roomToJoin = rooms.First();
+            }
+            
+            logger.LogDebug("Joining [room={room}]", roomToJoin);
             await Delay(1000, stoppingToken);
         }
     }

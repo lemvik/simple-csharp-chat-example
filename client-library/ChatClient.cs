@@ -59,6 +59,15 @@ namespace Critical.Chat.Client
             return response.Rooms;
         }
 
+        public async Task<IChatRoom> CreateRoom(string roomName, CancellationToken token = default)
+        {
+            var request = new CreateRoomRequest(++sequence, roomName);
+
+            var response = await Exchange<CreateRoomResponse>(request, token);
+
+            return response.Room;
+        }
+
         public Task<IChatRoomUser> JoinRoom(IChatRoom room, CancellationToken token = default)
         {
             throw new System.NotImplementedException();
@@ -105,12 +114,6 @@ namespace Critical.Chat.Client
 
             switch (message.Type)
             {
-                case MessageType.ListRoomsRequest:
-                    break;
-                case MessageType.ListRoomsResponse:
-                    break;
-                case MessageType.CreateRoom:
-                    break;
                 case MessageType.JoinRoom:
                     break;
                 case MessageType.LeaveRoom:

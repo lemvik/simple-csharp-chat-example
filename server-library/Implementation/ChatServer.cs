@@ -88,8 +88,14 @@ namespace Critical.Chat.Server.Implementation
                     await client.SendMessage(response, token);
                     break;
                 }
-                case MessageType.CreateRoom:
+                case MessageType.CreateRoomRequest:
+                {
+                    var createRoomRequest = message.Cast<CreateRoomRequest>();
+                    var room = await roomsRegistry.CreateRoom(createRoomRequest.RoomName);
+                    var response = new CreateRoomResponse(createRoomRequest.Id, room);
+                    await client.SendMessage(response, token);
                     break;
+                }
                 case MessageType.JoinRoom:
                     break;
                 case MessageType.LeaveRoom:

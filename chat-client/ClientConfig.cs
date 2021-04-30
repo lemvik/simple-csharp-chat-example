@@ -11,6 +11,7 @@ namespace Critical.Chat.Client.Example.TCP
         public class ChatClientConfig : IChatClientConfiguration
         {
             public string UserName { get; set; }
+            public string RoomToCreate { get; set; }
         }
         
         public ServerAddress Server { get; set; }

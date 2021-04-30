@@ -21,12 +21,23 @@ message HandshakeResponse {
   string userName = 1;
 }
 
+message CreateRoomRequest {
+  string roomName = 1;
+}
+
+message CreateRoomResponse {
+  string roomId = 1;
+  string roomName = 2;
+}
+
 message ProtocolMessage {
   uint64 id = 1;
   oneof message {
     HandshakeRequest handshakeRequest = 2;
     HandshakeResponse handshakeResponse = 3;
-    ListRoomsRequest listRoomRequest = 4;
-    ListRoomsResponse listRoomResponse = 5;
+    CreateRoomRequest createRoomRequest = 4;
+    CreateRoomResponse createRoomResponse = 5;
+    ListRoomsRequest listRoomRequest = 6;
+    ListRoomsResponse listRoomResponse = 7;
   }
 }
