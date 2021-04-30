@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "Critical.Chat.Protocol.Protobuf";
+
+message ChatRoom {
+  string id = 1;
+  string name = 2;
+}
+
+message ListRoomsRequest {}
+
+message ListRoomsResponse {
+  repeated ChatRoom rooms = 1;
+}
+
+message ProtocolMessage {
+  uint64 id = 1;
+  oneof message {
+    ListRoomsRequest listRoomRequest = 2;
+    ListRoomsResponse listRoomResponse = 3;
+  }
+}

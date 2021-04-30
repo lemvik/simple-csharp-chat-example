@@ -1,4 +1,6 @@
 using System;
+using Critical.Chat.Protocol.Messages;
+using Critical.Chat.Protocol.Protobuf;
 using Critical.Chat.Server.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +14,9 @@ namespace Critical.Chat.Server.Examples.TCP
         internal static IServiceCollection AddChatServer(this IServiceCollection serviceCollection)
         {
             return serviceCollection
-                .AddTransient<IServerRoomsRegistry, ServerRoomsRegistry>()
-                .AddSingleton<IHostedService, ChatServer>();
+                   .AddSingleton<IChatServer, Implementation.ChatServer>()
+                   .AddTransient<IMessageProtocol, ProtobufMessageProtocol>()
+                   .AddSingleton<IHostedService, ChatServer>();
         }
 
         internal static IServiceCollection AddServerLogging(this IServiceCollection serviceCollection)

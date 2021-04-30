@@ -1,13 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
 
-namespace Critical.Chat.Server
+namespace Critical.Chat.Protocol
 {
     public interface IChatRoomUser
     {
         IChatUser User { get; } 
-        IServerChatRoom Room { get; }
+        IChatRoom Room { get; }
         
         event Action<IChatMessage> MessageSent;
         Task ReceiveMessage(IChatMessage chatMessage);

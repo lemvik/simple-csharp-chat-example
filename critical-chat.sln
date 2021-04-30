@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client-library", "client-li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server-library", "server-library\server-library.csproj", "{4D40249D-E942-4E3A-AF66-96C7F2E97900}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "protobuf-protocol", "protobuf-protocol\protobuf-protocol.csproj", "{29423237-B050-4F78-8817-474315A988EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,17 @@ Global
 		{4D40249D-E942-4E3A-AF66-96C7F2E97900}.Release|x64.Build.0 = Release|Any CPU
 		{4D40249D-E942-4E3A-AF66-96C7F2E97900}.Release|x86.ActiveCfg = Release|Any CPU
 		{4D40249D-E942-4E3A-AF66-96C7F2E97900}.Release|x86.Build.0 = Release|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Debug|x64.Build.0 = Debug|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Debug|x86.Build.0 = Debug|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Release|x64.ActiveCfg = Release|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Release|x64.Build.0 = Release|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Release|x86.ActiveCfg = Release|Any CPU
+		{29423237-B050-4F78-8817-474315A988EF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

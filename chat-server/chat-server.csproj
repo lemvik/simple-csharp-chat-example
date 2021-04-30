@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\protocol\protocol.csproj" />
     <ProjectReference Include="..\server-library\server-library.csproj" />
+    <ProjectReference Include="..\protobuf-protocol\protobuf-protocol.csproj" />
   </ItemGroup>
 
   <ItemGroup>

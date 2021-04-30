@@ -7,6 +7,7 @@ namespace Critical.Chat.Server
     public interface IServerRoomsRegistry
     {
         Task<IServerChatRoom> CreateRoom(string roomName);
+        
         Task<IReadOnlyCollection<IServerChatRoom>> ListRooms();
 
         Task CloseRoom(IChatRoom room);
