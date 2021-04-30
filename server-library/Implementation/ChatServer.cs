@@ -73,9 +73,34 @@ namespace Critical.Chat.Server.Implementation
             throw new Exception($"Expected to receive handshake response [received={response}]");
         }
 
-        private Task DispatchAsync(IConnectedClient client, IMessage message, CancellationToken token = default)
+        private async Task DispatchAsync(IConnectedClient client, IMessage message, CancellationToken token = default)
         {
-            return Task.CompletedTask;
+            switch (message.Type)
+            {
+                case MessageType.HandshakeRequest:
+                    break;
+                case MessageType.HandshakeResponse:
+                    break;
+                case MessageType.ListRoomsRequest:
+                {
+                    var rooms = await roomsRegistry.ListRooms();
+                    var response = new ListRoomsResponse(message.Id, rooms);
+                    await client.SendMessage(response, token);
+                    break;
+                }
+                case MessageType.CreateRoom:
+                    break;
+                case MessageType.JoinRoom:
+                    break;
+                case MessageType.LeaveRoom:
+                    break;
+                case MessageType.SendMessage:
+                    break;
+                case MessageType.ReceiveMessage:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void RunClient(IConnectedClient client, CancellationToken token = default)

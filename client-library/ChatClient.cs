@@ -15,7 +15,7 @@ namespace Critical.Chat.Client
         private readonly IChatTransport transport;
         private readonly IChatClientConfiguration configuration;
         private readonly IDictionary<ulong, TaskCompletionSource<IMessage>> pendingMessages;
-        private ulong sequence = 0;
+        private ulong sequence;
         private string assignedId = string.Empty;
 
         internal ChatClient(ILogger<ChatClient> logger, 
@@ -30,6 +30,10 @@ namespace Critical.Chat.Client
 
         public async Task RunAsync(CancellationToken token = default)
         {
+            await HandshakeAsync(token);
+            
+            logger.LogDebug("Handshake successful [clientId={clientId}]", assignedId);
+            
             while (!token.IsCancellationRequested)
             {
                 var incomingMessage = await transport.Receive(token);
@@ -60,6 +64,23 @@ namespace Critical.Chat.Client
             throw new System.NotImplementedException();
         }
 
+        private async Task HandshakeAsync(CancellationToken token = default)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                var incomingMessage = await transport.Receive(token);
+                if (incomingMessage is HandshakeRequest handshakeRequest)
+                {
+                    assignedId = handshakeRequest.UserId;
+                    var response = new HandshakeResponse(handshakeRequest.Id, configuration.UserName);
+                    await transport.Send(response, token);
+                    return;
+                }
+
+                logger.LogWarning("Ignoring [message={message}] while waiting for handshake.", incomingMessage);
+            }
+        }
+
         private async Task<TResult> Exchange<TResult>(IMessage message, CancellationToken token = default)
             where TResult : class, IMessage
         {
@@ -78,22 +99,12 @@ namespace Critical.Chat.Client
             throw new Exception($"Received unexpected [response={response}] for [request={message}]");
         }
 
-        private async Task DispatchMessage(IMessage message, CancellationToken token = default)
+        private Task DispatchMessage(IMessage message, CancellationToken token = default)
         {
             logger.LogDebug("Dispatching [message={message}]", message);
 
             switch (message.Type)
             {
-                case MessageType.HandshakeRequest:
-                {
-                    var handshake = CastMessage<HandshakeRequest>(message);
-                    assignedId = handshake.UserId;
-                    var response = new HandshakeResponse(message.Id, configuration.UserName);
-                    await transport.Send(response, token);
-                    break;
-                }
-                case MessageType.HandshakeResponse:
-                    break;
                 case MessageType.ListRoomsRequest:
                     break;
                 case MessageType.ListRoomsResponse:
@@ -109,18 +120,11 @@ namespace Critical.Chat.Client
                 case MessageType.ReceiveMessage:
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private TMessage CastMessage<TMessage>(IMessage message) where TMessage : IMessage
-        {
-            if (message is TMessage castMessage)
-            {
-                return castMessage;
+                    logger.LogWarning("Unexpected message to be handled [message={message}]", message);
+                    break;
             }
 
-            throw new Exception($"Invalid message type [message={message}][expected={typeof(TMessage)}]");
+            return Task.CompletedTask;
         }
     }
 }
