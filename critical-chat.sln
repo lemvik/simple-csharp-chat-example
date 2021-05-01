@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server-library", "src\serve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "protobuf-protocol", "src\protobuf-protocol\protobuf-protocol.csproj", "{29423237-B050-4F78-8817-474315A988EF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F5B3CF68-9413-4CA3-AC9D-43831F02C678}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-tests", "tests\chat-tests\chat-tests.csproj", "{90422F2B-B999-40CC-BCC3-BBE9161B3595}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,5 +104,20 @@ Global
 		{29423237-B050-4F78-8817-474315A988EF}.Release|x64.Build.0 = Release|Any CPU
 		{29423237-B050-4F78-8817-474315A988EF}.Release|x86.ActiveCfg = Release|Any CPU
 		{29423237-B050-4F78-8817-474315A988EF}.Release|x86.Build.0 = Release|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Debug|x64.Build.0 = Debug|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Debug|x86.Build.0 = Debug|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Release|x64.ActiveCfg = Release|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Release|x64.Build.0 = Release|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Release|x86.ActiveCfg = Release|Any CPU
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{90422F2B-B999-40CC-BCC3-BBE9161B3595} = {F5B3CF68-9413-4CA3-AC9D-43831F02C678}
 	EndGlobalSection
 EndGlobal

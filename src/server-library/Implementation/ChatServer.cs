@@ -31,7 +31,7 @@ namespace Critical.Chat.Server.Implementation
 
         public async Task RunAsync(CancellationToken token = default)
         {
-            logger.LogDebug("Starting chat server main loop.");
+            logger.LogDebug("Starting chat server main loop");
             var reader = messages.Reader;
             while (await reader.WaitToReadAsync(token))
             {
@@ -42,23 +42,23 @@ namespace Critical.Chat.Server.Implementation
                 }
                 catch (Exception error)
                 {
-                    logger.LogError("Encountered [error={error}] trying to dispatch [message={message}]", 
+                    logger.LogError("Encountered [error={Error}] trying to dispatch [message={Message}]", 
                         error,
                         message);
                 }
             }
 
-            logger.LogDebug("Chat server main loop completed.");
+            logger.LogDebug("Chat server main loop completed");
         }
 
         public async Task AddClientAsync(IChatTransport transport, CancellationToken token = default)
         {
-            logger.LogDebug("Adding a client [connection={connection}]", transport);
+            logger.LogDebug("Adding a client [connection={Connection}]", transport);
 
             var chatClient = await HandshakeAsync(transport, token);
             var connectedClient = new ConnectedClient(chatClient, transport);
 
-            logger.LogDebug($"Adding chat user [chatClient={chatClient}]");
+            logger.LogDebug("Adding chat user [chatClient={ChatClient}]", chatClient);
 
             if (!clients.TryAdd(chatClient.Id, connectedClient))
             {
@@ -135,22 +135,22 @@ namespace Critical.Chat.Server.Implementation
             {
                 if (result.IsFaulted)
                 {
-                    logger.LogError("Encountered an error in [client={client}] interaction [error={error}]",
+                    logger.LogError("Encountered an error in [client={Client}] interaction [error={Error}]",
                         client,
                         result.Exception);
                 }
                 else if (result.IsCanceled)
                 {
-                    logger.LogDebug("Client stopped due to cancellation [client={client}]", client);
+                    logger.LogDebug("Client stopped due to cancellation [client={Client}]", client);
                 }
                 else
                 {
-                    logger.LogDebug("Client terminated loop [client={client}]", client);
+                    logger.LogDebug("Client terminated loop [client={Client}]", client);
                 }
 
                 if (!clients.TryRemove(client.User.Id, out _))
                 {
-                    logger.LogError("Failed to remove client from clients list [client={client}]", client);
+                    logger.LogError("Failed to remove client from clients list [client={Client}]", client);
                 }
             }, token);
         }
