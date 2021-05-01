@@ -3,13 +3,13 @@ namespace Critical.Chat.Protocol.Messages
     public class HandshakeRequest : IMessage
     {
         public ulong Id { get; }
-        public string UserId { get; }
+        public IChatUser User { get; }
         public MessageType Type => MessageType.HandshakeRequest;
         
-        public HandshakeRequest(ulong id, string userId)
+        public HandshakeRequest(ulong id, IChatUser user)
         {
             Id = id;
-            UserId = userId;
+            User = user;
         }
     }
 }

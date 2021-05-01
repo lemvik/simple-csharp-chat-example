@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Critical.Chat.Protocol;
 using Critical.Chat.Protocol.Transport;
 
 namespace Critical.Chat.Server
@@ -8,6 +9,6 @@ namespace Critical.Chat.Server
     {
         Task RunAsync(CancellationToken token = default);
         
-        Task AddClientAsync(IChatTransport transport, CancellationToken token = default);
+        Task AddClientAsync(IChatUser chatUser, IChatTransport transport, CancellationToken token = default);
     }
 }

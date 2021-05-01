@@ -13,19 +13,16 @@ namespace Critical.Chat.Client
     {
         private readonly ILogger<ChatClient> logger;
         private readonly IChatTransport transport;
-        private readonly IChatClientConfiguration configuration;
         private readonly IDictionary<ulong, TaskCompletionSource<IMessage>> pendingMessages;
         private readonly IDictionary<string, ClientChatRoom> rooms;
         private ulong sequence;
-        private string assignedId = string.Empty;
+        private IChatUser assignedUser;
 
         internal ChatClient(ILogger<ChatClient> logger,
-                            IChatTransport transport,
-                            IChatClientConfiguration configuration)
+                            IChatTransport transport)
         {
             this.logger = logger;
             this.transport = transport;
-            this.configuration = configuration;
             this.pendingMessages = new Dictionary<ulong, TaskCompletionSource<IMessage>>();
             this.rooms = new Dictionary<string, ClientChatRoom>();
         }
@@ -34,7 +31,7 @@ namespace Critical.Chat.Client
         {
             await HandshakeAsync(token);
 
-            logger.LogDebug("Handshake successful [clientId={clientId}]", assignedId);
+            logger.LogDebug("Handshake successful [chatUser={ChatUser}]", assignedUser);
 
             while (!token.IsCancellationRequested)
             {
@@ -84,7 +81,7 @@ namespace Critical.Chat.Client
             {
                 if (!chatRoom.ReceiveMessage(chatMessage))
                 {
-                    logger.LogWarning("Failed to deliver [message={message}] to chat [room={room}]", 
+                    logger.LogWarning("Failed to deliver [message={Message}] to chat [room={Room}]", 
                         chatMessage,
                         chatRoom);
                 }
@@ -100,13 +97,13 @@ namespace Critical.Chat.Client
                 var incomingMessage = await transport.Receive(token);
                 if (incomingMessage is HandshakeRequest handshakeRequest)
                 {
-                    assignedId = handshakeRequest.UserId;
-                    var response = new HandshakeResponse(handshakeRequest.Id, configuration.UserName);
+                    assignedUser = handshakeRequest.User;
+                    var response = new HandshakeResponse(handshakeRequest.Id);
                     await transport.Send(response, token);
                     return;
                 }
 
-                logger.LogWarning("Ignoring [message={message}] while waiting for handshake.", incomingMessage);
+                logger.LogWarning("Ignoring [message={Message}] while waiting for handshake", incomingMessage);
             }
         }
 
@@ -130,7 +127,7 @@ namespace Critical.Chat.Client
 
         private Task DispatchMessage(IMessage message, CancellationToken token = default)
         {
-            logger.LogDebug("Dispatching [message={message}]", message);
+            logger.LogDebug("Dispatching [message={Message}]", message);
 
             switch (message.Type)
             {
@@ -139,7 +136,7 @@ namespace Critical.Chat.Client
                 case MessageType.ReceiveMessage:
                     break;
                 default:
-                    logger.LogWarning("Unexpected message to be handled [message={message}]", message);
+                    logger.LogWarning("Unexpected message to be handled [message={Message}]", message);
                     break;
             }
 

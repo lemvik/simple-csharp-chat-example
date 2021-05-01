@@ -65,7 +65,7 @@ namespace Critical.Chat.Protocol.Protobuf
                 Id = handshakeRequest.Id,
                 HandshakeRequest = new HandshakeRequest()
                 {
-                    UserId = handshakeRequest.UserId
+                    User = handshakeRequest.User.ToProtobuf()
                 }
             };
         }
@@ -76,9 +76,6 @@ namespace Critical.Chat.Protocol.Protobuf
             {
                 Id = handshakeResponse.Id,
                 HandshakeResponse = new HandshakeResponse()
-                {
-                    UserName = handshakeResponse.UserName
-                }
             };
         }
 
@@ -241,9 +238,10 @@ namespace Critical.Chat.Protocol.Protobuf
                     var rooms = listRoomResponse.Rooms.Select(ChatRoom.FromProtobuf).ToList();
                     return new Messages.ListRoomsResponse(message.Id, rooms);
                 case ProtocolMessage.MessageOneofCase.HandshakeRequest:
-                    return new Messages.HandshakeRequest(message.Id, message.HandshakeRequest.UserId);
+                    return new Messages.HandshakeRequest(message.Id,
+                        ChatUser.FromProtobuf(message.HandshakeRequest.User));
                 case ProtocolMessage.MessageOneofCase.HandshakeResponse:
-                    return new Messages.HandshakeResponse(message.Id, message.HandshakeResponse.UserName);
+                    return new Messages.HandshakeResponse(message.Id);
                 case ProtocolMessage.MessageOneofCase.CreateRoomRequest:
                     return new Messages.CreateRoomRequest(message.Id, message.CreateRoomRequest.RoomName);
                 case ProtocolMessage.MessageOneofCase.CreateRoomResponse:

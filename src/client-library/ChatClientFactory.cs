@@ -14,7 +14,7 @@ namespace Critical.Chat.Client
 
         public IChatClient CreateClient(IChatTransport clientTransport, IChatClientConfiguration configuration)
         {
-            return new ChatClient(loggerFactory.CreateLogger<ChatClient>(), clientTransport, configuration);
+            return new ChatClient(loggerFactory.CreateLogger<ChatClient>(), clientTransport);
         }
     }
 }

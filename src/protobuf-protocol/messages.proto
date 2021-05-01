@@ -19,11 +19,10 @@ message ListRoomsResponse {
 }
 
 message HandshakeRequest {
-  string userId = 1;
+  ChatUser user = 1;
 }
 
 message HandshakeResponse {
-  string userName = 1;
 }
 
 message CreateRoomRequest {

@@ -27,32 +27,32 @@ namespace Critical.Chat.Protocol.Protobuf {
             "Cg5tZXNzYWdlcy5wcm90byIkCghDaGF0Um9vbRIKCgJpZBgBIAEoCRIMCgRu",
             "YW1lGAIgASgJIiwKCENoYXRVc2VyEg4KBnVzZXJJZBgBIAEoCRIQCgh1c2Vy",
             "TmFtZRgCIAEoCSISChBMaXN0Um9vbXNSZXF1ZXN0Ii0KEUxpc3RSb29tc1Jl",
-            "c3BvbnNlEhgKBXJvb21zGAEgAygLMgkuQ2hhdFJvb20iIgoQSGFuZHNoYWtl",
-            "UmVxdWVzdBIOCgZ1c2VySWQYASABKAkiJQoRSGFuZHNoYWtlUmVzcG9uc2US",
-            "EAoIdXNlck5hbWUYASABKAkiJQoRQ3JlYXRlUm9vbVJlcXVlc3QSEAoIcm9v",
-            "bU5hbWUYASABKAkiLQoSQ3JlYXRlUm9vbVJlc3BvbnNlEhcKBHJvb20YASAB",
-            "KAsyCS5DaGF0Um9vbSIhCg9Kb2luUm9vbVJlcXVlc3QSDgoGcm9vbUlkGAEg",
-            "ASgJIksKEEpvaW5Sb29tUmVzcG9uc2USFwoEcm9vbRgBIAEoCzIJLkNoYXRS",
-            "b29tEh4KCG1lc3NhZ2VzGAIgAygLMgwuVXNlck1lc3NhZ2UiKwoQTGVhdmVS",
-            "b29tUmVxdWVzdBIXCgRyb29tGAEgASgLMgkuQ2hhdFJvb20iLAoRTGVhdmVS",
-            "b29tUmVzcG9uc2USFwoEcm9vbRgBIAEoCzIJLkNoYXRSb29tIi4KC1NlbmRN",
-            "ZXNzYWdlEg4KBnJvb21JZBgBIAEoCRIPCgdtZXNzYWdlGAIgASgJIlAKC1Vz",
-            "ZXJNZXNzYWdlEhcKBHVzZXIYASABKAsyCS5DaGF0VXNlchIXCgRyb29tGAIg",
-            "ASgLMgkuQ2hhdFJvb20SDwoHbWVzc2FnZRgDIAEoCSLQBAoPUHJvdG9jb2xN",
-            "ZXNzYWdlEgoKAmlkGAEgASgEEi0KEGhhbmRzaGFrZVJlcXVlc3QYAiABKAsy",
-            "ES5IYW5kc2hha2VSZXF1ZXN0SAASLwoRaGFuZHNoYWtlUmVzcG9uc2UYAyAB",
-            "KAsyEi5IYW5kc2hha2VSZXNwb25zZUgAEi8KEWNyZWF0ZVJvb21SZXF1ZXN0",
-            "GAQgASgLMhIuQ3JlYXRlUm9vbVJlcXVlc3RIABIxChJjcmVhdGVSb29tUmVz",
-            "cG9uc2UYBSABKAsyEy5DcmVhdGVSb29tUmVzcG9uc2VIABIsCg9saXN0Um9v",
-            "bVJlcXVlc3QYBiABKAsyES5MaXN0Um9vbXNSZXF1ZXN0SAASLgoQbGlzdFJv",
-            "b21SZXNwb25zZRgHIAEoCzISLkxpc3RSb29tc1Jlc3BvbnNlSAASKwoPam9p",
-            "blJvb21SZXF1ZXN0GAggASgLMhAuSm9pblJvb21SZXF1ZXN0SAASLQoQam9p",
-            "blJvb21SZXNwb25zZRgJIAEoCzIRLkpvaW5Sb29tUmVzcG9uc2VIABItChBs",
-            "ZWF2ZVJvb21SZXF1ZXN0GAogASgLMhEuTGVhdmVSb29tUmVxdWVzdEgAEi8K",
-            "EWxlYXZlUm9vbVJlc3BvbnNlGAsgASgLMhIuTGVhdmVSb29tUmVzcG9uc2VI",
-            "ABIjCgtzZW5kTWVzc2FnZRgMIAEoCzIMLlNlbmRNZXNzYWdlSAASIwoLdXNl",
-            "ck1lc3NhZ2UYDSABKAsyDC5Vc2VyTWVzc2FnZUgAQgkKB21lc3NhZ2VCIqoC",
-            "H0NyaXRpY2FsLkNoYXQuUHJvdG9jb2wuUHJvdG9idWZiBnByb3RvMw=="));
+            "c3BvbnNlEhgKBXJvb21zGAEgAygLMgkuQ2hhdFJvb20iKwoQSGFuZHNoYWtl",
+            "UmVxdWVzdBIXCgR1c2VyGAEgASgLMgkuQ2hhdFVzZXIiEwoRSGFuZHNoYWtl",
+            "UmVzcG9uc2UiJQoRQ3JlYXRlUm9vbVJlcXVlc3QSEAoIcm9vbU5hbWUYASAB",
+            "KAkiLQoSQ3JlYXRlUm9vbVJlc3BvbnNlEhcKBHJvb20YASABKAsyCS5DaGF0",
+            "Um9vbSIhCg9Kb2luUm9vbVJlcXVlc3QSDgoGcm9vbUlkGAEgASgJIksKEEpv",
+            "aW5Sb29tUmVzcG9uc2USFwoEcm9vbRgBIAEoCzIJLkNoYXRSb29tEh4KCG1l",
+            "c3NhZ2VzGAIgAygLMgwuVXNlck1lc3NhZ2UiKwoQTGVhdmVSb29tUmVxdWVz",
+            "dBIXCgRyb29tGAEgASgLMgkuQ2hhdFJvb20iLAoRTGVhdmVSb29tUmVzcG9u",
+            "c2USFwoEcm9vbRgBIAEoCzIJLkNoYXRSb29tIi4KC1NlbmRNZXNzYWdlEg4K",
+            "BnJvb21JZBgBIAEoCRIPCgdtZXNzYWdlGAIgASgJIlAKC1VzZXJNZXNzYWdl",
+            "EhcKBHVzZXIYASABKAsyCS5DaGF0VXNlchIXCgRyb29tGAIgASgLMgkuQ2hh",
+            "dFJvb20SDwoHbWVzc2FnZRgDIAEoCSLQBAoPUHJvdG9jb2xNZXNzYWdlEgoK",
+            "AmlkGAEgASgEEi0KEGhhbmRzaGFrZVJlcXVlc3QYAiABKAsyES5IYW5kc2hh",
+            "a2VSZXF1ZXN0SAASLwoRaGFuZHNoYWtlUmVzcG9uc2UYAyABKAsyEi5IYW5k",
+            "c2hha2VSZXNwb25zZUgAEi8KEWNyZWF0ZVJvb21SZXF1ZXN0GAQgASgLMhIu",
+            "Q3JlYXRlUm9vbVJlcXVlc3RIABIxChJjcmVhdGVSb29tUmVzcG9uc2UYBSAB",
+            "KAsyEy5DcmVhdGVSb29tUmVzcG9uc2VIABIsCg9saXN0Um9vbVJlcXVlc3QY",
+            "BiABKAsyES5MaXN0Um9vbXNSZXF1ZXN0SAASLgoQbGlzdFJvb21SZXNwb25z",
+            "ZRgHIAEoCzISLkxpc3RSb29tc1Jlc3BvbnNlSAASKwoPam9pblJvb21SZXF1",
+            "ZXN0GAggASgLMhAuSm9pblJvb21SZXF1ZXN0SAASLQoQam9pblJvb21SZXNw",
+            "b25zZRgJIAEoCzIRLkpvaW5Sb29tUmVzcG9uc2VIABItChBsZWF2ZVJvb21S",
+            "ZXF1ZXN0GAogASgLMhEuTGVhdmVSb29tUmVxdWVzdEgAEi8KEWxlYXZlUm9v",
+            "bVJlc3BvbnNlGAsgASgLMhIuTGVhdmVSb29tUmVzcG9uc2VIABIjCgtzZW5k",
+            "TWVzc2FnZRgMIAEoCzIMLlNlbmRNZXNzYWdlSAASIwoLdXNlck1lc3NhZ2UY",
+            "DSABKAsyDC5Vc2VyTWVzc2FnZUgAQgkKB21lc3NhZ2VCIqoCH0NyaXRpY2Fs",
+            "LkNoYXQuUHJvdG9jb2wuUHJvdG9idWZiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -60,8 +60,8 @@ namespace Critical.Chat.Protocol.Protobuf {
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ChatUser), global::Critical.Chat.Protocol.Protobuf.ChatUser.Parser, new[]{ "UserId", "UserName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest), global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse), global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse.Parser, new[]{ "Rooms" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.HandshakeRequest), global::Critical.Chat.Protocol.Protobuf.HandshakeRequest.Parser, new[]{ "UserId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.HandshakeResponse), global::Critical.Chat.Protocol.Protobuf.HandshakeResponse.Parser, new[]{ "UserName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.HandshakeRequest), global::Critical.Chat.Protocol.Protobuf.HandshakeRequest.Parser, new[]{ "User" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.HandshakeResponse), global::Critical.Chat.Protocol.Protobuf.HandshakeResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest), global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest.Parser, new[]{ "RoomName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse), global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest), global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
@@ -819,7 +819,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public HandshakeRequest(HandshakeRequest other) : this() {
-      userId_ = other.userId_;
+      user_ = other.user_ != null ? other.user_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -828,14 +828,14 @@ namespace Critical.Chat.Protocol.Protobuf {
       return new HandshakeRequest(this);
     }
 
-    /// <summary>Field number for the "userId" field.</summary>
-    public const int UserIdFieldNumber = 1;
-    private string userId_ = "";
+    /// <summary>Field number for the "user" field.</summary>
+    public const int UserFieldNumber = 1;
+    private global::Critical.Chat.Protocol.Protobuf.ChatUser user_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string UserId {
-      get { return userId_; }
+    public global::Critical.Chat.Protocol.Protobuf.ChatUser User {
+      get { return user_; }
       set {
-        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        user_ = value;
       }
     }
 
@@ -852,14 +852,14 @@ namespace Critical.Chat.Protocol.Protobuf {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (UserId != other.UserId) return false;
+      if (!object.Equals(User, other.User)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (UserId.Length != 0) hash ^= UserId.GetHashCode();
+      if (user_ != null) hash ^= User.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -876,9 +876,9 @@ namespace Critical.Chat.Protocol.Protobuf {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (UserId.Length != 0) {
+      if (user_ != null) {
         output.WriteRawTag(10);
-        output.WriteString(UserId);
+        output.WriteMessage(User);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -889,9 +889,9 @@ namespace Critical.Chat.Protocol.Protobuf {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (UserId.Length != 0) {
+      if (user_ != null) {
         output.WriteRawTag(10);
-        output.WriteString(UserId);
+        output.WriteMessage(User);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -902,8 +902,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (UserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
+      if (user_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(User);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -916,8 +916,11 @@ namespace Critical.Chat.Protocol.Protobuf {
       if (other == null) {
         return;
       }
-      if (other.UserId.Length != 0) {
-        UserId = other.UserId;
+      if (other.user_ != null) {
+        if (user_ == null) {
+          User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+        }
+        User.MergeFrom(other.User);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -934,7 +937,10 @@ namespace Critical.Chat.Protocol.Protobuf {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            UserId = input.ReadString();
+            if (user_ == null) {
+              User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+            }
+            input.ReadMessage(User);
             break;
           }
         }
@@ -952,7 +958,10 @@ namespace Critical.Chat.Protocol.Protobuf {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            UserId = input.ReadString();
+            if (user_ == null) {
+              User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+            }
+            input.ReadMessage(User);
             break;
           }
         }
@@ -991,24 +1000,12 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public HandshakeResponse(HandshakeResponse other) : this() {
-      userName_ = other.userName_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public HandshakeResponse Clone() {
       return new HandshakeResponse(this);
-    }
-
-    /// <summary>Field number for the "userName" field.</summary>
-    public const int UserNameFieldNumber = 1;
-    private string userName_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string UserName {
-      get { return userName_; }
-      set {
-        userName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1024,14 +1021,12 @@ namespace Critical.Chat.Protocol.Protobuf {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (UserName != other.UserName) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (UserName.Length != 0) hash ^= UserName.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1048,10 +1043,6 @@ namespace Critical.Chat.Protocol.Protobuf {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (UserName.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(UserName);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1061,10 +1052,6 @@ namespace Critical.Chat.Protocol.Protobuf {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (UserName.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(UserName);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -1074,9 +1061,6 @@ namespace Critical.Chat.Protocol.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (UserName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserName);
-      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -1087,9 +1071,6 @@ namespace Critical.Chat.Protocol.Protobuf {
     public void MergeFrom(HandshakeResponse other) {
       if (other == null) {
         return;
-      }
-      if (other.UserName.Length != 0) {
-        UserName = other.UserName;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1105,10 +1086,6 @@ namespace Critical.Chat.Protocol.Protobuf {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            UserName = input.ReadString();
-            break;
-          }
         }
       }
     #endif
@@ -1123,10 +1100,6 @@ namespace Critical.Chat.Protocol.Protobuf {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            UserName = input.ReadString();
-            break;
-          }
         }
       }
     }

@@ -42,41 +42,49 @@ namespace Critical.Chat.Server.Implementation
                 }
                 catch (Exception error)
                 {
-                    logger.LogError("Encountered [error={Error}] trying to dispatch [message={Message}]", 
-                        error,
-                        message);
+                    logger.LogError("Encountered [error={Error}] trying to dispatch [message={Message}]",
+                                    error,
+                                    message);
                 }
             }
 
             logger.LogDebug("Chat server main loop completed");
         }
 
-        public async Task AddClientAsync(IChatTransport transport, CancellationToken token = default)
+        public async Task AddClientAsync(IChatUser chatUser,
+                                         IChatTransport transport,
+                                         CancellationToken token = default)
         {
-            logger.LogDebug("Adding a client [connection={Connection}]", transport);
+            logger.LogDebug("Adding a [client={ChatUser}][connection={Connection}]", chatUser, transport);
 
-            var chatClient = await HandshakeAsync(transport, token);
-            var connectedClient = new ConnectedClient(chatClient, transport);
-
-            logger.LogDebug("Adding chat user [chatClient={ChatClient}]", chatClient);
-
-            if (!clients.TryAdd(chatClient.Id, connectedClient))
+            var connectedClient = new ConnectedClient(chatUser, transport);
+            if (!clients.TryAdd(chatUser.Id, connectedClient))
             {
-                throw new Exception($"Unable to add [client={chatClient}]");
+                throw new Exception($"Unable to add [client={chatUser}], one is already connected");
             }
 
-            RunClient(connectedClient, token);
+            try
+            {
+                await HandshakeAsync(chatUser, transport, token);
+
+                RunClient(connectedClient, token);
+            }
+            catch (Exception error)
+            {
+                logger.LogError(error, "Failed to handshake with the [client={ChatUser}]", chatUser);
+            }
         }
 
-        private async Task<IChatUser> HandshakeAsync(IChatTransport transport, CancellationToken token = default)
+        private async Task HandshakeAsync(IChatUser chatUser,
+                                          IChatTransport transport,
+                                          CancellationToken token = default)
         {
-            var clientId = Guid.NewGuid().ToString();
-            var handshake = new HandshakeRequest(0, clientId);
+            var handshake = new HandshakeRequest(0, chatUser);
             await transport.Send(handshake, token);
             var response = await transport.Receive(token);
-            if (response is HandshakeResponse handshakeResponse)
+            if (response is HandshakeResponse)
             {
-                return new ChatUser(clientId, handshakeResponse.UserName);
+                return;
             }
 
             throw new Exception($"Expected to receive handshake response [received={response}]");
@@ -135,9 +143,7 @@ namespace Critical.Chat.Server.Implementation
             {
                 if (result.IsFaulted)
                 {
-                    logger.LogError("Encountered an error in [client={Client}] interaction [error={Error}]",
-                        client,
-                        result.Exception);
+                    logger.LogError(result.Exception, "Encountered an error in [client={Client}] interaction", client);
                 }
                 else if (result.IsCanceled)
                 {
