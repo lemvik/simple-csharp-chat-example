@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Critical.Chat.Protocol;
@@ -12,18 +11,15 @@ namespace Critical.Chat.Client
     internal class ChatClient : IChatClient
     {
         private readonly ILogger<ChatClient> logger;
-        private readonly IChatTransport transport;
-        private readonly IDictionary<ulong, TaskCompletionSource<IMessage>> pendingMessages;
+        private readonly IChatRequestTransport transport;
         private readonly IDictionary<string, ClientChatRoom> rooms;
-        private ulong sequence;
         private IChatUser assignedUser;
 
         internal ChatClient(ILogger<ChatClient> logger,
                             IChatTransport transport)
         {
             this.logger = logger;
-            this.transport = transport;
-            this.pendingMessages = new Dictionary<ulong, TaskCompletionSource<IMessage>>();
+            this.transport = new ChatRequestTransport(transport);
             this.rooms = new Dictionary<string, ClientChatRoom>();
         }
 
@@ -36,44 +32,35 @@ namespace Critical.Chat.Client
             while (!token.IsCancellationRequested)
             {
                 var incomingMessage = await transport.Receive(token);
-
-                if (pendingMessages.TryGetValue(incomingMessage.Id, out var pendingRequest))
-                {
-                    pendingMessages.Remove(incomingMessage.Id);
-                    pendingRequest.SetResult(incomingMessage);
-                }
-                else
-                {
-                    await DispatchMessage(incomingMessage, token);
-                }
+                await DispatchMessage(incomingMessage, token);
             }
         }
 
         public async Task<IReadOnlyCollection<IChatRoom>> ListRooms(CancellationToken token = default)
         {
-            var request = new ListRoomsRequest(++sequence);
+            var request = new ListRoomsRequest();
 
-            var response = await Exchange<ListRoomsResponse>(request, token);
+            var response = await transport.Exchange<ListRoomsResponse>(request, token);
 
             return response.Rooms;
         }
 
         public async Task<IChatRoom> CreateRoom(string roomName, CancellationToken token = default)
         {
-            var request = new CreateRoomRequest(++sequence, roomName);
+            var request = new CreateRoomRequest(roomName);
 
-            var response = await Exchange<CreateRoomResponse>(request, token);
+            var response = await transport.Exchange<CreateRoomResponse>(request, token);
 
             return response.Room;
         }
 
         public async Task<IClientChatRoom> JoinRoom(IChatRoom room, CancellationToken token = default)
         {
-            var request = new JoinRoomRequest(++sequence, room.Id);
+            var request = new JoinRoomRequest(room.Id);
 
-            var response = await Exchange<JoinRoomResponse>(request, token);
+            var response = await transport.Exchange<JoinRoomResponse>(request, token);
 
-            var chatRoom = new ClientChatRoom(response.Room);
+            var chatRoom = new ClientChatRoom(response.Room, transport);
 
             rooms.Add(chatRoom.Id, chatRoom);
 
@@ -81,9 +68,9 @@ namespace Critical.Chat.Client
             {
                 if (!chatRoom.ReceiveMessage(chatMessage))
                 {
-                    logger.LogWarning("Failed to deliver [message={Message}] to chat [room={Room}]", 
-                        chatMessage,
-                        chatRoom);
+                    logger.LogWarning("Failed to deliver [message={Message}] to chat [room={Room}]",
+                                      chatMessage,
+                                      chatRoom);
                 }
             }
 
@@ -105,24 +92,6 @@ namespace Critical.Chat.Client
 
                 logger.LogWarning("Ignoring [message={Message}] while waiting for handshake", incomingMessage);
             }
-        }
-
-        private async Task<TResult> Exchange<TResult>(IMessage message, CancellationToken token = default)
-            where TResult : class, IMessage
-        {
-            var completion = new TaskCompletionSource<IMessage>();
-            pendingMessages.Add(message.Id, completion);
-
-            await transport.Send(message, token);
-
-            var response = await completion.Task;
-
-            if (response is TResult result)
-            {
-                return result;
-            }
-
-            throw new Exception($"Received unexpected [response={response}] for [request={message}]");
         }
 
         private Task DispatchMessage(IMessage message, CancellationToken token = default)

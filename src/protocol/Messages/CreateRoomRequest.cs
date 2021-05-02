@@ -1,14 +1,20 @@
 namespace Critical.Chat.Protocol.Messages
 {
-    public class CreateRoomRequest : IMessage
+    public class CreateRoomRequest : IRequest
     {
-        public ulong Id { get; }
+        public ulong RequestId { get; set; }
         public MessageType Type => MessageType.CreateRoomRequest;
         public string RoomName { get; }
-        
+
+        public CreateRoomRequest(string roomName)
+        {
+            RequestId = default;
+            RoomName = roomName;
+        }
+
         public CreateRoomRequest(ulong id, string roomName)
         {
-            Id = id;
+            RequestId = id;
             RoomName = roomName;
         }
     }

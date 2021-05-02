@@ -3,6 +3,8 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Critical.Chat.Protocol;
+using Critical.Chat.Protocol.Messages;
+using Critical.Chat.Protocol.Transport;
 
 namespace Critical.Chat.Client
 {
@@ -10,13 +12,16 @@ namespace Critical.Chat.Client
     {
         private readonly IChatRoom room;
         private readonly Channel<IChatMessage> messages;
+        private readonly IChatRequestTransport transport;
+        private ulong sequence;
 
         public string Id => room.Id;
         public string Name => room.Name;
 
-        public ClientChatRoom(IChatRoom room)
+        public ClientChatRoom(IChatRoom room, IChatRequestTransport chatTransport)
         {
             this.room = room;
+            this.transport = chatTransport;
             this.messages = Channel.CreateUnbounded<IChatMessage>(new UnboundedChannelOptions
             {
                 SingleReader = false,
@@ -30,6 +35,15 @@ namespace Critical.Chat.Client
         }
 
         public bool IsActive { get; private set; } = true;
+
+        public async Task<IReadOnlyCollection<IChatUser>> ListUsers(CancellationToken token = default)
+        {
+            var listRequest = new ListUsersRequest(++sequence, room);
+
+            var response = await transport.Exchange<ListUsersResponse>(listRequest, token);
+
+            return response.Users;
+        }
 
         public Task SendMessage(string message, CancellationToken token = default)
         {

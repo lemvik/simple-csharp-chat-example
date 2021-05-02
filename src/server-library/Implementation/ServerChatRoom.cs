@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Critical.Chat.Protocol;
+using Critical.Chat.Protocol.Messages;
 
 namespace Critical.Chat.Server.Implementation
 {
@@ -12,21 +14,17 @@ namespace Critical.Chat.Server.Implementation
     {
         public string Id { get; }
         public string Name { get; }
+        public ChannelWriter<(IChatRoomMessage, IConnectedClient)> MessagesSink => messages.Writer;
 
         private readonly ConcurrentDictionary<string, IConnectedClient> clients;
-        private readonly Channel<IChatMessage> messages;
+        private readonly Channel<(IChatRoomMessage, IConnectedClient)> messages;
 
         internal ServerChatRoom(string id, string name)
         {
             Id = id;
             Name = name;
-            this.clients = new ConcurrentDictionary<string, IConnectedClient>();
-            this.messages = Channel.CreateUnbounded<IChatMessage>();
-        }
-
-        public async Task AddMessage(IChatMessage message, CancellationToken token = default)
-        {
-            await messages.Writer.WriteAsync(message, token);
+            clients = new ConcurrentDictionary<string, IConnectedClient>();
+            messages = Channel.CreateUnbounded<(IChatRoomMessage, IConnectedClient)>();
         }
 
         public Task AddUser(IConnectedClient connectedClient, CancellationToken token = default)
@@ -35,7 +33,9 @@ namespace Critical.Chat.Server.Implementation
             {
                 throw new Exception($"Cannot add [client={connectedClient}] to chat [room={this}]");
             }
-            
+
+            connectedClient.EnterRoom(this);
+
             return Task.CompletedTask;
         }
 
@@ -46,14 +46,17 @@ namespace Critical.Chat.Server.Implementation
                 throw new Exception($"Cannot remove [client={connectedClient}] to chat [room={this}]");
             }
 
+            connectedClient.LeaveRoom(this);
+
             return Task.CompletedTask;
         }
 
-        public Task<IReadOnlyCollection<IChatRoomUser>> ListUsers(CancellationToken token = default)
+        private IReadOnlyCollection<IChatRoomUser> ListUsers()
         {
-            throw new System.NotImplementedException();
+            var users = clients.Values.Select(client => new ChatRoomUser(this, client)).ToList();
+            return users;
         }
-        
+
         public Task<IReadOnlyCollection<IChatMessage>> MostRecentMessages(
             int maxMessages, CancellationToken token = default)
         {
@@ -64,14 +67,49 @@ namespace Critical.Chat.Server.Implementation
             return Task.FromResult<IReadOnlyCollection<IChatMessage>>(chatMessages);
         }
 
-        public Task Close()
+        public async Task RunAsync(CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            while (!token.IsCancellationRequested)
+            {
+                var (message, client) = await messages.Reader.ReadAsync(token);
+
+                await DispatchMessage(message, client, token);
+            }
+        }
+
+        private async Task DispatchMessage(IChatRoomMessage message,
+                                           IConnectedClient client,
+                                           CancellationToken token = default)
+        {
+            switch (message)
+            {
+                case ListUsersRequest listUsersRequest:
+                {
+                    var users = ListUsers();
+                    var response = new ListUsersResponse(listUsersRequest.RequestId, this, users);
+                    await client.SendMessage(response, token);
+                    break;
+                }
+            }
         }
 
         public override string ToString()
         {
             return $"Room[id={Id},name={Name}]";
+        }
+
+        private class ChatRoomUser : IChatRoomUser
+        {
+            public string Id => Client.User.Id;
+            public string Name => Client.User.Name;
+            public IChatRoom Room { get; }
+            public IConnectedClient Client { get; }
+
+            public ChatRoomUser(IChatRoom room, IConnectedClient client)
+            {
+                Room = room;
+                Client = client;
+            }
         }
     }
 }

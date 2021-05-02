@@ -7,7 +7,9 @@ namespace Critical.Chat.Client
 {
     public interface IClientChatRoom : IChatRoom
     {
-        bool IsActive { get; } 
+        bool IsActive { get; }
+
+        Task<IReadOnlyCollection<IChatUser>> ListUsers(CancellationToken token = default);
         
         Task SendMessage(string message, CancellationToken token = default);
 

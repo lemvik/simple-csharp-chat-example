@@ -36,14 +36,14 @@ namespace Critical.Chat.Protocol.Protobuf
 
         private static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsRequest listRoomsRequest)
         {
-            return new ProtocolMessage {Id = listRoomsRequest.Id, ListRoomRequest = new ListRoomsRequest()};
+            return new ProtocolMessage {Id = listRoomsRequest.RequestId, ListRoomRequest = new ListRoomsRequest()};
         }
 
         private static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsResponse listRoomsResponse)
         {
             return new ProtocolMessage()
             {
-                Id = listRoomsResponse.Id,
+                Id = listRoomsResponse.RequestId,
                 ListRoomResponse = new ListRoomsResponse()
                 {
                     Rooms =
@@ -83,7 +83,7 @@ namespace Critical.Chat.Protocol.Protobuf
         {
             return new ProtocolMessage()
             {
-                Id = createRoomRequest.Id,
+                Id = createRoomRequest.RequestId,
                 CreateRoomRequest = new CreateRoomRequest()
                 {
                     RoomName = createRoomRequest.RoomName
@@ -95,7 +95,7 @@ namespace Critical.Chat.Protocol.Protobuf
         {
             return new ProtocolMessage()
             {
-                Id = createRoomResponse.Id,
+                Id = createRoomResponse.RequestId,
                 CreateRoomResponse = new CreateRoomResponse()
                 {
                     Room = createRoomResponse.Room.ToProtobuf()
@@ -107,7 +107,7 @@ namespace Critical.Chat.Protocol.Protobuf
         {
             return new ProtocolMessage()
             {
-                Id = joinRoomRequest.Id,
+                Id = joinRoomRequest.RequestId,
                 JoinRoomRequest = new JoinRoomRequest()
                 {
                     RoomId = joinRoomRequest.RoomId
@@ -119,7 +119,7 @@ namespace Critical.Chat.Protocol.Protobuf
         {
             return new ProtocolMessage()
             {
-                Id = joinRoomResponse.Id,
+                Id = joinRoomResponse.RequestId,
                 JoinRoomResponse = new JoinRoomResponse()
                 {
                     Room = joinRoomResponse.Room.ToProtobuf(),
@@ -135,7 +135,7 @@ namespace Critical.Chat.Protocol.Protobuf
         {
             return new ProtocolMessage()
             {
-                Id = leaveRoomRequest.Id,
+                Id = leaveRoomRequest.RequestId,
                 LeaveRoomRequest = new LeaveRoomRequest()
                 {
                     Room = leaveRoomRequest.Room.ToProtobuf()
@@ -147,7 +147,7 @@ namespace Critical.Chat.Protocol.Protobuf
         {
             return new ProtocolMessage()
             {
-                Id = leaveRoomResponse.Id,
+                Id = leaveRoomResponse.RequestId,
                 LeaveRoomResponse = new LeaveRoomResponse()
                 {
                     Room = leaveRoomResponse.Room.ToProtobuf()

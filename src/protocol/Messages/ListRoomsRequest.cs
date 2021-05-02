@@ -1,13 +1,13 @@
 namespace Critical.Chat.Protocol.Messages
 {
-    public class ListRoomsRequest : IMessage
+    public class ListRoomsRequest : IRequest
     {
-        public ulong Id { get; }
+        public ulong RequestId { get; set; }
         public MessageType Type => MessageType.ListRoomsRequest;
 
-        public ListRoomsRequest(ulong id)
+        public ListRoomsRequest(ulong id = default)
         {
-            Id = id;
+            RequestId = id;
         }
     }
 }

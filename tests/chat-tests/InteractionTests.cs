@@ -1,29 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Critical.Chat.Client;
 using Critical.Chat.Protocol.Transport;
 using Critical.Chat.Server;
 using Critical.Chat.Server.Implementation;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Critical.Chat.Testing
 {
-    [TestFixture]
+    [TestClass]
     public class InteractionTests
     {
         private readonly IChatClientFactory clientFactory = new ChatClientFactory(TestingLogger.CreateFactory());
         private readonly IList<Task> pendingTasks = new List<Task>();
         private CancellationTokenSource testsLifetime;
 
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             testsLifetime = new CancellationTokenSource();
         }
 
-        [TearDown]
+        [TestCleanup]
         public async Task Teardown()
         {
             testsLifetime.Cancel();
@@ -34,11 +35,11 @@ namespace Critical.Chat.Testing
             catch (OperationCanceledException)
             {
             }
-            
+
             pendingTasks.Clear();
         }
 
-        [Test, Timeout(1000)]
+        [TestMethod, Timeout(10000)]
         public async Task ListRoomsUponConnectionTest()
         {
             var chatServer = CreateServer();
@@ -49,10 +50,10 @@ namespace Critical.Chat.Testing
 
             var rooms = await chatClient.ListRooms(testsLifetime.Token);
 
-            Assert.IsEmpty(rooms);
+            Assert.AreEqual(rooms.Count, 0);
         }
 
-        [Test, Timeout(1000)]
+        [TestMethod, Timeout(1000)]
         public async Task ConnectTwiceWithSameClientTest()
         {
             var chatServer = CreateServer();
@@ -60,9 +61,40 @@ namespace Critical.Chat.Testing
             var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
             await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
 
-            Assert.ThrowsAsync<Exception>(async () => await chatServer.AddClientAsync(chatUser,
-                                              connectingClient,
-                                              testsLifetime.Token));
+            try
+            {
+                Debug.WriteLine("Adding second client.");
+                await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+                Debug.WriteLine("Was not expecting this to succeed.");
+                Assert.Fail();
+            }
+            catch (Exception error)
+            {
+                Debug.WriteLine($"{error}");
+                // expected
+            }
+        }
+
+        [TestMethod, Timeout(1000)]
+        public async Task CreateAndConnectToRoom()
+        {
+            var chatServer = CreateServer();
+            var (chatClient, connectingClient) = CreateClient();
+            var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
+
+            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+
+            var room = await chatClient.CreateRoom("testRoom", testsLifetime.Token);
+
+            Assert.IsNotNull(room);
+
+            var clientRoom = await chatClient.JoinRoom(room, testsLifetime.Token);
+
+            Assert.IsNotNull(clientRoom);
+
+            var users = await clientRoom.ListUsers(testsLifetime.Token);
+
+            Assert.IsTrue(users.Count > 0);
         }
 
         private class TestClientConfig : IChatClientConfiguration
@@ -85,11 +117,10 @@ namespace Critical.Chat.Testing
 
         private IChatServer CreateServer()
         {
-            var chatServer = new ChatServer(TestingLogger.CreateLogger<ChatServer>(),
-                                        new ServerRoomsRegistry(TestingLogger
-                                                                    .CreateLogger<ServerRoomsRegistry>()));
+            var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>());
+            var chatServer = new ChatServer(TestingLogger.CreateLogger<ChatServer>(), roomRegistry);
 
-            pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token));
+            pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token).ContinueWith(_ => roomRegistry.Close()));
             return chatServer;
         }
     }

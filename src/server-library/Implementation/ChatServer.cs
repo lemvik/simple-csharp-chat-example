@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -14,10 +15,12 @@ namespace Critical.Chat.Server.Implementation
     {
         private readonly ILogger<ChatServer> logger;
         private readonly Channel<(IConnectedClient, IMessage)> messages;
-        private readonly ConcurrentDictionary<string, IConnectedClient> clients;
-        private readonly IServerRoomsRegistry roomsRegistry;
+        private readonly SemaphoreSlim clientsLock;
+        private readonly ConcurrentDictionary<string, ClientTask> clientTasks;
+        private readonly IRoomRegistry roomsRegistry;
+        private readonly CancellationTokenSource lifetime;
 
-        public ChatServer(ILogger<ChatServer> logger, IServerRoomsRegistry roomsRegistry)
+        public ChatServer(ILogger<ChatServer> logger, IRoomRegistry roomsRegistry)
         {
             this.logger = logger;
             this.roomsRegistry = roomsRegistry;
@@ -26,52 +29,78 @@ namespace Critical.Chat.Server.Implementation
                 SingleReader = true,
                 SingleWriter = false
             });
-            this.clients = new ConcurrentDictionary<string, IConnectedClient>();
+            this.clientsLock = new SemaphoreSlim(1, 1);
+            this.clientTasks = new ConcurrentDictionary<string, ClientTask>();
+            this.lifetime = new CancellationTokenSource();
         }
 
         public async Task RunAsync(CancellationToken token = default)
         {
             logger.LogDebug("Starting chat server main loop");
-            var reader = messages.Reader;
-            while (await reader.WaitToReadAsync(token))
+            using (token.Register(lifetime.Cancel))
             {
-                var (client, message) = await reader.ReadAsync(token);
                 try
                 {
-                    await DispatchAsync(client, message, token);
+                    await PumpMessages(lifetime.Token);
+                }
+                catch (OperationCanceledException)
+                {
                 }
                 catch (Exception error)
                 {
-                    logger.LogError("Encountered [error={Error}] trying to dispatch [message={Message}]",
-                                    error,
-                                    message);
+                    logger.LogError(error, "Server loop encountered error");
                 }
-            }
+                finally
+                {
+                    await CleanUp();
+                }
 
-            logger.LogDebug("Chat server main loop completed");
+                logger.LogDebug("Chat server main loop completed");
+            }
         }
 
         public async Task AddClientAsync(IChatUser chatUser,
                                          IChatTransport transport,
-                                         CancellationToken token = default)
+                                         CancellationToken clientToken = default)
         {
-            logger.LogDebug("Adding a [client={ChatUser}][connection={Connection}]", chatUser, transport);
-
-            var connectedClient = new ConnectedClient(chatUser, transport);
-            if (!clients.TryAdd(chatUser.Id, connectedClient))
-            {
-                throw new Exception($"Unable to add [client={chatUser}], one is already connected");
-            }
-
+            var token = CancellationTokenSource.CreateLinkedTokenSource(lifetime.Token, clientToken).Token;
             try
             {
-                await HandshakeAsync(chatUser, transport, token);
+                await clientsLock.WaitAsync(token);
 
-                RunClient(connectedClient, token);
+                logger.LogDebug("Handshaking [client={ChatUser}][connection={Connection}]", chatUser, transport);
+                var connectedClient = new ConnectedClient(chatUser, transport, messages.Writer);
+                var clientTask = new ClientTask();
+
+                // If we fail to add client we should not run it's `RunAsync` method, so first add, then fire the task.
+                if (!clientTasks.TryAdd(chatUser.Id, clientTask))
+                {
+                    throw new Exception($"Unable to add [client={chatUser}], one is already connected");
+                }
+
+                try
+                {
+                    await HandshakeAsync(chatUser, transport, token);
+                }
+                catch (Exception)
+                {
+                    clientTasks.TryRemove(chatUser.Id, out _);
+                    throw;
+                }
+
+                logger.LogDebug("Handshake successful, adding [client={ChatUser}][connection={Connection}]",
+                                chatUser,
+                                transport);
+
+                clientTask.Task = RunClient(connectedClient, token);
             }
             catch (Exception error)
             {
                 logger.LogError(error, "Failed to handshake with the [client={ChatUser}]", chatUser);
+            }
+            finally
+            {
+                clientsLock.Release();
             }
         }
 
@@ -90,75 +119,105 @@ namespace Critical.Chat.Server.Implementation
             throw new Exception($"Expected to receive handshake response [received={response}]");
         }
 
-        private async Task DispatchAsync(IConnectedClient client, IMessage message, CancellationToken token = default)
+        private async Task DispatchAsync(IConnectedClient client, IMessage message,
+                                         CancellationToken token = default)
         {
-            switch (message.Type)
+            switch (message)
             {
-                case MessageType.ListRoomsRequest:
+                case ListRoomsRequest listRoomsRequest:
                 {
                     var rooms = await roomsRegistry.ListRooms();
-                    var response = new ListRoomsResponse(message.Id, rooms);
+                    var response = new ListRoomsResponse(listRoomsRequest.RequestId, rooms);
                     await client.SendMessage(response, token);
                     break;
                 }
-                case MessageType.CreateRoomRequest:
+                case CreateRoomRequest createRoomRequest:
                 {
-                    var createRoomRequest = message.Cast<CreateRoomRequest>();
-                    var room = await roomsRegistry.CreateRoom(createRoomRequest.RoomName);
-                    var response = new CreateRoomResponse(createRoomRequest.Id, room);
+                    var room = await roomsRegistry.CreateRoom(createRoomRequest.RoomName, token);
+                    var response = new CreateRoomResponse(createRoomRequest.RequestId, room);
                     await client.SendMessage(response, token);
                     break;
                 }
-                case MessageType.JoinRoomRequest:
+                case JoinRoomRequest joinRoomRequest:
                 {
-                    var joinRoomRequest = message.Cast<JoinRoomRequest>();
-                    var room = await roomsRegistry.GetRoom(joinRoomRequest.RoomId);
+                    var room = await roomsRegistry.GetRoom(joinRoomRequest.RoomId, token);
                     await room.AddUser(client, token);
                     var mostRecentMessages = await room.MostRecentMessages(5, token);
-                    var response = new JoinRoomResponse(message.Id, room, mostRecentMessages);
+                    var response = new JoinRoomResponse(joinRoomRequest.RequestId, room, mostRecentMessages);
                     await client.SendMessage(response, token);
                     break;
                 }
-                case MessageType.LeaveRoomRequest:
+                case LeaveRoomRequest leaveRoomRequest:
                 {
-                    var leaveRoomRequest = message.Cast<LeaveRoomRequest>();
                     var room = await roomsRegistry.GetRoom(leaveRoomRequest.Room.Id);
                     await room.RemoveUser(client, token);
-                    var response = new LeaveRoomResponse(message.Id, room);
+                    var response = new LeaveRoomResponse(leaveRoomRequest.RequestId, room);
                     await client.SendMessage(response, token);
                     break;
                 }
-                case MessageType.SendMessage:
-                    break;
-                case MessageType.ReceiveMessage:
-                    break;
                 default:
+                    logger.LogError("Unknown [message={Message}]", message);
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void RunClient(IConnectedClient client, CancellationToken token = default)
+        private async Task RunClient(IConnectedClient client, CancellationToken token = default)
         {
-            client.RunAsync(messages.Writer, token).ContinueWith(result =>
+            try
             {
-                if (result.IsFaulted)
+                await client.RunAsync(token);
+            }
+            catch (Exception error)
+            {
+                logger.LogError(error, "Encountered an error running [client={Client}] task", client);
+            }
+            finally
+            {
+                if (!clientTasks.TryRemove(client.User.Id, out _))
                 {
-                    logger.LogError(result.Exception, "Encountered an error in [client={Client}] interaction", client);
+                    logger.LogError("Unable to remove [client={Client}] from server", client);
                 }
-                else if (result.IsCanceled)
-                {
-                    logger.LogDebug("Client stopped due to cancellation [client={Client}]", client);
-                }
-                else
-                {
-                    logger.LogDebug("Client terminated loop [client={Client}]", client);
-                }
+            }
+        }
 
-                if (!clients.TryRemove(client.User.Id, out _))
+        private async Task PumpMessages(CancellationToken token = default)
+        {
+            var reader = messages.Reader;
+            while (await reader.WaitToReadAsync(token))
+            {
+                var (client, message) = await reader.ReadAsync(token);
+                try
                 {
-                    logger.LogError("Failed to remove client from clients list [client={Client}]", client);
+                    await DispatchAsync(client, message, token);
                 }
-            }, token);
+                catch (Exception error)
+                {
+                    logger.LogError("Encountered [error={Error}] trying to dispatch [message={Message}]",
+                                    error,
+                                    message);
+                }
+            }
+        }
+
+        private async Task CleanUp()
+        {
+            try
+            {
+                await clientsLock.WaitAsync();
+
+                var tasks = clientTasks.Values.Select(task => task.Task);
+
+                await Task.WhenAll(tasks);
+            }
+            finally
+            {
+                clientsLock.Release();
+            }
+        }
+
+        private class ClientTask
+        {
+            public Task Task { get; set; }
         }
     }
 }
