@@ -15,6 +15,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Lemvik.Example.Chat.Protocol.Protobuf</RootNamespace>
+    <Protobuf_NoWarnMissingExpected>true</Protobuf_NoWarnMissingExpected>
   </PropertyGroup>
   
   <ItemGroup>
