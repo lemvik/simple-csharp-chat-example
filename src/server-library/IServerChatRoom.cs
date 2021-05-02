@@ -9,7 +9,7 @@ namespace Critical.Chat.Server
 {
     public interface IServerChatRoom : IChatRoom
     {
-        ChannelWriter<(IChatRoomMessage, IConnectedClient)> MessagesSink { get; }
+        ChannelWriter<(IMessage, IConnectedClient)> MessagesSink { get; }
 
         Task AddUser(IConnectedClient connectedClient, CancellationToken token = default);
 

@@ -8,8 +8,8 @@ message ChatRoom {
 }
 
 message ChatUser {
-  string userId = 1;
-  string userName = 2;
+  string user_id = 1;
+  string user_name = 2;
 }
 
 message ListRoomsRequest {}
@@ -26,7 +26,7 @@ message HandshakeResponse {
 }
 
 message CreateRoomRequest {
-  string roomName = 1;
+  string room_name = 1;
 }
 
 message CreateRoomResponse {
@@ -34,7 +34,7 @@ message CreateRoomResponse {
 }
 
 message JoinRoomRequest {
-  string roomId = 1;
+  string room_id = 1;
 }
 
 message JoinRoomResponse {
@@ -50,31 +50,31 @@ message LeaveRoomResponse {
   ChatRoom room = 1;
 }
 
-message SendMessage {
-  string roomId = 1;
-  string message = 2;
-}
-
 message UserMessage {
   ChatUser user = 1;
   ChatRoom room = 2;
   string message = 3;
 }
 
-message ProtocolMessage {
-  uint64 id = 1;
+message ProtocolExchange {
+  uint64 exchange_id = 1;
   oneof message {
-    HandshakeRequest handshakeRequest = 2;
-    HandshakeResponse handshakeResponse = 3;
-    CreateRoomRequest createRoomRequest = 4;
-    CreateRoomResponse createRoomResponse = 5;
-    ListRoomsRequest listRoomRequest = 6;
-    ListRoomsResponse listRoomResponse = 7;
-    JoinRoomRequest joinRoomRequest = 8;
-    JoinRoomResponse joinRoomResponse = 9;
-    LeaveRoomRequest leaveRoomRequest = 10;
-    LeaveRoomResponse leaveRoomResponse = 11;
-    SendMessage sendMessage = 12;
-    UserMessage userMessage = 13;
+    HandshakeRequest handshake_request = 2;
+    HandshakeResponse handshake_response = 3;
+    CreateRoomRequest create_room_request = 4;
+    CreateRoomResponse create_room_response = 5;
+    ListRoomsRequest list_room_request = 6;
+    ListRoomsResponse list_room_response = 7;
+    JoinRoomRequest join_room_request = 8;
+    JoinRoomResponse join_room_response = 9;
+    LeaveRoomRequest leave_room_request = 10;
+    LeaveRoomResponse leave_room_response = 11;
+  }
+}
+
+message ProtocolMessage {
+  oneof message {
+    ProtocolExchange exchange_message = 1;
+    UserMessage userMessage = 2;
   }
 }

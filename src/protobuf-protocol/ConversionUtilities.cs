@@ -34,151 +34,118 @@ namespace Critical.Chat.Protocol.Protobuf
             };
         }
 
-        private static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsRequest listRoomsRequest)
+        private static ProtocolExchange ToProtocolExchange(this ExchangeMessage message)
         {
-            return new ProtocolMessage {Id = listRoomsRequest.RequestId, ListRoomRequest = new ListRoomsRequest()};
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.ListRoomsResponse listRoomsResponse)
-        {
-            return new ProtocolMessage()
+            switch (message.Message)
             {
-                Id = listRoomsResponse.RequestId,
-                ListRoomResponse = new ListRoomsResponse()
-                {
-                    Rooms =
+                case Messages.ListRoomsRequest _:
+                    return new ProtocolExchange
                     {
-                        listRoomsResponse.Rooms.Select(room => new Protobuf.ChatRoom()
+                        ExchangeId = message.ExchangeId,
+                        ListRoomRequest = new ListRoomsRequest()
+                    };
+                case Messages.ListRoomsResponse listRoomsResponse:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        ListRoomResponse = new ListRoomsResponse
                         {
-                            Id = room.Id,
-                            Name = room.Name
-                        })
-                    }
-                }
-            };
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.HandshakeRequest handshakeRequest)
-        {
-            return new ProtocolMessage()
-            {
-                Id = handshakeRequest.Id,
-                HandshakeRequest = new HandshakeRequest()
-                {
-                    User = handshakeRequest.User.ToProtobuf()
-                }
-            };
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.HandshakeResponse handshakeResponse)
-        {
-            return new ProtocolMessage()
-            {
-                Id = handshakeResponse.Id,
-                HandshakeResponse = new HandshakeResponse()
-            };
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.CreateRoomRequest createRoomRequest)
-        {
-            return new ProtocolMessage()
-            {
-                Id = createRoomRequest.RequestId,
-                CreateRoomRequest = new CreateRoomRequest()
-                {
-                    RoomName = createRoomRequest.RoomName
-                }
-            };
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.CreateRoomResponse createRoomResponse)
-        {
-            return new ProtocolMessage()
-            {
-                Id = createRoomResponse.RequestId,
-                CreateRoomResponse = new CreateRoomResponse()
-                {
-                    Room = createRoomResponse.Room.ToProtobuf()
-                }
-            };
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.JoinRoomRequest joinRoomRequest)
-        {
-            return new ProtocolMessage()
-            {
-                Id = joinRoomRequest.RequestId,
-                JoinRoomRequest = new JoinRoomRequest()
-                {
-                    RoomId = joinRoomRequest.RoomId
-                }
-            };
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.JoinRoomResponse joinRoomResponse)
-        {
-            return new ProtocolMessage()
-            {
-                Id = joinRoomResponse.RequestId,
-                JoinRoomResponse = new JoinRoomResponse()
-                {
-                    Room = joinRoomResponse.Room.ToProtobuf(),
-                    Messages =
+                            Rooms =
+                            {
+                                listRoomsResponse.Rooms.Select(room => new Protobuf.ChatRoom()
+                                {
+                                    Id = room.Id,
+                                    Name = room.Name
+                                })
+                            }
+                        }
+                    };
+                case Messages.HandshakeRequest handshakeRequest:
+                    return new ProtocolExchange
                     {
-                        joinRoomResponse.Messages.Select(message => message.ToProtobuf())
-                    }
-                }
-            };
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.LeaveRoomRequest leaveRoomRequest)
-        {
-            return new ProtocolMessage()
-            {
-                Id = leaveRoomRequest.RequestId,
-                LeaveRoomRequest = new LeaveRoomRequest()
-                {
-                    Room = leaveRoomRequest.Room.ToProtobuf()
-                }
-            };
-        }
-
-        private static ProtocolMessage ToProtocolMessage(this Messages.LeaveRoomResponse leaveRoomResponse)
-        {
-            return new ProtocolMessage()
-            {
-                Id = leaveRoomResponse.RequestId,
-                LeaveRoomResponse = new LeaveRoomResponse()
-                {
-                    Room = leaveRoomResponse.Room.ToProtobuf()
-                }
-            };
+                        ExchangeId = message.ExchangeId,
+                        HandshakeRequest = new HandshakeRequest
+                        {
+                            User = handshakeRequest.User.ToProtobuf()
+                        }
+                    };
+                case Messages.HandshakeResponse _:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        HandshakeResponse = new HandshakeResponse()
+                    };
+                case Messages.CreateRoomRequest createRoomRequest:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        CreateRoomRequest = new CreateRoomRequest
+                        {
+                            RoomName = createRoomRequest.RoomName
+                        }
+                    };
+                case Messages.CreateRoomResponse createRoomResponse:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        CreateRoomResponse = new CreateRoomResponse
+                        {
+                            Room = createRoomResponse.Room.ToProtobuf()
+                        }
+                    };
+                case Messages.JoinRoomRequest joinRoomRequest:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        JoinRoomRequest = new JoinRoomRequest
+                        {
+                            RoomId = joinRoomRequest.RoomId
+                        }
+                    };
+                case Messages.JoinRoomResponse joinRoomResponse:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        JoinRoomResponse = new JoinRoomResponse
+                        {
+                            Room = joinRoomResponse.Room.ToProtobuf(),
+                            Messages =
+                            {
+                                joinRoomResponse.Messages.Select(chatMessage => chatMessage.ToProtobuf())
+                            }
+                        }
+                    };
+                case Messages.LeaveRoomRequest leaveRoomRequest:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        LeaveRoomRequest = new LeaveRoomRequest
+                        {
+                            Room = leaveRoomRequest.Room.ToProtobuf()
+                        }
+                    };
+                case Messages.LeaveRoomResponse leaveRoomResponse:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        LeaveRoomResponse = new LeaveRoomResponse
+                        {
+                            Room = leaveRoomResponse.Room.ToProtobuf()
+                        }
+                    };
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         internal static ProtocolMessage ToProtocolMessage(this IMessage message)
         {
-            switch (message.Type)
+            switch (message)
             {
-                case MessageType.ListRoomsRequest:
-                    return message.Cast<Messages.ListRoomsRequest>().ToProtocolMessage();
-                case MessageType.ListRoomsResponse:
-                    return message.Cast<Messages.ListRoomsResponse>().ToProtocolMessage();
-                case MessageType.HandshakeRequest:
-                    return message.Cast<Messages.HandshakeRequest>().ToProtocolMessage();
-                case MessageType.HandshakeResponse:
-                    return message.Cast<Messages.HandshakeResponse>().ToProtocolMessage();
-                case MessageType.CreateRoomRequest:
-                    return message.Cast<Messages.CreateRoomRequest>().ToProtocolMessage();
-                case MessageType.CreateRoomResponse:
-                    return message.Cast<Messages.CreateRoomResponse>().ToProtocolMessage();
-                case MessageType.JoinRoomRequest:
-                    return message.Cast<Messages.JoinRoomRequest>().ToProtocolMessage();
-                case MessageType.JoinRoomResponse:
-                    return message.Cast<Messages.JoinRoomResponse>().ToProtocolMessage();
-                case MessageType.LeaveRoomRequest:
-                    return message.Cast<Messages.LeaveRoomRequest>().ToProtocolMessage();
-                case MessageType.LeaveRoomResponse:
-                    return message.Cast<Messages.LeaveRoomResponse>().ToProtocolMessage();
+                case ExchangeMessage exchangeMessage:
+                    return new ProtocolMessage {ExchangeMessage = exchangeMessage.ToProtocolExchange()};
+                case ChatMessage chatMessage:
+                    return new ProtocolMessage {UserMessage = chatMessage.ToProtobuf()};
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -218,48 +185,62 @@ namespace Critical.Chat.Protocol.Protobuf
             }
         }
 
-        private static IChatMessage FromProtobuf(UserMessage message)
+        private static ChatMessage FromProtobuf(this UserMessage message)
         {
             return new ChatMessage(ChatUser.FromProtobuf(message.User),
-                ChatRoom.FromProtobuf(message.Room),
-                message.Message);
+                                   ChatRoom.FromProtobuf(message.Room),
+                                   message.Message);
         }
 
         internal static IMessage FromProtocolMessage(this ProtocolMessage message)
         {
             switch (message.MessageCase)
             {
-                case ProtocolMessage.MessageOneofCase.None:
-                    throw new Exception($"Unexpected None as message type [message={message}]");
-                case ProtocolMessage.MessageOneofCase.ListRoomRequest:
-                    return new Messages.ListRoomsRequest(message.Id);
-                case ProtocolMessage.MessageOneofCase.ListRoomResponse:
-                    var listRoomResponse = message.ListRoomResponse;
-                    var rooms = listRoomResponse.Rooms.Select(ChatRoom.FromProtobuf).ToList();
-                    return new Messages.ListRoomsResponse(message.Id, rooms);
-                case ProtocolMessage.MessageOneofCase.HandshakeRequest:
-                    return new Messages.HandshakeRequest(message.Id,
-                        ChatUser.FromProtobuf(message.HandshakeRequest.User));
-                case ProtocolMessage.MessageOneofCase.HandshakeResponse:
-                    return new Messages.HandshakeResponse(message.Id);
-                case ProtocolMessage.MessageOneofCase.CreateRoomRequest:
-                    return new Messages.CreateRoomRequest(message.Id, message.CreateRoomRequest.RoomName);
-                case ProtocolMessage.MessageOneofCase.CreateRoomResponse:
-                    return new Messages.CreateRoomResponse(message.Id,
-                        ChatRoom.FromProtobuf(message.CreateRoomResponse.Room));
-                case ProtocolMessage.MessageOneofCase.JoinRoomRequest:
-                    return new Messages.JoinRoomRequest(message.Id, message.JoinRoomRequest.RoomId);
-                case ProtocolMessage.MessageOneofCase.JoinRoomResponse:
-                    return new Messages.JoinRoomResponse(message.Id,
-                        ChatRoom.FromProtobuf(message.JoinRoomResponse.Room),
-                        message.JoinRoomResponse.Messages.Select(FromProtobuf).ToList());
-                case ProtocolMessage.MessageOneofCase.LeaveRoomRequest:
-                    return new Messages.LeaveRoomRequest(message.Id,
-                        ChatRoom.FromProtobuf(message.LeaveRoomResponse.Room));
-                case ProtocolMessage.MessageOneofCase.LeaveRoomResponse:
-                    return new Messages.LeaveRoomResponse(message.Id,
-                        ChatRoom.FromProtobuf(message.LeaveRoomResponse.Room));
+                case ProtocolMessage.MessageOneofCase.ExchangeMessage:
+                    return message.ExchangeMessage.FromProtobuf();
+                case ProtocolMessage.MessageOneofCase.UserMessage:
+                    return message.UserMessage.FromProtobuf();
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
+        private static ExchangeMessage FromProtobuf(this ProtocolExchange protocolExchange)
+        {
+            return new ExchangeMessage(protocolExchange.ExchangeId, protocolExchange.PayloadFromProtobuf());
+        }
+
+        private static IMessage PayloadFromProtobuf(this ProtocolExchange protocolExchange)
+        {
+            switch (protocolExchange.MessageCase)
+            {
+                case ProtocolExchange.MessageOneofCase.HandshakeRequest:
+                    return new Messages.HandshakeRequest(ChatUser.FromProtobuf(protocolExchange.HandshakeRequest.User));
+                case ProtocolExchange.MessageOneofCase.HandshakeResponse:
+                    return new Messages.HandshakeResponse();
+                case ProtocolExchange.MessageOneofCase.CreateRoomRequest:
+                    return new Messages.CreateRoomRequest(protocolExchange.CreateRoomRequest.RoomName);
+                case ProtocolExchange.MessageOneofCase.CreateRoomResponse:
+                    return new Messages.CreateRoomResponse(ChatRoom.FromProtobuf(protocolExchange.CreateRoomResponse
+                                                               .Room));
+                case ProtocolExchange.MessageOneofCase.ListRoomRequest:
+                    return new Messages.ListRoomsRequest();
+                case ProtocolExchange.MessageOneofCase.ListRoomResponse:
+                    return new Messages.ListRoomsResponse(protocolExchange.ListRoomResponse.Rooms
+                                                                          .Select(ChatRoom.FromProtobuf)
+                                                                          .ToList());
+                case ProtocolExchange.MessageOneofCase.JoinRoomRequest:
+                    return new Messages.JoinRoomRequest(protocolExchange.JoinRoomRequest.RoomId);
+                case ProtocolExchange.MessageOneofCase.JoinRoomResponse:
+                    return new Messages.JoinRoomResponse(ChatRoom.FromProtobuf(protocolExchange.JoinRoomResponse.Room),
+                                                         protocolExchange.JoinRoomResponse.Messages
+                                                                         .Select(message => message.FromProtobuf())
+                                                                         .ToList());
+                case ProtocolExchange.MessageOneofCase.LeaveRoomRequest:
+                    return new Messages.LeaveRoomRequest(ChatRoom.FromProtobuf(protocolExchange.LeaveRoomRequest.Room));
+                case ProtocolExchange.MessageOneofCase.LeaveRoomResponse:
+                    return new
+                        Messages.LeaveRoomResponse(ChatRoom.FromProtobuf(protocolExchange.LeaveRoomResponse.Room));
                 default:
                     throw new ArgumentOutOfRangeException();
             }

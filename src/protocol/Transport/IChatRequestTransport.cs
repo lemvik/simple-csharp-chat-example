@@ -6,7 +6,7 @@ namespace Critical.Chat.Protocol.Transport
 {
     public interface IChatRequestTransport : IChatTransport
     {
-        Task<TResponse> Exchange<TResponse>(IRequest request, CancellationToken token = default)
+        Task<TResponse> Exchange<TResponse>(IMessage request, CancellationToken token = default)
             where TResponse : IMessage;
     }
 }

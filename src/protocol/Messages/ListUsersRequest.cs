@@ -1,14 +1,11 @@
 namespace Critical.Chat.Protocol.Messages
 {
-    public class ListUsersRequest : IChatRoomMessage, IRequest
+    public class ListUsersRequest : IChatRoomMessage
     {
-        public ulong RequestId { get; set; }
         public IChatRoom Room { get; }
-        public MessageType Type => MessageType.ListUsersRequest;
         
-        public ListUsersRequest(ulong id, IChatRoom room)
+        public ListUsersRequest(IChatRoom room)
         {
-            RequestId = id;
             Room = room;
         }
     }

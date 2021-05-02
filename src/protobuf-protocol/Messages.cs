@@ -25,34 +25,35 @@ namespace Critical.Chat.Protocol.Protobuf {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg5tZXNzYWdlcy5wcm90byIkCghDaGF0Um9vbRIKCgJpZBgBIAEoCRIMCgRu",
-            "YW1lGAIgASgJIiwKCENoYXRVc2VyEg4KBnVzZXJJZBgBIAEoCRIQCgh1c2Vy",
-            "TmFtZRgCIAEoCSISChBMaXN0Um9vbXNSZXF1ZXN0Ii0KEUxpc3RSb29tc1Jl",
-            "c3BvbnNlEhgKBXJvb21zGAEgAygLMgkuQ2hhdFJvb20iKwoQSGFuZHNoYWtl",
-            "UmVxdWVzdBIXCgR1c2VyGAEgASgLMgkuQ2hhdFVzZXIiEwoRSGFuZHNoYWtl",
-            "UmVzcG9uc2UiJQoRQ3JlYXRlUm9vbVJlcXVlc3QSEAoIcm9vbU5hbWUYASAB",
-            "KAkiLQoSQ3JlYXRlUm9vbVJlc3BvbnNlEhcKBHJvb20YASABKAsyCS5DaGF0",
-            "Um9vbSIhCg9Kb2luUm9vbVJlcXVlc3QSDgoGcm9vbUlkGAEgASgJIksKEEpv",
-            "aW5Sb29tUmVzcG9uc2USFwoEcm9vbRgBIAEoCzIJLkNoYXRSb29tEh4KCG1l",
-            "c3NhZ2VzGAIgAygLMgwuVXNlck1lc3NhZ2UiKwoQTGVhdmVSb29tUmVxdWVz",
-            "dBIXCgRyb29tGAEgASgLMgkuQ2hhdFJvb20iLAoRTGVhdmVSb29tUmVzcG9u",
-            "c2USFwoEcm9vbRgBIAEoCzIJLkNoYXRSb29tIi4KC1NlbmRNZXNzYWdlEg4K",
-            "BnJvb21JZBgBIAEoCRIPCgdtZXNzYWdlGAIgASgJIlAKC1VzZXJNZXNzYWdl",
-            "EhcKBHVzZXIYASABKAsyCS5DaGF0VXNlchIXCgRyb29tGAIgASgLMgkuQ2hh",
-            "dFJvb20SDwoHbWVzc2FnZRgDIAEoCSLQBAoPUHJvdG9jb2xNZXNzYWdlEgoK",
-            "AmlkGAEgASgEEi0KEGhhbmRzaGFrZVJlcXVlc3QYAiABKAsyES5IYW5kc2hh",
-            "a2VSZXF1ZXN0SAASLwoRaGFuZHNoYWtlUmVzcG9uc2UYAyABKAsyEi5IYW5k",
-            "c2hha2VSZXNwb25zZUgAEi8KEWNyZWF0ZVJvb21SZXF1ZXN0GAQgASgLMhIu",
-            "Q3JlYXRlUm9vbVJlcXVlc3RIABIxChJjcmVhdGVSb29tUmVzcG9uc2UYBSAB",
-            "KAsyEy5DcmVhdGVSb29tUmVzcG9uc2VIABIsCg9saXN0Um9vbVJlcXVlc3QY",
-            "BiABKAsyES5MaXN0Um9vbXNSZXF1ZXN0SAASLgoQbGlzdFJvb21SZXNwb25z",
-            "ZRgHIAEoCzISLkxpc3RSb29tc1Jlc3BvbnNlSAASKwoPam9pblJvb21SZXF1",
-            "ZXN0GAggASgLMhAuSm9pblJvb21SZXF1ZXN0SAASLQoQam9pblJvb21SZXNw",
-            "b25zZRgJIAEoCzIRLkpvaW5Sb29tUmVzcG9uc2VIABItChBsZWF2ZVJvb21S",
-            "ZXF1ZXN0GAogASgLMhEuTGVhdmVSb29tUmVxdWVzdEgAEi8KEWxlYXZlUm9v",
-            "bVJlc3BvbnNlGAsgASgLMhIuTGVhdmVSb29tUmVzcG9uc2VIABIjCgtzZW5k",
-            "TWVzc2FnZRgMIAEoCzIMLlNlbmRNZXNzYWdlSAASIwoLdXNlck1lc3NhZ2UY",
-            "DSABKAsyDC5Vc2VyTWVzc2FnZUgAQgkKB21lc3NhZ2VCIqoCH0NyaXRpY2Fs",
-            "LkNoYXQuUHJvdG9jb2wuUHJvdG9idWZiBnByb3RvMw=="));
+            "YW1lGAIgASgJIi4KCENoYXRVc2VyEg8KB3VzZXJfaWQYASABKAkSEQoJdXNl",
+            "cl9uYW1lGAIgASgJIhIKEExpc3RSb29tc1JlcXVlc3QiLQoRTGlzdFJvb21z",
+            "UmVzcG9uc2USGAoFcm9vbXMYASADKAsyCS5DaGF0Um9vbSIrChBIYW5kc2hh",
+            "a2VSZXF1ZXN0EhcKBHVzZXIYASABKAsyCS5DaGF0VXNlciITChFIYW5kc2hh",
+            "a2VSZXNwb25zZSImChFDcmVhdGVSb29tUmVxdWVzdBIRCglyb29tX25hbWUY",
+            "ASABKAkiLQoSQ3JlYXRlUm9vbVJlc3BvbnNlEhcKBHJvb20YASABKAsyCS5D",
+            "aGF0Um9vbSIiCg9Kb2luUm9vbVJlcXVlc3QSDwoHcm9vbV9pZBgBIAEoCSJL",
+            "ChBKb2luUm9vbVJlc3BvbnNlEhcKBHJvb20YASABKAsyCS5DaGF0Um9vbRIe",
+            "CghtZXNzYWdlcxgCIAMoCzIMLlVzZXJNZXNzYWdlIisKEExlYXZlUm9vbVJl",
+            "cXVlc3QSFwoEcm9vbRgBIAEoCzIJLkNoYXRSb29tIiwKEUxlYXZlUm9vbVJl",
+            "c3BvbnNlEhcKBHJvb20YASABKAsyCS5DaGF0Um9vbSJQCgtVc2VyTWVzc2Fn",
+            "ZRIXCgR1c2VyGAEgASgLMgkuQ2hhdFVzZXISFwoEcm9vbRgCIAEoCzIJLkNo",
+            "YXRSb29tEg8KB21lc3NhZ2UYAyABKAkiogQKEFByb3RvY29sRXhjaGFuZ2US",
+            "EwoLZXhjaGFuZ2VfaWQYASABKAQSLgoRaGFuZHNoYWtlX3JlcXVlc3QYAiAB",
+            "KAsyES5IYW5kc2hha2VSZXF1ZXN0SAASMAoSaGFuZHNoYWtlX3Jlc3BvbnNl",
+            "GAMgASgLMhIuSGFuZHNoYWtlUmVzcG9uc2VIABIxChNjcmVhdGVfcm9vbV9y",
+            "ZXF1ZXN0GAQgASgLMhIuQ3JlYXRlUm9vbVJlcXVlc3RIABIzChRjcmVhdGVf",
+            "cm9vbV9yZXNwb25zZRgFIAEoCzITLkNyZWF0ZVJvb21SZXNwb25zZUgAEi4K",
+            "EWxpc3Rfcm9vbV9yZXF1ZXN0GAYgASgLMhEuTGlzdFJvb21zUmVxdWVzdEgA",
+            "EjAKEmxpc3Rfcm9vbV9yZXNwb25zZRgHIAEoCzISLkxpc3RSb29tc1Jlc3Bv",
+            "bnNlSAASLQoRam9pbl9yb29tX3JlcXVlc3QYCCABKAsyEC5Kb2luUm9vbVJl",
+            "cXVlc3RIABIvChJqb2luX3Jvb21fcmVzcG9uc2UYCSABKAsyES5Kb2luUm9v",
+            "bVJlc3BvbnNlSAASLwoSbGVhdmVfcm9vbV9yZXF1ZXN0GAogASgLMhEuTGVh",
+            "dmVSb29tUmVxdWVzdEgAEjEKE2xlYXZlX3Jvb21fcmVzcG9uc2UYCyABKAsy",
+            "Ei5MZWF2ZVJvb21SZXNwb25zZUgAQgkKB21lc3NhZ2UicAoPUHJvdG9jb2xN",
+            "ZXNzYWdlEi0KEGV4Y2hhbmdlX21lc3NhZ2UYASABKAsyES5Qcm90b2NvbEV4",
+            "Y2hhbmdlSAASIwoLdXNlck1lc3NhZ2UYAiABKAsyDC5Vc2VyTWVzc2FnZUgA",
+            "QgkKB21lc3NhZ2VCIqoCH0NyaXRpY2FsLkNoYXQuUHJvdG9jb2wuUHJvdG9i",
+            "dWZiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -68,9 +69,9 @@ namespace Critical.Chat.Protocol.Protobuf {
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse), global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse.Parser, new[]{ "Room", "Messages" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest), global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest.Parser, new[]{ "Room" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse), global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.SendMessage), global::Critical.Chat.Protocol.Protobuf.SendMessage.Parser, new[]{ "RoomId", "Message" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.UserMessage), global::Critical.Chat.Protocol.Protobuf.UserMessage.Parser, new[]{ "User", "Room", "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ProtocolMessage), global::Critical.Chat.Protocol.Protobuf.ProtocolMessage.Parser, new[]{ "Id", "HandshakeRequest", "HandshakeResponse", "CreateRoomRequest", "CreateRoomResponse", "ListRoomRequest", "ListRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "LeaveRoomRequest", "LeaveRoomResponse", "SendMessage", "UserMessage" }, new[]{ "Message" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ProtocolExchange), global::Critical.Chat.Protocol.Protobuf.ProtocolExchange.Parser, new[]{ "ExchangeId", "HandshakeRequest", "HandshakeResponse", "CreateRoomRequest", "CreateRoomResponse", "ListRoomRequest", "ListRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "LeaveRoomRequest", "LeaveRoomResponse" }, new[]{ "Message" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ProtocolMessage), global::Critical.Chat.Protocol.Protobuf.ProtocolMessage.Parser, new[]{ "ExchangeMessage", "UserMessage" }, new[]{ "Message" }, null, null, null)
           }));
     }
     #endregion
@@ -324,7 +325,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       return new ChatUser(this);
     }
 
-    /// <summary>Field number for the "userId" field.</summary>
+    /// <summary>Field number for the "user_id" field.</summary>
     public const int UserIdFieldNumber = 1;
     private string userId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -335,7 +336,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "userName" field.</summary>
+    /// <summary>Field number for the "user_name" field.</summary>
     public const int UserNameFieldNumber = 2;
     private string userName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1145,7 +1146,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       return new CreateRoomRequest(this);
     }
 
-    /// <summary>Field number for the "roomName" field.</summary>
+    /// <summary>Field number for the "room_name" field.</summary>
     public const int RoomNameFieldNumber = 1;
     private string roomName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1498,7 +1499,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       return new JoinRoomRequest(this);
     }
 
-    /// <summary>Field number for the "roomId" field.</summary>
+    /// <summary>Field number for the "room_id" field.</summary>
     public const int RoomIdFieldNumber = 1;
     private string roomId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2200,214 +2201,6 @@ namespace Critical.Chat.Protocol.Protobuf {
 
   }
 
-  public sealed partial class SendMessage : pb::IMessage<SendMessage>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<SendMessage> _parser = new pb::MessageParser<SendMessage>(() => new SendMessage());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SendMessage> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[12]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SendMessage() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SendMessage(SendMessage other) : this() {
-      roomId_ = other.roomId_;
-      message_ = other.message_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SendMessage Clone() {
-      return new SendMessage(this);
-    }
-
-    /// <summary>Field number for the "roomId" field.</summary>
-    public const int RoomIdFieldNumber = 1;
-    private string roomId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string RoomId {
-      get { return roomId_; }
-      set {
-        roomId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "message" field.</summary>
-    public const int MessageFieldNumber = 2;
-    private string message_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Message {
-      get { return message_; }
-      set {
-        message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SendMessage);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SendMessage other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (RoomId != other.RoomId) return false;
-      if (Message != other.Message) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (RoomId.Length != 0) hash ^= RoomId.GetHashCode();
-      if (Message.Length != 0) hash ^= Message.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (RoomId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(RoomId);
-      }
-      if (Message.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Message);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (RoomId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(RoomId);
-      }
-      if (Message.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Message);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (RoomId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomId);
-      }
-      if (Message.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SendMessage other) {
-      if (other == null) {
-        return;
-      }
-      if (other.RoomId.Length != 0) {
-        RoomId = other.RoomId;
-      }
-      if (other.Message.Length != 0) {
-        Message = other.Message;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            RoomId = input.ReadString();
-            break;
-          }
-          case 18: {
-            Message = input.ReadString();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 10: {
-            RoomId = input.ReadString();
-            break;
-          }
-          case 18: {
-            Message = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-    #endif
-
-  }
-
   public sealed partial class UserMessage : pb::IMessage<UserMessage>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2420,7 +2213,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2670,19 +2463,19 @@ namespace Critical.Chat.Protocol.Protobuf {
 
   }
 
-  public sealed partial class ProtocolMessage : pb::IMessage<ProtocolMessage>
+  public sealed partial class ProtocolExchange : pb::IMessage<ProtocolExchange>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<ProtocolMessage> _parser = new pb::MessageParser<ProtocolMessage>(() => new ProtocolMessage());
+    private static readonly pb::MessageParser<ProtocolExchange> _parser = new pb::MessageParser<ProtocolExchange>(() => new ProtocolExchange());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ProtocolMessage> Parser { get { return _parser; } }
+    public static pb::MessageParser<ProtocolExchange> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2691,15 +2484,15 @@ namespace Critical.Chat.Protocol.Protobuf {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ProtocolMessage() {
+    public ProtocolExchange() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ProtocolMessage(ProtocolMessage other) : this() {
-      id_ = other.id_;
+    public ProtocolExchange(ProtocolExchange other) : this() {
+      exchangeId_ = other.exchangeId_;
       switch (other.MessageCase) {
         case MessageOneofCase.HandshakeRequest:
           HandshakeRequest = other.HandshakeRequest.Clone();
@@ -2731,34 +2524,28 @@ namespace Critical.Chat.Protocol.Protobuf {
         case MessageOneofCase.LeaveRoomResponse:
           LeaveRoomResponse = other.LeaveRoomResponse.Clone();
           break;
-        case MessageOneofCase.SendMessage:
-          SendMessage = other.SendMessage.Clone();
-          break;
-        case MessageOneofCase.UserMessage:
-          UserMessage = other.UserMessage.Clone();
-          break;
       }
 
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ProtocolMessage Clone() {
-      return new ProtocolMessage(this);
+    public ProtocolExchange Clone() {
+      return new ProtocolExchange(this);
     }
 
-    /// <summary>Field number for the "id" field.</summary>
-    public const int IdFieldNumber = 1;
-    private ulong id_;
+    /// <summary>Field number for the "exchange_id" field.</summary>
+    public const int ExchangeIdFieldNumber = 1;
+    private ulong exchangeId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Id {
-      get { return id_; }
+    public ulong ExchangeId {
+      get { return exchangeId_; }
       set {
-        id_ = value;
+        exchangeId_ = value;
       }
     }
 
-    /// <summary>Field number for the "handshakeRequest" field.</summary>
+    /// <summary>Field number for the "handshake_request" field.</summary>
     public const int HandshakeRequestFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.HandshakeRequest HandshakeRequest {
@@ -2769,7 +2556,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "handshakeResponse" field.</summary>
+    /// <summary>Field number for the "handshake_response" field.</summary>
     public const int HandshakeResponseFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.HandshakeResponse HandshakeResponse {
@@ -2780,7 +2567,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "createRoomRequest" field.</summary>
+    /// <summary>Field number for the "create_room_request" field.</summary>
     public const int CreateRoomRequestFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest CreateRoomRequest {
@@ -2791,7 +2578,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "createRoomResponse" field.</summary>
+    /// <summary>Field number for the "create_room_response" field.</summary>
     public const int CreateRoomResponseFieldNumber = 5;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse CreateRoomResponse {
@@ -2802,7 +2589,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "listRoomRequest" field.</summary>
+    /// <summary>Field number for the "list_room_request" field.</summary>
     public const int ListRoomRequestFieldNumber = 6;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest ListRoomRequest {
@@ -2813,7 +2600,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "listRoomResponse" field.</summary>
+    /// <summary>Field number for the "list_room_response" field.</summary>
     public const int ListRoomResponseFieldNumber = 7;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse ListRoomResponse {
@@ -2824,7 +2611,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "joinRoomRequest" field.</summary>
+    /// <summary>Field number for the "join_room_request" field.</summary>
     public const int JoinRoomRequestFieldNumber = 8;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest JoinRoomRequest {
@@ -2835,7 +2622,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "joinRoomResponse" field.</summary>
+    /// <summary>Field number for the "join_room_response" field.</summary>
     public const int JoinRoomResponseFieldNumber = 9;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse JoinRoomResponse {
@@ -2846,7 +2633,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "leaveRoomRequest" field.</summary>
+    /// <summary>Field number for the "leave_room_request" field.</summary>
     public const int LeaveRoomRequestFieldNumber = 10;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest LeaveRoomRequest {
@@ -2857,7 +2644,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "leaveRoomResponse" field.</summary>
+    /// <summary>Field number for the "leave_room_response" field.</summary>
     public const int LeaveRoomResponseFieldNumber = 11;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse LeaveRoomResponse {
@@ -2865,28 +2652,6 @@ namespace Critical.Chat.Protocol.Protobuf {
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.LeaveRoomResponse;
-      }
-    }
-
-    /// <summary>Field number for the "sendMessage" field.</summary>
-    public const int SendMessageFieldNumber = 12;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.SendMessage SendMessage {
-      get { return messageCase_ == MessageOneofCase.SendMessage ? (global::Critical.Chat.Protocol.Protobuf.SendMessage) message_ : null; }
-      set {
-        message_ = value;
-        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.SendMessage;
-      }
-    }
-
-    /// <summary>Field number for the "userMessage" field.</summary>
-    public const int UserMessageFieldNumber = 13;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.UserMessage UserMessage {
-      get { return messageCase_ == MessageOneofCase.UserMessage ? (global::Critical.Chat.Protocol.Protobuf.UserMessage) message_ : null; }
-      set {
-        message_ = value;
-        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.UserMessage;
       }
     }
 
@@ -2904,8 +2669,6 @@ namespace Critical.Chat.Protocol.Protobuf {
       JoinRoomResponse = 9,
       LeaveRoomRequest = 10,
       LeaveRoomResponse = 11,
-      SendMessage = 12,
-      UserMessage = 13,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2921,18 +2684,18 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as ProtocolMessage);
+      return Equals(other as ProtocolExchange);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ProtocolMessage other) {
+    public bool Equals(ProtocolExchange other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Id != other.Id) return false;
+      if (ExchangeId != other.ExchangeId) return false;
       if (!object.Equals(HandshakeRequest, other.HandshakeRequest)) return false;
       if (!object.Equals(HandshakeResponse, other.HandshakeResponse)) return false;
       if (!object.Equals(CreateRoomRequest, other.CreateRoomRequest)) return false;
@@ -2943,8 +2706,6 @@ namespace Critical.Chat.Protocol.Protobuf {
       if (!object.Equals(JoinRoomResponse, other.JoinRoomResponse)) return false;
       if (!object.Equals(LeaveRoomRequest, other.LeaveRoomRequest)) return false;
       if (!object.Equals(LeaveRoomResponse, other.LeaveRoomResponse)) return false;
-      if (!object.Equals(SendMessage, other.SendMessage)) return false;
-      if (!object.Equals(UserMessage, other.UserMessage)) return false;
       if (MessageCase != other.MessageCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -2952,7 +2713,7 @@ namespace Critical.Chat.Protocol.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Id != 0UL) hash ^= Id.GetHashCode();
+      if (ExchangeId != 0UL) hash ^= ExchangeId.GetHashCode();
       if (messageCase_ == MessageOneofCase.HandshakeRequest) hash ^= HandshakeRequest.GetHashCode();
       if (messageCase_ == MessageOneofCase.HandshakeResponse) hash ^= HandshakeResponse.GetHashCode();
       if (messageCase_ == MessageOneofCase.CreateRoomRequest) hash ^= CreateRoomRequest.GetHashCode();
@@ -2963,8 +2724,6 @@ namespace Critical.Chat.Protocol.Protobuf {
       if (messageCase_ == MessageOneofCase.JoinRoomResponse) hash ^= JoinRoomResponse.GetHashCode();
       if (messageCase_ == MessageOneofCase.LeaveRoomRequest) hash ^= LeaveRoomRequest.GetHashCode();
       if (messageCase_ == MessageOneofCase.LeaveRoomResponse) hash ^= LeaveRoomResponse.GetHashCode();
-      if (messageCase_ == MessageOneofCase.SendMessage) hash ^= SendMessage.GetHashCode();
-      if (messageCase_ == MessageOneofCase.UserMessage) hash ^= UserMessage.GetHashCode();
       hash ^= (int) messageCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -2982,9 +2741,9 @@ namespace Critical.Chat.Protocol.Protobuf {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Id != 0UL) {
+      if (ExchangeId != 0UL) {
         output.WriteRawTag(8);
-        output.WriteUInt64(Id);
+        output.WriteUInt64(ExchangeId);
       }
       if (messageCase_ == MessageOneofCase.HandshakeRequest) {
         output.WriteRawTag(18);
@@ -3025,14 +2784,6 @@ namespace Critical.Chat.Protocol.Protobuf {
       if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
         output.WriteRawTag(90);
         output.WriteMessage(LeaveRoomResponse);
-      }
-      if (messageCase_ == MessageOneofCase.SendMessage) {
-        output.WriteRawTag(98);
-        output.WriteMessage(SendMessage);
-      }
-      if (messageCase_ == MessageOneofCase.UserMessage) {
-        output.WriteRawTag(106);
-        output.WriteMessage(UserMessage);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -3043,9 +2794,9 @@ namespace Critical.Chat.Protocol.Protobuf {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Id != 0UL) {
+      if (ExchangeId != 0UL) {
         output.WriteRawTag(8);
-        output.WriteUInt64(Id);
+        output.WriteUInt64(ExchangeId);
       }
       if (messageCase_ == MessageOneofCase.HandshakeRequest) {
         output.WriteRawTag(18);
@@ -3087,14 +2838,6 @@ namespace Critical.Chat.Protocol.Protobuf {
         output.WriteRawTag(90);
         output.WriteMessage(LeaveRoomResponse);
       }
-      if (messageCase_ == MessageOneofCase.SendMessage) {
-        output.WriteRawTag(98);
-        output.WriteMessage(SendMessage);
-      }
-      if (messageCase_ == MessageOneofCase.UserMessage) {
-        output.WriteRawTag(106);
-        output.WriteMessage(UserMessage);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -3104,8 +2847,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Id != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Id);
+      if (ExchangeId != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ExchangeId);
       }
       if (messageCase_ == MessageOneofCase.HandshakeRequest) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(HandshakeRequest);
@@ -3137,12 +2880,6 @@ namespace Critical.Chat.Protocol.Protobuf {
       if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(LeaveRoomResponse);
       }
-      if (messageCase_ == MessageOneofCase.SendMessage) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SendMessage);
-      }
-      if (messageCase_ == MessageOneofCase.UserMessage) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserMessage);
-      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -3150,12 +2887,12 @@ namespace Critical.Chat.Protocol.Protobuf {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ProtocolMessage other) {
+    public void MergeFrom(ProtocolExchange other) {
       if (other == null) {
         return;
       }
-      if (other.Id != 0UL) {
-        Id = other.Id;
+      if (other.ExchangeId != 0UL) {
+        ExchangeId = other.ExchangeId;
       }
       switch (other.MessageCase) {
         case MessageOneofCase.HandshakeRequest:
@@ -3218,11 +2955,416 @@ namespace Critical.Chat.Protocol.Protobuf {
           }
           LeaveRoomResponse.MergeFrom(other.LeaveRoomResponse);
           break;
-        case MessageOneofCase.SendMessage:
-          if (SendMessage == null) {
-            SendMessage = new global::Critical.Chat.Protocol.Protobuf.SendMessage();
+      }
+
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            ExchangeId = input.ReadUInt64();
+            break;
           }
-          SendMessage.MergeFrom(other.SendMessage);
+          case 18: {
+            global::Critical.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeRequest();
+            if (messageCase_ == MessageOneofCase.HandshakeRequest) {
+              subBuilder.MergeFrom(HandshakeRequest);
+            }
+            input.ReadMessage(subBuilder);
+            HandshakeRequest = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Critical.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeResponse();
+            if (messageCase_ == MessageOneofCase.HandshakeResponse) {
+              subBuilder.MergeFrom(HandshakeResponse);
+            }
+            input.ReadMessage(subBuilder);
+            HandshakeResponse = subBuilder;
+            break;
+          }
+          case 34: {
+            global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest();
+            if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
+              subBuilder.MergeFrom(CreateRoomRequest);
+            }
+            input.ReadMessage(subBuilder);
+            CreateRoomRequest = subBuilder;
+            break;
+          }
+          case 42: {
+            global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse();
+            if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
+              subBuilder.MergeFrom(CreateRoomResponse);
+            }
+            input.ReadMessage(subBuilder);
+            CreateRoomResponse = subBuilder;
+            break;
+          }
+          case 50: {
+            global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest();
+            if (messageCase_ == MessageOneofCase.ListRoomRequest) {
+              subBuilder.MergeFrom(ListRoomRequest);
+            }
+            input.ReadMessage(subBuilder);
+            ListRoomRequest = subBuilder;
+            break;
+          }
+          case 58: {
+            global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse();
+            if (messageCase_ == MessageOneofCase.ListRoomResponse) {
+              subBuilder.MergeFrom(ListRoomResponse);
+            }
+            input.ReadMessage(subBuilder);
+            ListRoomResponse = subBuilder;
+            break;
+          }
+          case 66: {
+            global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest();
+            if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
+              subBuilder.MergeFrom(JoinRoomRequest);
+            }
+            input.ReadMessage(subBuilder);
+            JoinRoomRequest = subBuilder;
+            break;
+          }
+          case 74: {
+            global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse();
+            if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
+              subBuilder.MergeFrom(JoinRoomResponse);
+            }
+            input.ReadMessage(subBuilder);
+            JoinRoomResponse = subBuilder;
+            break;
+          }
+          case 82: {
+            global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest();
+            if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
+              subBuilder.MergeFrom(LeaveRoomRequest);
+            }
+            input.ReadMessage(subBuilder);
+            LeaveRoomRequest = subBuilder;
+            break;
+          }
+          case 90: {
+            global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse();
+            if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
+              subBuilder.MergeFrom(LeaveRoomResponse);
+            }
+            input.ReadMessage(subBuilder);
+            LeaveRoomResponse = subBuilder;
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            ExchangeId = input.ReadUInt64();
+            break;
+          }
+          case 18: {
+            global::Critical.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeRequest();
+            if (messageCase_ == MessageOneofCase.HandshakeRequest) {
+              subBuilder.MergeFrom(HandshakeRequest);
+            }
+            input.ReadMessage(subBuilder);
+            HandshakeRequest = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Critical.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeResponse();
+            if (messageCase_ == MessageOneofCase.HandshakeResponse) {
+              subBuilder.MergeFrom(HandshakeResponse);
+            }
+            input.ReadMessage(subBuilder);
+            HandshakeResponse = subBuilder;
+            break;
+          }
+          case 34: {
+            global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest();
+            if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
+              subBuilder.MergeFrom(CreateRoomRequest);
+            }
+            input.ReadMessage(subBuilder);
+            CreateRoomRequest = subBuilder;
+            break;
+          }
+          case 42: {
+            global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse();
+            if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
+              subBuilder.MergeFrom(CreateRoomResponse);
+            }
+            input.ReadMessage(subBuilder);
+            CreateRoomResponse = subBuilder;
+            break;
+          }
+          case 50: {
+            global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest();
+            if (messageCase_ == MessageOneofCase.ListRoomRequest) {
+              subBuilder.MergeFrom(ListRoomRequest);
+            }
+            input.ReadMessage(subBuilder);
+            ListRoomRequest = subBuilder;
+            break;
+          }
+          case 58: {
+            global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse();
+            if (messageCase_ == MessageOneofCase.ListRoomResponse) {
+              subBuilder.MergeFrom(ListRoomResponse);
+            }
+            input.ReadMessage(subBuilder);
+            ListRoomResponse = subBuilder;
+            break;
+          }
+          case 66: {
+            global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest();
+            if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
+              subBuilder.MergeFrom(JoinRoomRequest);
+            }
+            input.ReadMessage(subBuilder);
+            JoinRoomRequest = subBuilder;
+            break;
+          }
+          case 74: {
+            global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse();
+            if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
+              subBuilder.MergeFrom(JoinRoomResponse);
+            }
+            input.ReadMessage(subBuilder);
+            JoinRoomResponse = subBuilder;
+            break;
+          }
+          case 82: {
+            global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest();
+            if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
+              subBuilder.MergeFrom(LeaveRoomRequest);
+            }
+            input.ReadMessage(subBuilder);
+            LeaveRoomRequest = subBuilder;
+            break;
+          }
+          case 90: {
+            global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse();
+            if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
+              subBuilder.MergeFrom(LeaveRoomResponse);
+            }
+            input.ReadMessage(subBuilder);
+            LeaveRoomResponse = subBuilder;
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class ProtocolMessage : pb::IMessage<ProtocolMessage>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ProtocolMessage> _parser = new pb::MessageParser<ProtocolMessage>(() => new ProtocolMessage());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ProtocolMessage> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[14]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ProtocolMessage() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ProtocolMessage(ProtocolMessage other) : this() {
+      switch (other.MessageCase) {
+        case MessageOneofCase.ExchangeMessage:
+          ExchangeMessage = other.ExchangeMessage.Clone();
+          break;
+        case MessageOneofCase.UserMessage:
+          UserMessage = other.UserMessage.Clone();
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ProtocolMessage Clone() {
+      return new ProtocolMessage(this);
+    }
+
+    /// <summary>Field number for the "exchange_message" field.</summary>
+    public const int ExchangeMessageFieldNumber = 1;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Critical.Chat.Protocol.Protobuf.ProtocolExchange ExchangeMessage {
+      get { return messageCase_ == MessageOneofCase.ExchangeMessage ? (global::Critical.Chat.Protocol.Protobuf.ProtocolExchange) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.ExchangeMessage;
+      }
+    }
+
+    /// <summary>Field number for the "userMessage" field.</summary>
+    public const int UserMessageFieldNumber = 2;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Critical.Chat.Protocol.Protobuf.UserMessage UserMessage {
+      get { return messageCase_ == MessageOneofCase.UserMessage ? (global::Critical.Chat.Protocol.Protobuf.UserMessage) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.UserMessage;
+      }
+    }
+
+    private object message_;
+    /// <summary>Enum of possible cases for the "message" oneof.</summary>
+    public enum MessageOneofCase {
+      None = 0,
+      ExchangeMessage = 1,
+      UserMessage = 2,
+    }
+    private MessageOneofCase messageCase_ = MessageOneofCase.None;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MessageOneofCase MessageCase {
+      get { return messageCase_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void ClearMessage() {
+      messageCase_ = MessageOneofCase.None;
+      message_ = null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ProtocolMessage);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ProtocolMessage other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(ExchangeMessage, other.ExchangeMessage)) return false;
+      if (!object.Equals(UserMessage, other.UserMessage)) return false;
+      if (MessageCase != other.MessageCase) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (messageCase_ == MessageOneofCase.ExchangeMessage) hash ^= ExchangeMessage.GetHashCode();
+      if (messageCase_ == MessageOneofCase.UserMessage) hash ^= UserMessage.GetHashCode();
+      hash ^= (int) messageCase_;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (messageCase_ == MessageOneofCase.ExchangeMessage) {
+        output.WriteRawTag(10);
+        output.WriteMessage(ExchangeMessage);
+      }
+      if (messageCase_ == MessageOneofCase.UserMessage) {
+        output.WriteRawTag(18);
+        output.WriteMessage(UserMessage);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (messageCase_ == MessageOneofCase.ExchangeMessage) {
+        output.WriteRawTag(10);
+        output.WriteMessage(ExchangeMessage);
+      }
+      if (messageCase_ == MessageOneofCase.UserMessage) {
+        output.WriteRawTag(18);
+        output.WriteMessage(UserMessage);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (messageCase_ == MessageOneofCase.ExchangeMessage) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ExchangeMessage);
+      }
+      if (messageCase_ == MessageOneofCase.UserMessage) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserMessage);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ProtocolMessage other) {
+      if (other == null) {
+        return;
+      }
+      switch (other.MessageCase) {
+        case MessageOneofCase.ExchangeMessage:
+          if (ExchangeMessage == null) {
+            ExchangeMessage = new global::Critical.Chat.Protocol.Protobuf.ProtocolExchange();
+          }
+          ExchangeMessage.MergeFrom(other.ExchangeMessage);
           break;
         case MessageOneofCase.UserMessage:
           if (UserMessage == null) {
@@ -3246,110 +3388,16 @@ namespace Critical.Chat.Protocol.Protobuf {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 8: {
-            Id = input.ReadUInt64();
+          case 10: {
+            global::Critical.Chat.Protocol.Protobuf.ProtocolExchange subBuilder = new global::Critical.Chat.Protocol.Protobuf.ProtocolExchange();
+            if (messageCase_ == MessageOneofCase.ExchangeMessage) {
+              subBuilder.MergeFrom(ExchangeMessage);
+            }
+            input.ReadMessage(subBuilder);
+            ExchangeMessage = subBuilder;
             break;
           }
           case 18: {
-            global::Critical.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeRequest();
-            if (messageCase_ == MessageOneofCase.HandshakeRequest) {
-              subBuilder.MergeFrom(HandshakeRequest);
-            }
-            input.ReadMessage(subBuilder);
-            HandshakeRequest = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Critical.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeResponse();
-            if (messageCase_ == MessageOneofCase.HandshakeResponse) {
-              subBuilder.MergeFrom(HandshakeResponse);
-            }
-            input.ReadMessage(subBuilder);
-            HandshakeResponse = subBuilder;
-            break;
-          }
-          case 34: {
-            global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest();
-            if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
-              subBuilder.MergeFrom(CreateRoomRequest);
-            }
-            input.ReadMessage(subBuilder);
-            CreateRoomRequest = subBuilder;
-            break;
-          }
-          case 42: {
-            global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse();
-            if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
-              subBuilder.MergeFrom(CreateRoomResponse);
-            }
-            input.ReadMessage(subBuilder);
-            CreateRoomResponse = subBuilder;
-            break;
-          }
-          case 50: {
-            global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest();
-            if (messageCase_ == MessageOneofCase.ListRoomRequest) {
-              subBuilder.MergeFrom(ListRoomRequest);
-            }
-            input.ReadMessage(subBuilder);
-            ListRoomRequest = subBuilder;
-            break;
-          }
-          case 58: {
-            global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse();
-            if (messageCase_ == MessageOneofCase.ListRoomResponse) {
-              subBuilder.MergeFrom(ListRoomResponse);
-            }
-            input.ReadMessage(subBuilder);
-            ListRoomResponse = subBuilder;
-            break;
-          }
-          case 66: {
-            global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest();
-            if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
-              subBuilder.MergeFrom(JoinRoomRequest);
-            }
-            input.ReadMessage(subBuilder);
-            JoinRoomRequest = subBuilder;
-            break;
-          }
-          case 74: {
-            global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse();
-            if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
-              subBuilder.MergeFrom(JoinRoomResponse);
-            }
-            input.ReadMessage(subBuilder);
-            JoinRoomResponse = subBuilder;
-            break;
-          }
-          case 82: {
-            global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest();
-            if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
-              subBuilder.MergeFrom(LeaveRoomRequest);
-            }
-            input.ReadMessage(subBuilder);
-            LeaveRoomRequest = subBuilder;
-            break;
-          }
-          case 90: {
-            global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse();
-            if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
-              subBuilder.MergeFrom(LeaveRoomResponse);
-            }
-            input.ReadMessage(subBuilder);
-            LeaveRoomResponse = subBuilder;
-            break;
-          }
-          case 98: {
-            global::Critical.Chat.Protocol.Protobuf.SendMessage subBuilder = new global::Critical.Chat.Protocol.Protobuf.SendMessage();
-            if (messageCase_ == MessageOneofCase.SendMessage) {
-              subBuilder.MergeFrom(SendMessage);
-            }
-            input.ReadMessage(subBuilder);
-            SendMessage = subBuilder;
-            break;
-          }
-          case 106: {
             global::Critical.Chat.Protocol.Protobuf.UserMessage subBuilder = new global::Critical.Chat.Protocol.Protobuf.UserMessage();
             if (messageCase_ == MessageOneofCase.UserMessage) {
               subBuilder.MergeFrom(UserMessage);
@@ -3372,110 +3420,16 @@ namespace Critical.Chat.Protocol.Protobuf {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 8: {
-            Id = input.ReadUInt64();
+          case 10: {
+            global::Critical.Chat.Protocol.Protobuf.ProtocolExchange subBuilder = new global::Critical.Chat.Protocol.Protobuf.ProtocolExchange();
+            if (messageCase_ == MessageOneofCase.ExchangeMessage) {
+              subBuilder.MergeFrom(ExchangeMessage);
+            }
+            input.ReadMessage(subBuilder);
+            ExchangeMessage = subBuilder;
             break;
           }
           case 18: {
-            global::Critical.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeRequest();
-            if (messageCase_ == MessageOneofCase.HandshakeRequest) {
-              subBuilder.MergeFrom(HandshakeRequest);
-            }
-            input.ReadMessage(subBuilder);
-            HandshakeRequest = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Critical.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeResponse();
-            if (messageCase_ == MessageOneofCase.HandshakeResponse) {
-              subBuilder.MergeFrom(HandshakeResponse);
-            }
-            input.ReadMessage(subBuilder);
-            HandshakeResponse = subBuilder;
-            break;
-          }
-          case 34: {
-            global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest();
-            if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
-              subBuilder.MergeFrom(CreateRoomRequest);
-            }
-            input.ReadMessage(subBuilder);
-            CreateRoomRequest = subBuilder;
-            break;
-          }
-          case 42: {
-            global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse();
-            if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
-              subBuilder.MergeFrom(CreateRoomResponse);
-            }
-            input.ReadMessage(subBuilder);
-            CreateRoomResponse = subBuilder;
-            break;
-          }
-          case 50: {
-            global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest();
-            if (messageCase_ == MessageOneofCase.ListRoomRequest) {
-              subBuilder.MergeFrom(ListRoomRequest);
-            }
-            input.ReadMessage(subBuilder);
-            ListRoomRequest = subBuilder;
-            break;
-          }
-          case 58: {
-            global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse();
-            if (messageCase_ == MessageOneofCase.ListRoomResponse) {
-              subBuilder.MergeFrom(ListRoomResponse);
-            }
-            input.ReadMessage(subBuilder);
-            ListRoomResponse = subBuilder;
-            break;
-          }
-          case 66: {
-            global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest();
-            if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
-              subBuilder.MergeFrom(JoinRoomRequest);
-            }
-            input.ReadMessage(subBuilder);
-            JoinRoomRequest = subBuilder;
-            break;
-          }
-          case 74: {
-            global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse();
-            if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
-              subBuilder.MergeFrom(JoinRoomResponse);
-            }
-            input.ReadMessage(subBuilder);
-            JoinRoomResponse = subBuilder;
-            break;
-          }
-          case 82: {
-            global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest();
-            if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
-              subBuilder.MergeFrom(LeaveRoomRequest);
-            }
-            input.ReadMessage(subBuilder);
-            LeaveRoomRequest = subBuilder;
-            break;
-          }
-          case 90: {
-            global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse();
-            if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
-              subBuilder.MergeFrom(LeaveRoomResponse);
-            }
-            input.ReadMessage(subBuilder);
-            LeaveRoomResponse = subBuilder;
-            break;
-          }
-          case 98: {
-            global::Critical.Chat.Protocol.Protobuf.SendMessage subBuilder = new global::Critical.Chat.Protocol.Protobuf.SendMessage();
-            if (messageCase_ == MessageOneofCase.SendMessage) {
-              subBuilder.MergeFrom(SendMessage);
-            }
-            input.ReadMessage(subBuilder);
-            SendMessage = subBuilder;
-            break;
-          }
-          case 106: {
             global::Critical.Chat.Protocol.Protobuf.UserMessage subBuilder = new global::Critical.Chat.Protocol.Protobuf.UserMessage();
             if (messageCase_ == MessageOneofCase.UserMessage) {
               subBuilder.MergeFrom(UserMessage);

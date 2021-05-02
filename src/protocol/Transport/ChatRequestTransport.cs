@@ -9,13 +9,13 @@ namespace Critical.Chat.Protocol.Transport
     public class ChatRequestTransport : IChatRequestTransport
     {
         private readonly IChatTransport transport;
-        private readonly ConcurrentDictionary<ulong, TaskCompletionSource<IResponse>> pendingMessages;
+        private readonly ConcurrentDictionary<ulong, TaskCompletionSource<IMessage>> pendingMessages;
         private ulong sequence;
 
         public ChatRequestTransport(IChatTransport transport)
         {
             this.transport = transport;
-            this.pendingMessages = new ConcurrentDictionary<ulong, TaskCompletionSource<IResponse>>();
+            this.pendingMessages = new ConcurrentDictionary<ulong, TaskCompletionSource<IMessage>>();
         }
 
         public Task Send(IMessage message, CancellationToken token = default)
@@ -28,8 +28,8 @@ namespace Critical.Chat.Protocol.Transport
             while (true)
             {
                 var message = await transport.Receive(token);
-                if (message is IResponse response &&
-                    pendingMessages.TryRemove(response.RequestId, out var waitingTask))
+                if (message is ExchangeMessage response &&
+                    pendingMessages.TryRemove(response.ExchangeId, out var waitingTask))
                 {
                     waitingTask.SetResult(response);
                 }
@@ -40,22 +40,22 @@ namespace Critical.Chat.Protocol.Transport
             }
         }
 
-        public async Task<TResponse> Exchange<TResponse>(IRequest request, CancellationToken token = default)
+        public async Task<TResponse> Exchange<TResponse>(IMessage request, CancellationToken token = default)
             where TResponse : IMessage
         {
-            request.RequestId = ++sequence;
-            var waitingTask = new TaskCompletionSource<IResponse>();
-            if (!pendingMessages.TryAdd(request.RequestId, waitingTask))
-            {
-                throw new Exception($"Failed to schedule exchange [request={request}]");
-            }
-
-            await transport.Send(request, token);
-
+            var exchangeMessage = new ExchangeMessage(++sequence, request);
+            var waitingTask = new TaskCompletionSource<IMessage>();
             using (token.Register(() => waitingTask.TrySetCanceled()))
             {
+                if (!pendingMessages.TryAdd(exchangeMessage.ExchangeId, waitingTask))
+                {
+                    throw new Exception($"Failed to schedule exchange [request={request}]");
+                }
+
+                await transport.Send(exchangeMessage, token);
+
                 var taskResponse = await waitingTask.Task;
-                if (taskResponse is TResponse response)
+                if (taskResponse is ExchangeMessage {Message: TResponse response})
                 {
                     return response;
                 }

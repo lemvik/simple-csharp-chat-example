@@ -14,17 +14,17 @@ namespace Critical.Chat.Server.Implementation
     {
         public string Id { get; }
         public string Name { get; }
-        public ChannelWriter<(IChatRoomMessage, IConnectedClient)> MessagesSink => messages.Writer;
+        public ChannelWriter<(IMessage, IConnectedClient)> MessagesSink => messages.Writer;
 
         private readonly ConcurrentDictionary<string, IConnectedClient> clients;
-        private readonly Channel<(IChatRoomMessage, IConnectedClient)> messages;
+        private readonly Channel<(IMessage, IConnectedClient)> messages;
 
         internal ServerChatRoom(string id, string name)
         {
             Id = id;
             Name = name;
             clients = new ConcurrentDictionary<string, IConnectedClient>();
-            messages = Channel.CreateUnbounded<(IChatRoomMessage, IConnectedClient)>();
+            messages = Channel.CreateUnbounded<(IMessage, IConnectedClient)>();
         }
 
         public Task AddUser(IConnectedClient connectedClient, CancellationToken token = default)
@@ -73,19 +73,49 @@ namespace Critical.Chat.Server.Implementation
             }
         }
 
-        private async Task DispatchMessage(IChatRoomMessage message,
-                                           IConnectedClient client,
-                                           CancellationToken token = default)
+        private Task DispatchMessage(IMessage message,
+                                     IConnectedClient client,
+                                     CancellationToken token = default)
         {
-            switch (message)
+            if (message is ExchangeMessage exchangeMessage)
             {
-                case ListUsersRequest listUsersRequest:
+                return HandleRequest(exchangeMessage, client, token);
+            }
+
+            if (message is IChatRoomMessage chatRoomMessage)
+            {
+                return HandleMessage(chatRoomMessage, token);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private async Task HandleRequest(ExchangeMessage exchangeMessage,
+                                         IConnectedClient client,
+                                         CancellationToken token = default)
+        {
+            switch (exchangeMessage.Message)
+            {
+                case ListUsersRequest _:
                 {
                     var users = ListUsers();
-                    var response = new ListUsersResponse(listUsersRequest.RequestId, this, users);
+                    var response = exchangeMessage.MakeResponse(new ListUsersResponse(this, users));
                     await client.SendMessage(response, token);
                     break;
                 }
+                case ChatMessage chatMessage:
+                {
+                    var sendTasks = clients.Values.Select(chatClient => chatClient.SendMessage(chatMessage, token));
+                    await Task.WhenAll(sendTasks);
+                    break;
+                }
+            }
+        }
+
+        private async Task HandleMessage(IChatRoomMessage chatRoomMessage, CancellationToken token = default)
+        {
+            switch (chatRoomMessage)
+            {
                 case ChatMessage chatMessage:
                 {
                     var sendTasks = clients.Values.Select(chatClient => chatClient.SendMessage(chatMessage, token));

@@ -31,11 +31,18 @@ namespace Critical.Chat.Server.Implementation
             while (!token.IsCancellationRequested)
             {
                 var message = await transport.Receive(token);
-                if (message is IChatRoomMessage chatRoomMessage)
+                var targetRoom = message switch
                 {
-                    if (rooms.TryGetValue(chatRoomMessage.Room.Id, out var chatRoom))
+                    IChatRoomMessage chatRoomMessage => chatRoomMessage.Room,
+                    ExchangeMessage {Message: IChatRoomMessage chatRoomMessage} => chatRoomMessage.Room,
+                    _ => default
+                };
+
+                if (targetRoom != null)
+                {
+                    if (rooms.TryGetValue(targetRoom.Id, out var chatRoom))
                     {
-                        await chatRoom.MessagesSink.WriteAsync((chatRoomMessage, this), token);
+                        await chatRoom.MessagesSink.WriteAsync((message, this), token);
                     }
                     else
                     {

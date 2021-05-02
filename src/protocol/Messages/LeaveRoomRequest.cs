@@ -1,14 +1,11 @@
 namespace Critical.Chat.Protocol.Messages
 {
-    public class LeaveRoomRequest : IRequest
+    public class LeaveRoomRequest : IMessage
     {
-        public ulong RequestId { get; set; }
-        public MessageType Type => MessageType.LeaveRoomRequest;
         public IChatRoom Room { get; }
-        
-        public LeaveRoomRequest(ulong id, IChatRoom room)
+
+        public LeaveRoomRequest(IChatRoom room)
         {
-            RequestId = id;
             Room = room;
         }
     }

@@ -85,7 +85,7 @@ namespace Critical.Chat.Client
                 if (incomingMessage is HandshakeRequest handshakeRequest)
                 {
                     assignedUser = handshakeRequest.User;
-                    var response = new HandshakeResponse(handshakeRequest.Id);
+                    var response = new HandshakeResponse();
                     await transport.Send(response, token);
                     return;
                 }

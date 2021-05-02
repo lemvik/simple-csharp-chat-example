@@ -108,7 +108,7 @@ namespace Critical.Chat.Server.Implementation
                                           IChatTransport transport,
                                           CancellationToken token = default)
         {
-            var handshake = new HandshakeRequest(0, chatUser);
+            var handshake = new HandshakeRequest(chatUser);
             await transport.Send(handshake, token);
             var response = await transport.Receive(token);
             if (response is HandshakeResponse)
@@ -119,45 +119,52 @@ namespace Critical.Chat.Server.Implementation
             throw new Exception($"Expected to receive handshake response [received={response}]");
         }
 
-        private async Task DispatchAsync(IConnectedClient client, IMessage message,
+        private async Task DispatchAsync(IConnectedClient client,
+                                         IMessage message,
                                          CancellationToken token = default)
         {
-            switch (message)
+            if (message is ExchangeMessage exchangeMessage)
             {
-                case ListRoomsRequest listRoomsRequest:
+                switch (exchangeMessage.Message)
                 {
-                    var rooms = await roomsRegistry.ListRooms();
-                    var response = new ListRoomsResponse(listRoomsRequest.RequestId, rooms);
-                    await client.SendMessage(response, token);
-                    break;
+                    case ListRoomsRequest _:
+                    {
+                        var rooms = await roomsRegistry.ListRooms();
+                        var response = exchangeMessage.MakeResponse(new ListRoomsResponse(rooms));
+                        await client.SendMessage(response, token);
+                        break;
+                    }
+                    case CreateRoomRequest createRoomRequest:
+                    {
+                        var room = await roomsRegistry.CreateRoom(createRoomRequest.RoomName, token);
+                        var response =
+                            exchangeMessage.MakeResponse(new CreateRoomResponse(room));
+                        await client.SendMessage(response, token);
+                        break;
+                    }
+                    case JoinRoomRequest joinRoomRequest:
+                    {
+                        var room = await roomsRegistry.GetRoom(joinRoomRequest.RoomId, token);
+                        await room.AddUser(client, token);
+                        var mostRecentMessages = await room.MostRecentMessages(5, token);
+                        var response =
+                            exchangeMessage.MakeResponse(new JoinRoomResponse(room,
+                                                                              mostRecentMessages));
+                        await client.SendMessage(response, token);
+                        break;
+                    }
+                    case LeaveRoomRequest leaveRoomRequest:
+                    {
+                        var room = await roomsRegistry.GetRoom(leaveRoomRequest.Room.Id, token);
+                        await room.RemoveUser(client, token);
+                        var response = exchangeMessage.MakeResponse(new LeaveRoomResponse(room));
+                        await client.SendMessage(response, token);
+                        break;
+                    }
+                    default:
+                        logger.LogError("Unknown [message={Message}]", exchangeMessage.Message);
+                        throw new ArgumentOutOfRangeException();
                 }
-                case CreateRoomRequest createRoomRequest:
-                {
-                    var room = await roomsRegistry.CreateRoom(createRoomRequest.RoomName, token);
-                    var response = new CreateRoomResponse(createRoomRequest.RequestId, room);
-                    await client.SendMessage(response, token);
-                    break;
-                }
-                case JoinRoomRequest joinRoomRequest:
-                {
-                    var room = await roomsRegistry.GetRoom(joinRoomRequest.RoomId, token);
-                    await room.AddUser(client, token);
-                    var mostRecentMessages = await room.MostRecentMessages(5, token);
-                    var response = new JoinRoomResponse(joinRoomRequest.RequestId, room, mostRecentMessages);
-                    await client.SendMessage(response, token);
-                    break;
-                }
-                case LeaveRoomRequest leaveRoomRequest:
-                {
-                    var room = await roomsRegistry.GetRoom(leaveRoomRequest.Room.Id);
-                    await room.RemoveUser(client, token);
-                    var response = new LeaveRoomResponse(leaveRoomRequest.RequestId, room);
-                    await client.SendMessage(response, token);
-                    break;
-                }
-                default:
-                    logger.LogError("Unknown [message={Message}]", message);
-                    throw new ArgumentOutOfRangeException();
             }
         }
 

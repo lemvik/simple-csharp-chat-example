@@ -14,7 +14,6 @@ namespace Critical.Chat.Client
         private readonly IChatRoom room;
         private readonly Channel<IChatMessage> messages;
         private readonly IChatRequestTransport transport;
-        private ulong sequence;
 
         public string Id => room.Id;
         public string Name => room.Name;
@@ -40,7 +39,7 @@ namespace Critical.Chat.Client
 
         public async Task<IReadOnlyCollection<IChatUser>> ListUsers(CancellationToken token = default)
         {
-            var listRequest = new ListUsersRequest(++sequence, room);
+            var listRequest = new ListUsersRequest(room);
 
             var response = await transport.Exchange<ListUsersResponse>(listRequest, token);
 

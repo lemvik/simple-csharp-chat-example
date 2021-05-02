@@ -19,9 +19,9 @@ namespace Critical.Chat.Testing
             var respondingTask = Task.Run(async () =>
             {
                 var request = await remoteTransport.Receive(testLifetime.Token);
-                if (request is RequestMessage requestMessage)
+                if (request is ExchangeMessage {Message: RequestMessage} exchangeMessage)
                 {
-                    var responseMessage = new ResponseMessage() {RequestId = requestMessage.RequestId};
+                    var responseMessage = exchangeMessage.MakeResponse(new ResponseMessage());
                     await remoteTransport.Send(responseMessage, testLifetime.Token);
                 }
             }, testLifetime.Token);
@@ -45,16 +45,12 @@ namespace Critical.Chat.Testing
             }
         }
 
-        private class RequestMessage : IRequest
+        private class RequestMessage : IMessage
         {
-            public MessageType Type => MessageType.HandshakeRequest;
-            public ulong RequestId { get; set; }
         }
 
-        private class ResponseMessage : IResponse
+        private class ResponseMessage : IMessage
         {
-            public MessageType Type => MessageType.HandshakeResponse;
-            public ulong RequestId { get; set; }
         }
     }
 }
