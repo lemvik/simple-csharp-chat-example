@@ -3,15 +3,15 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using static System.Threading.Tasks.Task;
 
-namespace Critical.Chat.Client.Example.TCP
+namespace Lemvik.Example.Chat.Client.Example.TCP
 {
     public class ConsoleChatClient : BackgroundService
     {

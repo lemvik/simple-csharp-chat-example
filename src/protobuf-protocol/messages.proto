@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "Critical.Chat.Protocol.Protobuf";
+option csharp_namespace = "Lemvik.Example.Chat.Protocol.Protobuf";
 
 message ChatRoom {
   string id = 1;

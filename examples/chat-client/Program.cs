@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 
-namespace Critical.Chat.Client.Example.TCP
+namespace Lemvik.Example.Chat.Client.Example.TCP
 {
     internal static class Program
     {

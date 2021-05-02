@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol.Transport;
 
-namespace Critical.Chat.Protocol.Messages
+namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public class ExchangeMessage : IMessage
     {

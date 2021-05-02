@@ -1,4 +1,4 @@
-namespace Critical.Chat.Protocol
+namespace Lemvik.Example.Chat.Protocol
 {
     public enum LeaveReason
     {

@@ -1,7 +1,7 @@
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Logging;
 
-namespace Critical.Chat.Client
+namespace Lemvik.Example.Chat.Client
 {
     public class ChatClientFactory : IChatClientFactory
     {

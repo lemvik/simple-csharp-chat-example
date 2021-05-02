@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Critical.Chat.Testing</RootNamespace>
+    <RootNamespace>Lemvik.Example.Chat.Testing</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>

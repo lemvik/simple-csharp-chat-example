@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 
-namespace Critical.Chat.Client
+namespace Lemvik.Example.Chat.Client
 {
     public class ClientChatRoom : IClientChatRoom
     {

@@ -3,13 +3,13 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Critical.Chat.Server.Examples.TCP
+namespace Lemvik.Example.Chat.Server.Examples.TCP
 {
     internal class ChatServer : BackgroundService
     {

@@ -1,12 +1,12 @@
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Protobuf;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Protobuf;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Critical.Chat.Client.Example.TCP
+namespace Lemvik.Example.Chat.Client.Example.TCP
 {
     internal static class ClientRegistrations
     {

@@ -14,7 +14,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Critical.Chat.Protocol.Protobuf</RootNamespace>
+    <RootNamespace>Lemvik.Example.Chat.Protocol.Protobuf</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>

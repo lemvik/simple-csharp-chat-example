@@ -1,4 +1,4 @@
-namespace Critical.Chat.Protocol.Messages
+namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public class CreateRoomRequest : IMessage
     {

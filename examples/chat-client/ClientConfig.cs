@@ -1,4 +1,4 @@
-namespace Critical.Chat.Client.Example.TCP
+namespace Lemvik.Example.Chat.Client.Example.TCP
 {
     public class ClientConfig
     {

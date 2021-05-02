@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 
-namespace Critical.Chat.Testing
+namespace Lemvik.Example.Chat.Testing
 {
     public class TestingTransport : IChatTransport
     {

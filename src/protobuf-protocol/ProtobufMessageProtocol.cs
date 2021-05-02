@@ -1,11 +1,11 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Messages;
 using Google.Protobuf;
-using IMessage = Critical.Chat.Protocol.Messages.IMessage;
+using IMessage = Lemvik.Example.Chat.Protocol.Messages.IMessage;
 
-namespace Critical.Chat.Protocol.Protobuf
+namespace Lemvik.Example.Chat.Protocol.Protobuf
 {
     public class ProtobufMessageProtocol : IMessageProtocol
     {

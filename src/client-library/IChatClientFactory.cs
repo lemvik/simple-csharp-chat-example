@@ -1,6 +1,6 @@
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol.Transport;
 
-namespace Critical.Chat.Client
+namespace Lemvik.Example.Chat.Client
 {
     public interface IChatClientFactory
     {

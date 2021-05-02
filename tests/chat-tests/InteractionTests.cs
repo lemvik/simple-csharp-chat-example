@@ -5,13 +5,13 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Client;
-using Critical.Chat.Protocol.Transport;
-using Critical.Chat.Server;
-using Critical.Chat.Server.Implementation;
+using Lemvik.Example.Chat.Client;
+using Lemvik.Example.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Server;
+using Lemvik.Example.Chat.Server.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Critical.Chat.Testing
+namespace Lemvik.Example.Chat.Testing
 {
     [TestClass]
     public class InteractionTests

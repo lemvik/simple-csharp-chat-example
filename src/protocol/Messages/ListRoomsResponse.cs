@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Critical.Chat.Protocol.Messages
+namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public class ListRoomsResponse : IMessage
     {

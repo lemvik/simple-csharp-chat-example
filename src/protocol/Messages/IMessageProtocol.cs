@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Critical.Chat.Protocol.Messages
+namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public interface IMessageProtocol
     {

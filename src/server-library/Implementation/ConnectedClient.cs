@@ -3,11 +3,11 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 
-namespace Critical.Chat.Server.Implementation
+namespace Lemvik.Example.Chat.Server.Implementation
 {
     public class ConnectedClient : IConnectedClient
     {
@@ -71,7 +71,7 @@ namespace Critical.Chat.Server.Implementation
 
         public void LeaveRoom(IServerChatRoom serverChatRoom)
         {
-            if (!rooms.TryRemove(serverChatRoom.Id, out var _))
+            if (!rooms.TryRemove(serverChatRoom.Id, out _))
             {
                 throw new Exception($"Failed to leave [room={serverChatRoom}][client={this}]");
             }

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Logging;
 
-namespace Critical.Chat.Client
+namespace Lemvik.Example.Chat.Client
 {
     internal class ChatClient : IChatClient
     {
@@ -94,7 +94,7 @@ namespace Critical.Chat.Client
             }
         }
 
-        private async Task DispatchMessage(IMessage message, CancellationToken token = default)
+        private Task DispatchMessage(IMessage message, CancellationToken token = default)
         {
             logger.LogDebug("Dispatching [message={Message}]", message);
 
@@ -116,6 +116,8 @@ namespace Critical.Chat.Client
                     logger.LogWarning("Unexpected message to be handled [message={Message}]", message);
                     break;
             }
+            
+            return Task.CompletedTask;
         }
     }
 }

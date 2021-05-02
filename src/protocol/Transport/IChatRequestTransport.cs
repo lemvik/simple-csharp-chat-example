@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Messages;
 
-namespace Critical.Chat.Protocol.Transport
+namespace Lemvik.Example.Chat.Protocol.Transport
 {
     public interface IChatRequestTransport : IChatTransport
     {

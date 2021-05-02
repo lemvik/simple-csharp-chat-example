@@ -1,6 +1,6 @@
 using System;
 
-namespace Critical.Chat.Protocol.Messages
+namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public static class MessageUtilities
     {

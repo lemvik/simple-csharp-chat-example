@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Critical.Chat.Protocol.Protobuf {
+namespace Lemvik.Example.Chat.Protocol.Protobuf {
 
   /// <summary>Holder for reflection information generated from messages.proto</summary>
   public static partial class MessagesReflection {
@@ -52,26 +52,26 @@ namespace Critical.Chat.Protocol.Protobuf {
             "Ei5MZWF2ZVJvb21SZXNwb25zZUgAQgkKB21lc3NhZ2UicAoPUHJvdG9jb2xN",
             "ZXNzYWdlEi0KEGV4Y2hhbmdlX21lc3NhZ2UYASABKAsyES5Qcm90b2NvbEV4",
             "Y2hhbmdlSAASIwoLdXNlck1lc3NhZ2UYAiABKAsyDC5Vc2VyTWVzc2FnZUgA",
-            "QgkKB21lc3NhZ2VCIqoCH0NyaXRpY2FsLkNoYXQuUHJvdG9jb2wuUHJvdG9i",
-            "dWZiBnByb3RvMw=="));
+            "QgkKB21lc3NhZ2VCKKoCJUxlbXZpay5FeGFtcGxlLkNoYXQuUHJvdG9jb2wu",
+            "UHJvdG9idWZiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ChatRoom), global::Critical.Chat.Protocol.Protobuf.ChatRoom.Parser, new[]{ "Id", "Name" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ChatUser), global::Critical.Chat.Protocol.Protobuf.ChatUser.Parser, new[]{ "UserId", "UserName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest), global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse), global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse.Parser, new[]{ "Rooms" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.HandshakeRequest), global::Critical.Chat.Protocol.Protobuf.HandshakeRequest.Parser, new[]{ "User" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.HandshakeResponse), global::Critical.Chat.Protocol.Protobuf.HandshakeResponse.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest), global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest.Parser, new[]{ "RoomName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse), global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest), global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse), global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse.Parser, new[]{ "Room", "Messages" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest), global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest.Parser, new[]{ "Room" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse), global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.UserMessage), global::Critical.Chat.Protocol.Protobuf.UserMessage.Parser, new[]{ "User", "Room", "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ProtocolExchange), global::Critical.Chat.Protocol.Protobuf.ProtocolExchange.Parser, new[]{ "ExchangeId", "HandshakeRequest", "HandshakeResponse", "CreateRoomRequest", "CreateRoomResponse", "ListRoomRequest", "ListRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "LeaveRoomRequest", "LeaveRoomResponse" }, new[]{ "Message" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Critical.Chat.Protocol.Protobuf.ProtocolMessage), global::Critical.Chat.Protocol.Protobuf.ProtocolMessage.Parser, new[]{ "ExchangeMessage", "UserMessage" }, new[]{ "Message" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom), global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom.Parser, new[]{ "Id", "Name" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser), global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser.Parser, new[]{ "UserId", "UserName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest), global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse), global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse.Parser, new[]{ "Rooms" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest), global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest.Parser, new[]{ "User" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse), global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest), global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest.Parser, new[]{ "RoomName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse), global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest), global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse), global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse.Parser, new[]{ "Room", "Messages" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest), global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest.Parser, new[]{ "Room" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse), global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage), global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage.Parser, new[]{ "User", "Room", "Message" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange.Parser, new[]{ "ExchangeId", "HandshakeRequest", "HandshakeResponse", "CreateRoomRequest", "CreateRoomResponse", "ListRoomRequest", "ListRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "LeaveRoomRequest", "LeaveRoomResponse" }, new[]{ "Message" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolMessage), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolMessage.Parser, new[]{ "ExchangeMessage", "UserMessage" }, new[]{ "Message" }, null, null, null)
           }));
     }
     #endregion
@@ -90,7 +90,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -298,7 +298,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -506,7 +506,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -642,7 +642,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -670,11 +670,11 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "rooms" field.</summary>
     public const int RoomsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Critical.Chat.Protocol.Protobuf.ChatRoom> _repeated_rooms_codec
-        = pb::FieldCodec.ForMessage(10, global::Critical.Chat.Protocol.Protobuf.ChatRoom.Parser);
-    private readonly pbc::RepeatedField<global::Critical.Chat.Protocol.Protobuf.ChatRoom> rooms_ = new pbc::RepeatedField<global::Critical.Chat.Protocol.Protobuf.ChatRoom>();
+    private static readonly pb::FieldCodec<global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom> _repeated_rooms_codec
+        = pb::FieldCodec.ForMessage(10, global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom.Parser);
+    private readonly pbc::RepeatedField<global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom> rooms_ = new pbc::RepeatedField<global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Critical.Chat.Protocol.Protobuf.ChatRoom> Rooms {
+    public pbc::RepeatedField<global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom> Rooms {
       get { return rooms_; }
     }
 
@@ -803,7 +803,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -831,9 +831,9 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "user" field.</summary>
     public const int UserFieldNumber = 1;
-    private global::Critical.Chat.Protocol.Protobuf.ChatUser user_;
+    private global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser user_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ChatUser User {
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser User {
       get { return user_; }
       set {
         user_ = value;
@@ -919,7 +919,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
       if (other.user_ != null) {
         if (user_ == null) {
-          User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+          User = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser();
         }
         User.MergeFrom(other.User);
       }
@@ -939,7 +939,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (user_ == null) {
-              User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+              User = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser();
             }
             input.ReadMessage(User);
             break;
@@ -960,7 +960,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (user_ == null) {
-              User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+              User = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser();
             }
             input.ReadMessage(User);
             break;
@@ -984,7 +984,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1120,7 +1120,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1292,7 +1292,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1320,9 +1320,9 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "room" field.</summary>
     public const int RoomFieldNumber = 1;
-    private global::Critical.Chat.Protocol.Protobuf.ChatRoom room_;
+    private global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom room_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ChatRoom Room {
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom Room {
       get { return room_; }
       set {
         room_ = value;
@@ -1408,7 +1408,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
       if (other.room_ != null) {
         if (room_ == null) {
-          Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+          Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
         }
         Room.MergeFrom(other.Room);
       }
@@ -1428,7 +1428,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -1449,7 +1449,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -1473,7 +1473,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1645,7 +1645,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1674,9 +1674,9 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "room" field.</summary>
     public const int RoomFieldNumber = 1;
-    private global::Critical.Chat.Protocol.Protobuf.ChatRoom room_;
+    private global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom room_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ChatRoom Room {
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom Room {
       get { return room_; }
       set {
         room_ = value;
@@ -1685,11 +1685,11 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "messages" field.</summary>
     public const int MessagesFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Critical.Chat.Protocol.Protobuf.UserMessage> _repeated_messages_codec
-        = pb::FieldCodec.ForMessage(18, global::Critical.Chat.Protocol.Protobuf.UserMessage.Parser);
-    private readonly pbc::RepeatedField<global::Critical.Chat.Protocol.Protobuf.UserMessage> messages_ = new pbc::RepeatedField<global::Critical.Chat.Protocol.Protobuf.UserMessage>();
+    private static readonly pb::FieldCodec<global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage> _repeated_messages_codec
+        = pb::FieldCodec.ForMessage(18, global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage.Parser);
+    private readonly pbc::RepeatedField<global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage> messages_ = new pbc::RepeatedField<global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Critical.Chat.Protocol.Protobuf.UserMessage> Messages {
+    public pbc::RepeatedField<global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage> Messages {
       get { return messages_; }
     }
 
@@ -1777,7 +1777,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
       if (other.room_ != null) {
         if (room_ == null) {
-          Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+          Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
         }
         Room.MergeFrom(other.Room);
       }
@@ -1798,7 +1798,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -1823,7 +1823,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -1851,7 +1851,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1879,9 +1879,9 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "room" field.</summary>
     public const int RoomFieldNumber = 1;
-    private global::Critical.Chat.Protocol.Protobuf.ChatRoom room_;
+    private global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom room_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ChatRoom Room {
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom Room {
       get { return room_; }
       set {
         room_ = value;
@@ -1967,7 +1967,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
       if (other.room_ != null) {
         if (room_ == null) {
-          Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+          Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
         }
         Room.MergeFrom(other.Room);
       }
@@ -1987,7 +1987,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -2008,7 +2008,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -2032,7 +2032,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2060,9 +2060,9 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "room" field.</summary>
     public const int RoomFieldNumber = 1;
-    private global::Critical.Chat.Protocol.Protobuf.ChatRoom room_;
+    private global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom room_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ChatRoom Room {
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom Room {
       get { return room_; }
       set {
         room_ = value;
@@ -2148,7 +2148,7 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
       if (other.room_ != null) {
         if (room_ == null) {
-          Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+          Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
         }
         Room.MergeFrom(other.Room);
       }
@@ -2168,7 +2168,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -2189,7 +2189,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -2213,7 +2213,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2243,9 +2243,9 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "user" field.</summary>
     public const int UserFieldNumber = 1;
-    private global::Critical.Chat.Protocol.Protobuf.ChatUser user_;
+    private global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser user_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ChatUser User {
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser User {
       get { return user_; }
       set {
         user_ = value;
@@ -2254,9 +2254,9 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     /// <summary>Field number for the "room" field.</summary>
     public const int RoomFieldNumber = 2;
-    private global::Critical.Chat.Protocol.Protobuf.ChatRoom room_;
+    private global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom room_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ChatRoom Room {
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom Room {
       get { return room_; }
       set {
         room_ = value;
@@ -2379,13 +2379,13 @@ namespace Critical.Chat.Protocol.Protobuf {
       }
       if (other.user_ != null) {
         if (user_ == null) {
-          User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+          User = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser();
         }
         User.MergeFrom(other.User);
       }
       if (other.room_ != null) {
         if (room_ == null) {
-          Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+          Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
         }
         Room.MergeFrom(other.Room);
       }
@@ -2408,14 +2408,14 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (user_ == null) {
-              User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+              User = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser();
             }
             input.ReadMessage(User);
             break;
           }
           case 18: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -2440,14 +2440,14 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           case 10: {
             if (user_ == null) {
-              User = new global::Critical.Chat.Protocol.Protobuf.ChatUser();
+              User = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatUser();
             }
             input.ReadMessage(User);
             break;
           }
           case 18: {
             if (room_ == null) {
-              Room = new global::Critical.Chat.Protocol.Protobuf.ChatRoom();
+              Room = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatRoom();
             }
             input.ReadMessage(Room);
             break;
@@ -2475,7 +2475,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2548,8 +2548,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "handshake_request" field.</summary>
     public const int HandshakeRequestFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.HandshakeRequest HandshakeRequest {
-      get { return messageCase_ == MessageOneofCase.HandshakeRequest ? (global::Critical.Chat.Protocol.Protobuf.HandshakeRequest) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest HandshakeRequest {
+      get { return messageCase_ == MessageOneofCase.HandshakeRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.HandshakeRequest;
@@ -2559,8 +2559,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "handshake_response" field.</summary>
     public const int HandshakeResponseFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.HandshakeResponse HandshakeResponse {
-      get { return messageCase_ == MessageOneofCase.HandshakeResponse ? (global::Critical.Chat.Protocol.Protobuf.HandshakeResponse) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse HandshakeResponse {
+      get { return messageCase_ == MessageOneofCase.HandshakeResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.HandshakeResponse;
@@ -2570,8 +2570,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "create_room_request" field.</summary>
     public const int CreateRoomRequestFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest CreateRoomRequest {
-      get { return messageCase_ == MessageOneofCase.CreateRoomRequest ? (global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest CreateRoomRequest {
+      get { return messageCase_ == MessageOneofCase.CreateRoomRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.CreateRoomRequest;
@@ -2581,8 +2581,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "create_room_response" field.</summary>
     public const int CreateRoomResponseFieldNumber = 5;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse CreateRoomResponse {
-      get { return messageCase_ == MessageOneofCase.CreateRoomResponse ? (global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse CreateRoomResponse {
+      get { return messageCase_ == MessageOneofCase.CreateRoomResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.CreateRoomResponse;
@@ -2592,8 +2592,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "list_room_request" field.</summary>
     public const int ListRoomRequestFieldNumber = 6;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest ListRoomRequest {
-      get { return messageCase_ == MessageOneofCase.ListRoomRequest ? (global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest ListRoomRequest {
+      get { return messageCase_ == MessageOneofCase.ListRoomRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.ListRoomRequest;
@@ -2603,8 +2603,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "list_room_response" field.</summary>
     public const int ListRoomResponseFieldNumber = 7;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse ListRoomResponse {
-      get { return messageCase_ == MessageOneofCase.ListRoomResponse ? (global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse ListRoomResponse {
+      get { return messageCase_ == MessageOneofCase.ListRoomResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.ListRoomResponse;
@@ -2614,8 +2614,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "join_room_request" field.</summary>
     public const int JoinRoomRequestFieldNumber = 8;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest JoinRoomRequest {
-      get { return messageCase_ == MessageOneofCase.JoinRoomRequest ? (global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest JoinRoomRequest {
+      get { return messageCase_ == MessageOneofCase.JoinRoomRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.JoinRoomRequest;
@@ -2625,8 +2625,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "join_room_response" field.</summary>
     public const int JoinRoomResponseFieldNumber = 9;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse JoinRoomResponse {
-      get { return messageCase_ == MessageOneofCase.JoinRoomResponse ? (global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse JoinRoomResponse {
+      get { return messageCase_ == MessageOneofCase.JoinRoomResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.JoinRoomResponse;
@@ -2636,8 +2636,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "leave_room_request" field.</summary>
     public const int LeaveRoomRequestFieldNumber = 10;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest LeaveRoomRequest {
-      get { return messageCase_ == MessageOneofCase.LeaveRoomRequest ? (global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest LeaveRoomRequest {
+      get { return messageCase_ == MessageOneofCase.LeaveRoomRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.LeaveRoomRequest;
@@ -2647,8 +2647,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "leave_room_response" field.</summary>
     public const int LeaveRoomResponseFieldNumber = 11;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse LeaveRoomResponse {
-      get { return messageCase_ == MessageOneofCase.LeaveRoomResponse ? (global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse LeaveRoomResponse {
+      get { return messageCase_ == MessageOneofCase.LeaveRoomResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.LeaveRoomResponse;
@@ -2897,61 +2897,61 @@ namespace Critical.Chat.Protocol.Protobuf {
       switch (other.MessageCase) {
         case MessageOneofCase.HandshakeRequest:
           if (HandshakeRequest == null) {
-            HandshakeRequest = new global::Critical.Chat.Protocol.Protobuf.HandshakeRequest();
+            HandshakeRequest = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
           }
           HandshakeRequest.MergeFrom(other.HandshakeRequest);
           break;
         case MessageOneofCase.HandshakeResponse:
           if (HandshakeResponse == null) {
-            HandshakeResponse = new global::Critical.Chat.Protocol.Protobuf.HandshakeResponse();
+            HandshakeResponse = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
           }
           HandshakeResponse.MergeFrom(other.HandshakeResponse);
           break;
         case MessageOneofCase.CreateRoomRequest:
           if (CreateRoomRequest == null) {
-            CreateRoomRequest = new global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest();
+            CreateRoomRequest = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest();
           }
           CreateRoomRequest.MergeFrom(other.CreateRoomRequest);
           break;
         case MessageOneofCase.CreateRoomResponse:
           if (CreateRoomResponse == null) {
-            CreateRoomResponse = new global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse();
+            CreateRoomResponse = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse();
           }
           CreateRoomResponse.MergeFrom(other.CreateRoomResponse);
           break;
         case MessageOneofCase.ListRoomRequest:
           if (ListRoomRequest == null) {
-            ListRoomRequest = new global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest();
+            ListRoomRequest = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest();
           }
           ListRoomRequest.MergeFrom(other.ListRoomRequest);
           break;
         case MessageOneofCase.ListRoomResponse:
           if (ListRoomResponse == null) {
-            ListRoomResponse = new global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse();
+            ListRoomResponse = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse();
           }
           ListRoomResponse.MergeFrom(other.ListRoomResponse);
           break;
         case MessageOneofCase.JoinRoomRequest:
           if (JoinRoomRequest == null) {
-            JoinRoomRequest = new global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest();
+            JoinRoomRequest = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest();
           }
           JoinRoomRequest.MergeFrom(other.JoinRoomRequest);
           break;
         case MessageOneofCase.JoinRoomResponse:
           if (JoinRoomResponse == null) {
-            JoinRoomResponse = new global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse();
+            JoinRoomResponse = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse();
           }
           JoinRoomResponse.MergeFrom(other.JoinRoomResponse);
           break;
         case MessageOneofCase.LeaveRoomRequest:
           if (LeaveRoomRequest == null) {
-            LeaveRoomRequest = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest();
+            LeaveRoomRequest = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest();
           }
           LeaveRoomRequest.MergeFrom(other.LeaveRoomRequest);
           break;
         case MessageOneofCase.LeaveRoomResponse:
           if (LeaveRoomResponse == null) {
-            LeaveRoomResponse = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse();
+            LeaveRoomResponse = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse();
           }
           LeaveRoomResponse.MergeFrom(other.LeaveRoomResponse);
           break;
@@ -2976,7 +2976,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 18: {
-            global::Critical.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
             if (messageCase_ == MessageOneofCase.HandshakeRequest) {
               subBuilder.MergeFrom(HandshakeRequest);
             }
@@ -2985,7 +2985,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 26: {
-            global::Critical.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
             if (messageCase_ == MessageOneofCase.HandshakeResponse) {
               subBuilder.MergeFrom(HandshakeResponse);
             }
@@ -2994,7 +2994,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 34: {
-            global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest();
             if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
               subBuilder.MergeFrom(CreateRoomRequest);
             }
@@ -3003,7 +3003,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 42: {
-            global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse();
             if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
               subBuilder.MergeFrom(CreateRoomResponse);
             }
@@ -3012,7 +3012,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 50: {
-            global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest();
             if (messageCase_ == MessageOneofCase.ListRoomRequest) {
               subBuilder.MergeFrom(ListRoomRequest);
             }
@@ -3021,7 +3021,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 58: {
-            global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse();
             if (messageCase_ == MessageOneofCase.ListRoomResponse) {
               subBuilder.MergeFrom(ListRoomResponse);
             }
@@ -3030,7 +3030,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 66: {
-            global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest();
             if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
               subBuilder.MergeFrom(JoinRoomRequest);
             }
@@ -3039,7 +3039,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 74: {
-            global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse();
             if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
               subBuilder.MergeFrom(JoinRoomResponse);
             }
@@ -3048,7 +3048,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 82: {
-            global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest();
             if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
               subBuilder.MergeFrom(LeaveRoomRequest);
             }
@@ -3057,7 +3057,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 90: {
-            global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse();
             if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
               subBuilder.MergeFrom(LeaveRoomResponse);
             }
@@ -3084,7 +3084,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 18: {
-            global::Critical.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
             if (messageCase_ == MessageOneofCase.HandshakeRequest) {
               subBuilder.MergeFrom(HandshakeRequest);
             }
@@ -3093,7 +3093,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 26: {
-            global::Critical.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.HandshakeResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
             if (messageCase_ == MessageOneofCase.HandshakeResponse) {
               subBuilder.MergeFrom(HandshakeResponse);
             }
@@ -3102,7 +3102,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 34: {
-            global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest();
             if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
               subBuilder.MergeFrom(CreateRoomRequest);
             }
@@ -3111,7 +3111,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 42: {
-            global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.CreateRoomResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse();
             if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
               subBuilder.MergeFrom(CreateRoomResponse);
             }
@@ -3120,7 +3120,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 50: {
-            global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest();
             if (messageCase_ == MessageOneofCase.ListRoomRequest) {
               subBuilder.MergeFrom(ListRoomRequest);
             }
@@ -3129,7 +3129,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 58: {
-            global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.ListRoomsResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse();
             if (messageCase_ == MessageOneofCase.ListRoomResponse) {
               subBuilder.MergeFrom(ListRoomResponse);
             }
@@ -3138,7 +3138,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 66: {
-            global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest();
             if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
               subBuilder.MergeFrom(JoinRoomRequest);
             }
@@ -3147,7 +3147,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 74: {
-            global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.JoinRoomResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse();
             if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
               subBuilder.MergeFrom(JoinRoomResponse);
             }
@@ -3156,7 +3156,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 82: {
-            global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomRequest();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest();
             if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
               subBuilder.MergeFrom(LeaveRoomRequest);
             }
@@ -3165,7 +3165,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 90: {
-            global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Critical.Chat.Protocol.Protobuf.LeaveRoomResponse();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse();
             if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
               subBuilder.MergeFrom(LeaveRoomResponse);
             }
@@ -3192,7 +3192,7 @@ namespace Critical.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Critical.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3229,8 +3229,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "exchange_message" field.</summary>
     public const int ExchangeMessageFieldNumber = 1;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.ProtocolExchange ExchangeMessage {
-      get { return messageCase_ == MessageOneofCase.ExchangeMessage ? (global::Critical.Chat.Protocol.Protobuf.ProtocolExchange) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange ExchangeMessage {
+      get { return messageCase_ == MessageOneofCase.ExchangeMessage ? (global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.ExchangeMessage;
@@ -3240,8 +3240,8 @@ namespace Critical.Chat.Protocol.Protobuf {
     /// <summary>Field number for the "userMessage" field.</summary>
     public const int UserMessageFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Critical.Chat.Protocol.Protobuf.UserMessage UserMessage {
-      get { return messageCase_ == MessageOneofCase.UserMessage ? (global::Critical.Chat.Protocol.Protobuf.UserMessage) message_ : null; }
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage UserMessage {
+      get { return messageCase_ == MessageOneofCase.UserMessage ? (global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.UserMessage;
@@ -3362,13 +3362,13 @@ namespace Critical.Chat.Protocol.Protobuf {
       switch (other.MessageCase) {
         case MessageOneofCase.ExchangeMessage:
           if (ExchangeMessage == null) {
-            ExchangeMessage = new global::Critical.Chat.Protocol.Protobuf.ProtocolExchange();
+            ExchangeMessage = new global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange();
           }
           ExchangeMessage.MergeFrom(other.ExchangeMessage);
           break;
         case MessageOneofCase.UserMessage:
           if (UserMessage == null) {
-            UserMessage = new global::Critical.Chat.Protocol.Protobuf.UserMessage();
+            UserMessage = new global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage();
           }
           UserMessage.MergeFrom(other.UserMessage);
           break;
@@ -3389,7 +3389,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            global::Critical.Chat.Protocol.Protobuf.ProtocolExchange subBuilder = new global::Critical.Chat.Protocol.Protobuf.ProtocolExchange();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange();
             if (messageCase_ == MessageOneofCase.ExchangeMessage) {
               subBuilder.MergeFrom(ExchangeMessage);
             }
@@ -3398,7 +3398,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 18: {
-            global::Critical.Chat.Protocol.Protobuf.UserMessage subBuilder = new global::Critical.Chat.Protocol.Protobuf.UserMessage();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage();
             if (messageCase_ == MessageOneofCase.UserMessage) {
               subBuilder.MergeFrom(UserMessage);
             }
@@ -3421,7 +3421,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            global::Critical.Chat.Protocol.Protobuf.ProtocolExchange subBuilder = new global::Critical.Chat.Protocol.Protobuf.ProtocolExchange();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange();
             if (messageCase_ == MessageOneofCase.ExchangeMessage) {
               subBuilder.MergeFrom(ExchangeMessage);
             }
@@ -3430,7 +3430,7 @@ namespace Critical.Chat.Protocol.Protobuf {
             break;
           }
           case 18: {
-            global::Critical.Chat.Protocol.Protobuf.UserMessage subBuilder = new global::Critical.Chat.Protocol.Protobuf.UserMessage();
+            global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage();
             if (messageCase_ == MessageOneofCase.UserMessage) {
               subBuilder.MergeFrom(UserMessage);
             }

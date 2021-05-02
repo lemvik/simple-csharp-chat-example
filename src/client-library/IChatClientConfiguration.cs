@@ -1,4 +1,4 @@
-namespace Critical.Chat.Client
+namespace Lemvik.Example.Chat.Client
 {
     public interface IChatClientConfiguration
     {

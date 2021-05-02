@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol;
 using Microsoft.Extensions.Logging;
 
-namespace Critical.Chat.Server.Implementation
+namespace Lemvik.Example.Chat.Server.Implementation
 {
     public class RoomRegistry : IRoomRegistry
     {

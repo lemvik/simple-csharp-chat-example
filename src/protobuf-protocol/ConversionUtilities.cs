@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using Critical.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Messages;
 
-namespace Critical.Chat.Protocol.Protobuf
+namespace Lemvik.Example.Chat.Protocol.Protobuf
 {
     internal static class ConversionUtilities
     {

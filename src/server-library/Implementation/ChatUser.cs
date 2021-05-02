@@ -1,6 +1,6 @@
-using Critical.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol;
 
-namespace Critical.Chat.Server.Implementation
+namespace Lemvik.Example.Chat.Server.Implementation
 {
     public class ChatUser : IChatUser
     {

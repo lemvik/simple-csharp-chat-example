@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol;
 
-namespace Critical.Chat.Server
+namespace Lemvik.Example.Chat.Server
 {
     public interface IRoomRegistry
     {

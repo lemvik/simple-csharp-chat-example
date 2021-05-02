@@ -1,6 +1,6 @@
-using Critical.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Messages;
 
-namespace Critical.Chat.Protocol
+namespace Lemvik.Example.Chat.Protocol
 {
     public class ChatMessage : IChatMessage, IChatRoomMessage
     {

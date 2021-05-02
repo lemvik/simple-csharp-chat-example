@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <RootNamespace>Critical.Chat.Client.Example.TCP</RootNamespace>
+    <RootNamespace>Lemvik.Example.Chat.Client.Example.TCP</RootNamespace>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>

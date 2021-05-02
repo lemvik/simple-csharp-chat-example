@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Logging;
 
-namespace Critical.Chat.Server.Implementation
+namespace Lemvik.Example.Chat.Server.Implementation
 {
     public class ChatServer : IChatServer
     {

@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
-using Critical.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol.Messages;
 
-namespace Critical.Chat.Server
+namespace Lemvik.Example.Chat.Server
 {
     public interface IServerChatRoom : IChatRoom
     {

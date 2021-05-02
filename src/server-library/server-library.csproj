@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Critical.Chat.Server</RootNamespace>
+    <RootNamespace>Lemvik.Example.Chat.Server</RootNamespace>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 

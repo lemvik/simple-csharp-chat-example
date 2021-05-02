@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol.Transport;
 
-namespace Critical.Chat.Server
+namespace Lemvik.Example.Chat.Server
 {
     public interface IChatServer
     {

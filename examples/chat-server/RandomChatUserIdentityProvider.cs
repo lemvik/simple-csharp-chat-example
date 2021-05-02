@@ -2,9 +2,9 @@ using System;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol;
+using Lemvik.Example.Chat.Protocol;
 
-namespace Critical.Chat.Server.Examples.TCP
+namespace Lemvik.Example.Chat.Server.Examples.TCP
 {
     public class RandomChatUserIdentityProvider : IChatUserIdentityProvider
     {

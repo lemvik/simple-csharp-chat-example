@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Critical.Chat.Protocol.Messages;
-using Critical.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Critical.Chat.Testing
+namespace Lemvik.Example.Chat.Testing
 {
     [TestClass]
     public class ExchangeTests

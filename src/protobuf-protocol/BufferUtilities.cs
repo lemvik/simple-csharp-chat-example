@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Critical.Chat.Protocol.Protobuf
+namespace Lemvik.Example.Chat.Protocol.Protobuf
 {
     internal static class BufferUtilities
     {

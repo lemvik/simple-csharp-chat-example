@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace Critical.Chat.Testing
+namespace Lemvik.Example.Chat.Testing
 {
     internal static class TestingLogger
     {
