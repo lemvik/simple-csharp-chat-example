@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\protocol\protocol.csproj" />
+    <ProjectReference Include="..\..\src\protocol\protocol.csproj" />
   </ItemGroup>
 
   <ItemGroup>
