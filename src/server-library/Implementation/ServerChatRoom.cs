@@ -60,11 +60,7 @@ namespace Critical.Chat.Server.Implementation
         public Task<IReadOnlyCollection<IChatMessage>> MostRecentMessages(
             int maxMessages, CancellationToken token = default)
         {
-            var chatMessages = new List<IChatMessage>
-            {
-                new ChatMessage(new ChatUser("1", "Test"), this, "Some message")
-            };
-            return Task.FromResult<IReadOnlyCollection<IChatMessage>>(chatMessages);
+            return Task.FromResult<IReadOnlyCollection<IChatMessage>>(Array.Empty<IChatMessage>());
         }
 
         public async Task RunAsync(CancellationToken token = default)
@@ -88,6 +84,12 @@ namespace Critical.Chat.Server.Implementation
                     var users = ListUsers();
                     var response = new ListUsersResponse(listUsersRequest.RequestId, this, users);
                     await client.SendMessage(response, token);
+                    break;
+                }
+                case ChatMessage chatMessage:
+                {
+                    var sendTasks = clients.Values.Select(chatClient => chatClient.SendMessage(chatMessage, token));
+                    await Task.WhenAll(sendTasks);
                     break;
                 }
             }

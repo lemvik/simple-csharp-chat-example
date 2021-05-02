@@ -10,6 +10,7 @@ namespace Critical.Chat.Client
 {
     public class ClientChatRoom : IClientChatRoom
     {
+        private readonly IChatUser user;
         private readonly IChatRoom room;
         private readonly Channel<IChatMessage> messages;
         private readonly IChatRequestTransport transport;
@@ -18,8 +19,9 @@ namespace Critical.Chat.Client
         public string Id => room.Id;
         public string Name => room.Name;
 
-        public ClientChatRoom(IChatRoom room, IChatRequestTransport chatTransport)
+        public ClientChatRoom(IChatUser user, IChatRoom room, IChatRequestTransport chatTransport)
         {
+            this.user = user;
             this.room = room;
             this.transport = chatTransport;
             this.messages = Channel.CreateUnbounded<IChatMessage>(new UnboundedChannelOptions
@@ -47,7 +49,8 @@ namespace Critical.Chat.Client
 
         public Task SendMessage(string message, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            var chatMessage = new ChatMessage(user, room, message);
+            return transport.Send(chatMessage, token);
         }
 
         public async Task<IChatMessage> GetMessage(CancellationToken token = default)

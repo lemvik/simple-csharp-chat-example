@@ -14,6 +14,7 @@ namespace Critical.Chat.Protocol.Messages
         LeaveRoomResponse,
         ListUsersRequest,
         ListUsersResponse,
+        ChatMessage,
         SendMessage,
         ReceiveMessage
     }

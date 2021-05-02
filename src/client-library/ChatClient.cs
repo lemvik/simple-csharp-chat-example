@@ -60,7 +60,7 @@ namespace Critical.Chat.Client
 
             var response = await transport.Exchange<JoinRoomResponse>(request, token);
 
-            var chatRoom = new ClientChatRoom(response.Room, transport);
+            var chatRoom = new ClientChatRoom(assignedUser, response.Room, transport);
 
             rooms.Add(chatRoom.Id, chatRoom);
 
@@ -94,22 +94,28 @@ namespace Critical.Chat.Client
             }
         }
 
-        private Task DispatchMessage(IMessage message, CancellationToken token = default)
+        private async Task DispatchMessage(IMessage message, CancellationToken token = default)
         {
             logger.LogDebug("Dispatching [message={Message}]", message);
 
-            switch (message.Type)
+            switch (message)
             {
-                case MessageType.SendMessage:
+                case ChatMessage chatMessage:
+                {
+                    var room = chatMessage.Room;
+                    if (!(rooms.TryGetValue(room.Id, out var chatRoom) && chatRoom.ReceiveMessage(chatMessage)))
+                    {
+                        logger.LogWarning("Failed to dispatch chat [message={Message}] to [room={Room}]", 
+                                          message,
+                                          room);
+                    }
+
                     break;
-                case MessageType.ReceiveMessage:
-                    break;
+                }
                 default:
                     logger.LogWarning("Unexpected message to be handled [message={Message}]", message);
                     break;
             }
-
-            return Task.CompletedTask;
         }
     }
 }
