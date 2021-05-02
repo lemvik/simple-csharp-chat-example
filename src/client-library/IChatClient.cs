@@ -9,10 +9,10 @@ namespace Lemvik.Example.Chat.Client
     {
         Task RunAsync(CancellationToken token = default);
 
-        Task<IReadOnlyCollection<IChatRoom>> ListRooms(CancellationToken token = default);
+        Task<IReadOnlyCollection<ChatRoom>> ListRooms(CancellationToken token = default);
 
-        Task<IChatRoom> CreateRoom(string roomName, CancellationToken token = default);
+        Task<ChatRoom> CreateRoom(string roomName, CancellationToken token = default);
 
-        Task<IClientChatRoom> JoinRoom(IChatRoom room, CancellationToken token = default);
+        Task<IClientChatRoom> JoinRoom(ChatRoom room, CancellationToken token = default);
     }
 }

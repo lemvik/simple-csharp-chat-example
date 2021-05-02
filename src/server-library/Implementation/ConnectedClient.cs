@@ -11,12 +11,12 @@ namespace Lemvik.Example.Chat.Server.Implementation
 {
     public class ConnectedClient : IConnectedClient
     {
-        public IChatUser User { get; }
+        public ChatUser User { get; }
         private readonly IChatTransport transport;
         private readonly ChannelWriter<(IConnectedClient, IMessage)> serverSink;
         private readonly ConcurrentDictionary<string, IServerChatRoom> rooms;
 
-        public ConnectedClient(IChatUser user,
+        public ConnectedClient(ChatUser user,
                                IChatTransport transport,
                                ChannelWriter<(IConnectedClient, IMessage)> serverSink)
         {
@@ -63,7 +63,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
 
         public void EnterRoom(IServerChatRoom serverChatRoom)
         {
-            if (!rooms.TryAdd(serverChatRoom.Id, serverChatRoom))
+            if (!rooms.TryAdd(serverChatRoom.Room.Id, serverChatRoom))
             {
                 throw new Exception($"Failed to enter [room={serverChatRoom}][client={this}]");
             }
@@ -71,7 +71,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
 
         public void LeaveRoom(IServerChatRoom serverChatRoom)
         {
-            if (!rooms.TryRemove(serverChatRoom.Id, out _))
+            if (!rooms.TryRemove(serverChatRoom.Room.Id, out _))
             {
                 throw new Exception($"Failed to leave [room={serverChatRoom}][client={this}]");
             }

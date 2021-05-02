@@ -8,7 +8,7 @@ namespace Lemvik.Example.Chat.Server
 {
     public interface IConnectedClient
     {
-        IChatUser User { get; } 
+        ChatUser User { get; } 
         
         void EnterRoom(IServerChatRoom serverChatRoom);
 

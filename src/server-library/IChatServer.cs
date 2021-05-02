@@ -9,6 +9,6 @@ namespace Lemvik.Example.Chat.Server
     {
         Task RunAsync(CancellationToken token = default);
         
-        Task AddClientAsync(IChatUser chatUser, IChatTransport transport, CancellationToken token = default);
+        Task AddClientAsync(ChatUser chatUser, IChatTransport transport, CancellationToken token = default);
     }
 }

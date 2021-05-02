@@ -12,17 +12,15 @@ namespace Lemvik.Example.Chat.Server.Implementation
 {
     internal class ServerChatRoom : IServerChatRoom
     {
-        public string Id { get; }
-        public string Name { get; }
+        public ChatRoom Room { get; }
         public ChannelWriter<(IMessage, IConnectedClient)> MessagesSink => messages.Writer;
 
         private readonly ConcurrentDictionary<string, IConnectedClient> clients;
         private readonly Channel<(IMessage, IConnectedClient)> messages;
 
-        internal ServerChatRoom(string id, string name)
+        internal ServerChatRoom(ChatRoom room)
         {
-            Id = id;
-            Name = name;
+            Room = room;
             clients = new ConcurrentDictionary<string, IConnectedClient>();
             messages = Channel.CreateUnbounded<(IMessage, IConnectedClient)>();
         }
@@ -53,14 +51,14 @@ namespace Lemvik.Example.Chat.Server.Implementation
 
         private IReadOnlyCollection<IChatRoomUser> ListUsers()
         {
-            var users = clients.Values.Select(client => new ChatRoomUser(this, client)).ToList();
+            var users = clients.Values.Select(client => new ChatRoomUser(Room, client)).ToList();
             return users;
         }
 
-        public Task<IReadOnlyCollection<IChatMessage>> MostRecentMessages(
-            int maxMessages, CancellationToken token = default)
+        public Task<IReadOnlyCollection<ChatMessage>> MostRecentMessages(uint maxMessages, 
+                                                                         CancellationToken token = default)
         {
-            return Task.FromResult<IReadOnlyCollection<IChatMessage>>(Array.Empty<IChatMessage>());
+            return Task.FromResult<IReadOnlyCollection<ChatMessage>>(Array.Empty<ChatMessage>());
         }
 
         public async Task RunAsync(CancellationToken token = default)
@@ -98,8 +96,8 @@ namespace Lemvik.Example.Chat.Server.Implementation
             {
                 case ListUsersRequest _:
                 {
-                    var users = ListUsers();
-                    var response = exchangeMessage.MakeResponse(new ListUsersResponse(this, users));
+                    var users = ListUsers().Select(user => user.User).ToList();
+                    var response = exchangeMessage.MakeResponse(new ListUsersResponse(Room, users));
                     await client.SendMessage(response, token);
                     break;
                 }
@@ -125,19 +123,13 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
         }
 
-        public override string ToString()
-        {
-            return $"Room[id={Id},name={Name}]";
-        }
-
         private class ChatRoomUser : IChatRoomUser
         {
-            public string Id => Client.User.Id;
-            public string Name => Client.User.Name;
-            public IChatRoom Room { get; }
+            public ChatUser User => Client.User;
+            public ChatRoom Room { get; }
             public IConnectedClient Client { get; }
 
-            public ChatRoomUser(IChatRoom room, IConnectedClient client)
+            public ChatRoomUser(ChatRoom room, IConnectedClient client)
             {
                 Room = room;
                 Client = client;

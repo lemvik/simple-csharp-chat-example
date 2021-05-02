@@ -31,17 +31,17 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 await roomsLock.WaitAsync(token);
 
                 var existing = rooms.Values.Select(room => room.Room)
-                                    .FirstOrDefault(room => room.Name.Equals(roomName));
+                                    .FirstOrDefault(room => room.Room.Name.Equals(roomName));
 
                 if (existing != null)
                 {
                     return existing;
                 }
 
-                var newRoom = new ServerChatRoom(roomName, roomName);
+                var newRoom = new ServerChatRoom(new ChatRoom(roomName, roomName));
                 var roomLifetime = CancellationTokenSource.CreateLinkedTokenSource(lifetime.Token);
                 var tracker = new RoomTracker(newRoom, roomLifetime);
-                if (!rooms.TryAdd(newRoom.Id, tracker))
+                if (!rooms.TryAdd(newRoom.Room.Id, tracker))
                 {
                     throw new Exception($"Failed to create [room={roomName}]");
                 }
@@ -69,7 +69,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             return Task.FromResult<IReadOnlyCollection<IServerChatRoom>>(chatRooms);
         }
 
-        public async Task CloseRoom(IChatRoom room)
+        public async Task CloseRoom(ChatRoom room)
         {
             RoomTracker tracker;
             try
@@ -77,7 +77,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 await roomsLock.WaitAsync();
                 if (!rooms.TryRemove(room.Id, out tracker))
                 {
-                    logger.LogWarning("Unable to close non-existing [room={Room}]", room);
+                    logger.LogWarning("Unable to close non-existing [room={@Room}]", room);
                 }
             }
             finally

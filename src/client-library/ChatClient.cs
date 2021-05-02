@@ -11,15 +11,15 @@ namespace Lemvik.Example.Chat.Client
     internal class ChatClient : IChatClient
     {
         private readonly ILogger<ChatClient> logger;
-        private readonly IChatRequestTransport transport;
+        private readonly IChatExchangeTransport transport;
         private readonly IDictionary<string, ClientChatRoom> rooms;
-        private IChatUser assignedUser;
+        private ChatUser assignedUser;
 
         internal ChatClient(ILogger<ChatClient> logger,
                             IChatTransport transport)
         {
             this.logger = logger;
-            this.transport = new ChatRequestTransport(transport);
+            this.transport = new ChatExchangeTransport(transport);
             this.rooms = new Dictionary<string, ClientChatRoom>();
         }
 
@@ -36,7 +36,7 @@ namespace Lemvik.Example.Chat.Client
             }
         }
 
-        public async Task<IReadOnlyCollection<IChatRoom>> ListRooms(CancellationToken token = default)
+        public async Task<IReadOnlyCollection<ChatRoom>> ListRooms(CancellationToken token = default)
         {
             var request = new ListRoomsRequest();
 
@@ -45,7 +45,7 @@ namespace Lemvik.Example.Chat.Client
             return response.Rooms;
         }
 
-        public async Task<IChatRoom> CreateRoom(string roomName, CancellationToken token = default)
+        public async Task<ChatRoom> CreateRoom(string roomName, CancellationToken token = default)
         {
             var request = new CreateRoomRequest(roomName);
 
@@ -54,7 +54,7 @@ namespace Lemvik.Example.Chat.Client
             return response.Room;
         }
 
-        public async Task<IClientChatRoom> JoinRoom(IChatRoom room, CancellationToken token = default)
+        public async Task<IClientChatRoom> JoinRoom(ChatRoom room, CancellationToken token = default)
         {
             var request = new JoinRoomRequest(room.Id);
 
@@ -62,7 +62,7 @@ namespace Lemvik.Example.Chat.Client
 
             var chatRoom = new ClientChatRoom(assignedUser, response.Room, transport);
 
-            rooms.Add(chatRoom.Id, chatRoom);
+            rooms.Add(chatRoom.Room.Id, chatRoom);
 
             foreach (var chatMessage in response.Messages)
             {

@@ -2,9 +2,9 @@ namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public class LeaveRoomResponse : IMessage
     {
-        public IChatRoom Room { get; }
+        public ChatRoom Room { get; }
 
-        public LeaveRoomResponse(IChatRoom room)
+        public LeaveRoomResponse(ChatRoom room)
         {
             Room = room;
         }

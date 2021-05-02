@@ -4,10 +4,10 @@ namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public class ListUsersResponse : IChatRoomMessage
     {
-        public IChatRoom Room { get; }
-        public IReadOnlyCollection<IChatUser> Users { get; }
+        public ChatRoom Room { get; }
+        public IReadOnlyCollection<ChatUser> Users { get; }
         
-        public ListUsersResponse(IChatRoom room, IReadOnlyCollection<IChatUser> users)
+        public ListUsersResponse(ChatRoom room, IReadOnlyCollection<ChatUser> users)
         {
             Room = room;
             Users = users;

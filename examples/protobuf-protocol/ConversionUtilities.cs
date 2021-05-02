@@ -6,25 +6,42 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
 {
     internal static class ConversionUtilities
     {
-        private static Protobuf.ChatRoom ToProtobuf(this IChatRoom chatRoom)
+        private static Protocol.ChatUser FromProtobuf(this ChatUser user)
         {
-            return new Protobuf.ChatRoom()
+            return new Protocol.ChatUser(user.UserId, user.UserName);
+        }
+
+        private static Protocol.ChatRoom FromProtobuf(this ChatRoom chatRoom)
+        {
+            return new Protocol.ChatRoom(chatRoom.Id, chatRoom.Name);
+        }
+
+        private static ChatMessage FromProtobuf(this UserMessage message)
+        {
+            return new ChatMessage(message.User.FromProtobuf(), 
+                                   message.Room.FromProtobuf(),
+                                   message.Message);
+        }
+        
+        private static ChatRoom ToProtobuf(this Protocol.ChatRoom chatRoom)
+        {
+            return new ChatRoom()
             {
                 Id = chatRoom.Id,
                 Name = chatRoom.Name
             };
         }
 
-        private static Protobuf.ChatUser ToProtobuf(this IChatUser chatUser)
+        private static ChatUser ToProtobuf(this Protocol.ChatUser chatUser)
         {
-            return new Protobuf.ChatUser()
+            return new ChatUser()
             {
                 UserId = chatUser.Id,
                 UserName = chatUser.Name
             };
         }
 
-        private static UserMessage ToProtobuf(this IChatMessage chatMessage)
+        private static UserMessage ToProtobuf(this ChatMessage chatMessage)
         {
             return new UserMessage()
             {
@@ -52,7 +69,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
                         {
                             Rooms =
                             {
-                                listRoomsResponse.Rooms.Select(room => new Protobuf.ChatRoom()
+                                listRoomsResponse.Rooms.Select(room => new ChatRoom()
                                 {
                                     Id = room.Id,
                                     Name = room.Name
@@ -151,46 +168,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
             }
         }
 
-        private class ChatUser : IChatUser
-        {
-            public string Id { get; }
-            public string Name { get; }
-
-            private ChatUser(string id, string name)
-            {
-                Id = id;
-                Name = name;
-            }
-
-            public static ChatUser FromProtobuf(Protobuf.ChatUser user)
-            {
-                return new ChatUser(user.UserId, user.UserName);
-            }
-        }
-
-        private class ChatRoom : IChatRoom
-        {
-            public string Id { get; }
-            public string Name { get; }
-
-            private ChatRoom(string id, string name)
-            {
-                Id = id;
-                Name = name;
-            }
-
-            internal static ChatRoom FromProtobuf(Protobuf.ChatRoom chatRoom)
-            {
-                return new ChatRoom(chatRoom.Id, chatRoom.Name);
-            }
-        }
-
-        private static ChatMessage FromProtobuf(this UserMessage message)
-        {
-            return new ChatMessage(ChatUser.FromProtobuf(message.User),
-                                   ChatRoom.FromProtobuf(message.Room),
-                                   message.Message);
-        }
 
         internal static IMessage FromProtocolMessage(this ProtocolMessage message)
         {
@@ -215,32 +192,31 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
             switch (protocolExchange.MessageCase)
             {
                 case ProtocolExchange.MessageOneofCase.HandshakeRequest:
-                    return new Messages.HandshakeRequest(ChatUser.FromProtobuf(protocolExchange.HandshakeRequest.User));
+                    return new Messages.HandshakeRequest(protocolExchange.HandshakeRequest.User.FromProtobuf());
                 case ProtocolExchange.MessageOneofCase.HandshakeResponse:
                     return new Messages.HandshakeResponse();
                 case ProtocolExchange.MessageOneofCase.CreateRoomRequest:
                     return new Messages.CreateRoomRequest(protocolExchange.CreateRoomRequest.RoomName);
                 case ProtocolExchange.MessageOneofCase.CreateRoomResponse:
-                    return new Messages.CreateRoomResponse(ChatRoom.FromProtobuf(protocolExchange.CreateRoomResponse
-                                                               .Room));
+                    return new Messages.CreateRoomResponse(protocolExchange.CreateRoomResponse.Room.FromProtobuf());
                 case ProtocolExchange.MessageOneofCase.ListRoomRequest:
                     return new Messages.ListRoomsRequest();
                 case ProtocolExchange.MessageOneofCase.ListRoomResponse:
                     return new Messages.ListRoomsResponse(protocolExchange.ListRoomResponse.Rooms
-                                                                          .Select(ChatRoom.FromProtobuf)
+                                                                          .Select(room => room.FromProtobuf())
                                                                           .ToList());
                 case ProtocolExchange.MessageOneofCase.JoinRoomRequest:
                     return new Messages.JoinRoomRequest(protocolExchange.JoinRoomRequest.RoomId);
                 case ProtocolExchange.MessageOneofCase.JoinRoomResponse:
-                    return new Messages.JoinRoomResponse(ChatRoom.FromProtobuf(protocolExchange.JoinRoomResponse.Room),
+                    return new Messages.JoinRoomResponse(protocolExchange.JoinRoomResponse.Room.FromProtobuf(),
                                                          protocolExchange.JoinRoomResponse.Messages
                                                                          .Select(message => message.FromProtobuf())
                                                                          .ToList());
                 case ProtocolExchange.MessageOneofCase.LeaveRoomRequest:
-                    return new Messages.LeaveRoomRequest(ChatRoom.FromProtobuf(protocolExchange.LeaveRoomRequest.Room));
+                    return new Messages.LeaveRoomRequest(protocolExchange.LeaveRoomRequest.Room.FromProtobuf());
                 case ProtocolExchange.MessageOneofCase.LeaveRoomResponse:
                     return new
-                        Messages.LeaveRoomResponse(ChatRoom.FromProtobuf(protocolExchange.LeaveRoomResponse.Room));
+                        Messages.LeaveRoomResponse(protocolExchange.LeaveRoomResponse.Room.FromProtobuf());
                 default:
                     throw new ArgumentOutOfRangeException();
             }

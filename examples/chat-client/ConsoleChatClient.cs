@@ -56,7 +56,7 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
             var rooms = await chatClient.ListRooms(stoppingToken);
             logger.LogDebug("Enumerated [rooms={rooms}]", rooms);
 
-            IChatRoom roomToJoin;
+            ChatRoom roomToJoin;
             if (rooms.Count == 0)
             {
                 roomToJoin = await chatClient.CreateRoom(clientConfig.ChatConfig.RoomToCreate, stoppingToken);

@@ -1,12 +1,10 @@
-using Lemvik.Example.Chat.Protocol;
-
-namespace Lemvik.Example.Chat.Server.Implementation
+namespace Lemvik.Example.Chat.Protocol
 {
-    public class ChatUser : IChatUser
+    public class ChatUser
     {
         public string Id { get; }
         public string Name { get; }
-
+        
         public ChatUser(string id, string name)
         {
             Id = id;

@@ -10,36 +10,31 @@ namespace Lemvik.Example.Chat.Client
 {
     public class ClientChatRoom : IClientChatRoom
     {
-        private readonly IChatUser user;
-        private readonly IChatRoom room;
-        private readonly Channel<IChatMessage> messages;
-        private readonly IChatRequestTransport transport;
+        public ChatRoom Room { get; }
+        private readonly ChatUser user;
+        private readonly Channel<ChatMessage> messages;
+        private readonly IChatExchangeTransport transport;
 
-        public string Id => room.Id;
-        public string Name => room.Name;
-
-        public ClientChatRoom(IChatUser user, IChatRoom room, IChatRequestTransport chatTransport)
+        public ClientChatRoom(ChatUser user, ChatRoom room, IChatExchangeTransport chatTransport)
         {
             this.user = user;
-            this.room = room;
+            this.Room = room;
             this.transport = chatTransport;
-            this.messages = Channel.CreateUnbounded<IChatMessage>(new UnboundedChannelOptions
+            this.messages = Channel.CreateUnbounded<ChatMessage>(new UnboundedChannelOptions
             {
                 SingleReader = false,
                 SingleWriter = false
             });
         }
 
-        public bool ReceiveMessage(IChatMessage message)
+        public bool ReceiveMessage(ChatMessage message)
         {
             return messages.Writer.TryWrite(message);
         }
 
-        public bool IsActive { get; private set; } = true;
-
-        public async Task<IReadOnlyCollection<IChatUser>> ListUsers(CancellationToken token = default)
+        public async Task<IReadOnlyCollection<ChatUser>> ListUsers(CancellationToken token = default)
         {
-            var listRequest = new ListUsersRequest(room);
+            var listRequest = new ListUsersRequest(Room);
 
             var response = await transport.Exchange<ListUsersResponse>(listRequest, token);
 
@@ -48,18 +43,12 @@ namespace Lemvik.Example.Chat.Client
 
         public Task SendMessage(string message, CancellationToken token = default)
         {
-            var chatMessage = new ChatMessage(user, room, message);
+            var chatMessage = new ChatMessage(user, Room, message);
             return transport.Send(chatMessage, token);
         }
 
-        public async Task<IChatMessage> GetMessage(CancellationToken token = default)
+        public async Task<ChatMessage> GetMessage(CancellationToken token = default)
         {
-            if (!await messages.Reader.WaitToReadAsync(token))
-            {
-                IsActive = false;
-                return null;
-            }
-
             return await messages.Reader.ReadAsync(token);
         }
     }

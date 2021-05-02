@@ -59,7 +59,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
         }
 
-        public async Task AddClientAsync(IChatUser chatUser,
+        public async Task AddClientAsync(ChatUser chatUser,
                                          IChatTransport transport,
                                          CancellationToken clientToken = default)
         {
@@ -104,7 +104,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
         }
 
-        private async Task HandshakeAsync(IChatUser chatUser,
+        private async Task HandshakeAsync(ChatUser chatUser,
                                           IChatTransport transport,
                                           CancellationToken token = default)
         {
@@ -130,7 +130,8 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     case ListRoomsRequest _:
                     {
                         var rooms = await roomsRegistry.ListRooms();
-                        var response = exchangeMessage.MakeResponse(new ListRoomsResponse(rooms));
+                        var chatRooms = rooms.Select(room => room.Room).ToList();
+                        var response = exchangeMessage.MakeResponse(new ListRoomsResponse(chatRooms));
                         await client.SendMessage(response, token);
                         break;
                     }
@@ -138,7 +139,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     {
                         var room = await roomsRegistry.CreateRoom(createRoomRequest.RoomName, token);
                         var response =
-                            exchangeMessage.MakeResponse(new CreateRoomResponse(room));
+                            exchangeMessage.MakeResponse(new CreateRoomResponse(room.Room));
                         await client.SendMessage(response, token);
                         break;
                     }
@@ -148,7 +149,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                         await room.AddUser(client, token);
                         var mostRecentMessages = await room.MostRecentMessages(5, token);
                         var response =
-                            exchangeMessage.MakeResponse(new JoinRoomResponse(room,
+                            exchangeMessage.MakeResponse(new JoinRoomResponse(room.Room,
                                                                               mostRecentMessages));
                         await client.SendMessage(response, token);
                         break;
@@ -157,7 +158,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     {
                         var room = await roomsRegistry.GetRoom(leaveRoomRequest.Room.Id, token);
                         await room.RemoveUser(client, token);
-                        var response = exchangeMessage.MakeResponse(new LeaveRoomResponse(room));
+                        var response = exchangeMessage.MakeResponse(new LeaveRoomResponse(room.Room));
                         await client.SendMessage(response, token);
                         break;
                     }

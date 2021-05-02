@@ -4,9 +4,9 @@ namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public class ListRoomsResponse : IMessage
     {
-        public IReadOnlyCollection<IChatRoom> Rooms { get; }
+        public IReadOnlyCollection<ChatRoom> Rooms { get; }
 
-        public ListRoomsResponse(IReadOnlyCollection<IChatRoom> rooms)
+        public ListRoomsResponse(IReadOnlyCollection<ChatRoom> rooms)
         {
             Rooms = rooms;
         }

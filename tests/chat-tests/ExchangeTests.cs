@@ -15,7 +15,7 @@ namespace Lemvik.Example.Chat.Testing
         {
             var (wrappedTransport, remoteTransport) = TestingTransport.CreatePair();
             var testLifetime = new CancellationTokenSource();
-            var exchangeTransport = new ChatRequestTransport(wrappedTransport);
+            var exchangeTransport = new ChatExchangeTransport(wrappedTransport);
             var respondingTask = Task.Run(async () =>
             {
                 var request = await remoteTransport.Receive(testLifetime.Token);

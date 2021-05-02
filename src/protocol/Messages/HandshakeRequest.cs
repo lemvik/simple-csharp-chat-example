@@ -2,9 +2,9 @@ namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public class HandshakeRequest : IMessage
     {
-        public IChatUser User { get; }
+        public ChatUser User { get; }
         
-        public HandshakeRequest(IChatUser user)
+        public HandshakeRequest(ChatUser user)
         {
             User = user;
         }

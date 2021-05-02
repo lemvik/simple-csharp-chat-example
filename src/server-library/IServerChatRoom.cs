@@ -7,14 +7,16 @@ using Lemvik.Example.Chat.Protocol.Messages;
 
 namespace Lemvik.Example.Chat.Server
 {
-    public interface IServerChatRoom : IChatRoom
+    public interface IServerChatRoom 
     {
+        ChatRoom Room { get; } 
+        
         ChannelWriter<(IMessage, IConnectedClient)> MessagesSink { get; }
 
         Task AddUser(IConnectedClient connectedClient, CancellationToken token = default);
 
         Task RemoveUser(IConnectedClient connectedClient, CancellationToken token = default);
 
-        Task<IReadOnlyCollection<IChatMessage>> MostRecentMessages(int maxMessages, CancellationToken token = default);
+        Task<IReadOnlyCollection<ChatMessage>> MostRecentMessages(uint maxMessages, CancellationToken token = default);
     }
 }

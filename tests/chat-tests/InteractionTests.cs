@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Client;
+using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Transport;
 using Lemvik.Example.Chat.Server;
 using Lemvik.Example.Chat.Server.Implementation;
@@ -120,7 +120,7 @@ namespace Lemvik.Example.Chat.Testing
             var firstRoom = connections[0];
             var secondRoom = connections[1];
 
-            Assert.AreEqual(firstRoom.Id, secondRoom.Id);
+            Assert.AreEqual(firstRoom.Room.Id, secondRoom.Room.Id);
 
             var firstMessage = $"Hello from {firstUser.Name}";
             var secondMessage = $"Hello from {secondUser.Name}";

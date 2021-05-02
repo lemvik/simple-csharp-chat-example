@@ -13,7 +13,7 @@ namespace Lemvik.Example.Chat.Server
 
         Task<IReadOnlyCollection<IServerChatRoom>> ListRooms();
 
-        Task CloseRoom(IChatRoom room);
+        Task CloseRoom(ChatRoom room);
 
         Task Close();
     }

@@ -7,6 +7,6 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
 {
     public interface IChatUserIdentityProvider
     {
-        Task<IChatUser> Identify(TcpClient client, CancellationToken token = default);
+        Task<ChatUser> Identify(TcpClient client, CancellationToken token = default);
     }
 }

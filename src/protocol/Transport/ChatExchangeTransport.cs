@@ -6,13 +6,13 @@ using Lemvik.Example.Chat.Protocol.Messages;
 
 namespace Lemvik.Example.Chat.Protocol.Transport
 {
-    public class ChatRequestTransport : IChatRequestTransport
+    public class ChatExchangeTransport : IChatExchangeTransport
     {
         private readonly IChatTransport transport;
         private readonly ConcurrentDictionary<ulong, TaskCompletionSource<IMessage>> pendingMessages;
         private ulong sequence;
 
-        public ChatRequestTransport(IChatTransport transport)
+        public ChatExchangeTransport(IChatTransport transport)
         {
             this.transport = transport;
             this.pendingMessages = new ConcurrentDictionary<ulong, TaskCompletionSource<IMessage>>();
