@@ -23,9 +23,9 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
             await stream.WriteAsync(buffer, 0, buffer.Length, token);
         }
 
-        internal static async Task<byte[]> ReadAtLeastAsync(this Stream stream,
-                                                            int length,
-                                                            CancellationToken token = default)
+        private static async Task<byte[]> ReadAtLeastAsync(this Stream stream,
+                                                           int length,
+                                                           CancellationToken token = default)
         {
             var buffer = new byte[length];
             var read = 0;
@@ -37,14 +37,14 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
             return buffer;
         }
 
-        internal static async Task<int> ReadIntegerAsync(this Stream stream, CancellationToken token = default)
+        private static async Task<int> ReadIntegerAsync(this Stream stream, CancellationToken token = default)
         {
             var buffer = await stream.ReadAtLeastAsync(sizeof(int), token);
             var integer = BitConverter.ToInt32(buffer, 0);
             return IPAddress.NetworkToHostOrder(integer);
         }
 
-        internal static async Task WriteIntegerAsync(this Stream stream, int integer, CancellationToken token = default)
+        private static async Task WriteIntegerAsync(this Stream stream, int integer, CancellationToken token = default)
         {
             var network = IPAddress.HostToNetworkOrder(integer);
             var buffer = BitConverter.GetBytes(network);

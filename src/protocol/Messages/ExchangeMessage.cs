@@ -1,6 +1,3 @@
-using System.Threading.Tasks;
-using Lemvik.Example.Chat.Protocol.Transport;
-
 namespace Lemvik.Example.Chat.Protocol.Messages
 {
     public class ExchangeMessage : IMessage

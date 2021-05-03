@@ -19,7 +19,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             this.existingRooms = new ConcurrentDictionary<string, IRoom>();
         }
 
-        public async Task Initialize(IReadOnlyCollection<ChatRoom> initialRooms, CancellationToken token = default)
+        public async Task Initialize(IEnumerable<ChatRoom> initialRooms, CancellationToken token = default)
         {
             await Task.WhenAll(initialRooms.Select(room => BuildRoom(room, token)));
         }

@@ -1,4 +1,3 @@
-using System;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Protobuf;
 using Lemvik.Example.Chat.Server.Implementation;
@@ -17,7 +16,7 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
                    .AddSingleton<IChatServer, Implementation.ChatServer>()
                    .AddSingleton<IRoomSource, TransientRoomSource>()
                    .AddSingleton<IRoomRegistry, RoomRegistry>()
-                   .AddSingleton<IMessageTrackerFactory>(InMemoryMessageTracker.Factory)
+                   .AddSingleton(InMemoryMessageTracker.Factory)
                    .AddSingleton<IChatUserIdentityProvider, RandomChatUserIdentityProvider>()
                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>()
                    .AddSingleton<IHostedService, ChatServer>();

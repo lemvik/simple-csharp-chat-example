@@ -18,7 +18,6 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
         private readonly ILogger<ConsoleChatClient> logger;
         private readonly IChatClientFactory clientFactory;
         private readonly IMessageProtocol messageProtocol;
-        private readonly ClientConfig clientConfig;
         private readonly TcpClient client;
         private readonly IPAddress serverAddress;
         private readonly int serverPort;
@@ -32,7 +31,6 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
             this.clientFactory = clientFactory;
             this.messageProtocol = messageProtocol;
             this.client = new TcpClient();
-            this.clientConfig = clientConfig.Value;
             var serverConfig = clientConfig.Value.Server;
             this.serverAddress = IPAddress.Parse(serverConfig.Host);
             this.serverPort = serverConfig.Port;
@@ -44,7 +42,7 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
             await client.ConnectAsync(serverAddress, serverPort, stoppingToken);
             logger.LogDebug("Connected to [server={@Server}]", client.Client.RemoteEndPoint);
             var chatClient =
-                clientFactory.CreateClient(new TcpChatTransport(client, messageProtocol), clientConfig.ChatConfig);
+                clientFactory.CreateClient(new TcpChatTransport(client, messageProtocol));
 
             var commandsReader = new ConsoleCommandsReader(logger);
             var connectionTask = chatClient.RunAsync(stoppingToken);
@@ -80,7 +78,7 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
                                            IChatClient chatClient,
                                            IDictionary<string, ChatRoom> knownRooms,
                                            IDictionary<string, IRoom> roomInstances,
-                                           IList<Task> roomsTasks,
+                                           ICollection<Task> roomsTasks,
                                            CancellationToken stoppingToken)
         {
             switch (command)

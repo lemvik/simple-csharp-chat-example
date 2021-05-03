@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Shared;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
@@ -51,10 +51,9 @@ namespace Lemvik.Example.Chat.Server.Implementation
             return Task.CompletedTask;
         }
 
-        private IReadOnlyCollection<IChatRoomUser> ListUsers()
+        private IEnumerable<IChatRoomUser> ListUsers()
         {
-            var users = clients.Values.Select(client => new ChatRoomUser(ChatRoom, client)).ToList();
-            return users;
+            return clients.Values.Select(client => new ChatRoomUser(ChatRoom, client));
         }
 
         public Task<IReadOnlyCollection<ChatMessage>> MostRecentMessages(uint maxMessages, 
@@ -77,17 +76,12 @@ namespace Lemvik.Example.Chat.Server.Implementation
                                      IClient client,
                                      CancellationToken token = default)
         {
-            if (message is ExchangeMessage exchangeMessage)
+            return message switch
             {
-                return HandleRequest(exchangeMessage, client, token);
-            }
-
-            if (message is IChatRoomMessage chatRoomMessage)
-            {
-                return HandleMessage(chatRoomMessage, token);
-            }
-
-            return Task.CompletedTask;
+                ExchangeMessage exchangeMessage => HandleRequest(exchangeMessage, client, token),
+                IChatRoomMessage chatRoomMessage => HandleMessage(chatRoomMessage, token),
+                _ => Task.CompletedTask
+            };
         }
 
         private async Task HandleRequest(ExchangeMessage exchangeMessage,
@@ -96,7 +90,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
         {
             switch (exchangeMessage.Message)
             {
-                case ListUsersRequest _:
+                case ListUsersRequest:
                 {
                     var users = ListUsers().Select(user => user.User).ToList();
                     var response = exchangeMessage.MakeResponse(new ListUsersResponse(ChatRoom, users));

@@ -25,7 +25,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
 
         private static ChatRoom ToProtobuf(this Protocol.ChatRoom chatRoom)
         {
-            return new ChatRoom()
+            return new ChatRoom
             {
                 Id = chatRoom.Id,
                 Name = chatRoom.Name
@@ -34,7 +34,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
 
         private static ChatUser ToProtobuf(this Protocol.ChatUser chatUser)
         {
-            return new ChatUser()
+            return new ChatUser
             {
                 UserId = chatUser.Id,
                 UserName = chatUser.Name
@@ -43,7 +43,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
 
         private static UserMessage ToProtobuf(this ChatMessage chatMessage)
         {
-            return new UserMessage()
+            return new UserMessage
             {
                 User = chatMessage.Sender.ToProtobuf(),
                 Room = chatMessage.Room.ToProtobuf(),
@@ -69,7 +69,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
                         {
                             Rooms =
                             {
-                                listRoomsResponse.Rooms.Select(room => new ChatRoom()
+                                listRoomsResponse.Rooms.Select(room => new ChatRoom
                                 {
                                     Id = room.Id,
                                     Name = room.Name

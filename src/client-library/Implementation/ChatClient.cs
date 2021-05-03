@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Transport;
-using Lemvik.Example.Chat.Server;
+using Lemvik.Example.Chat.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace Lemvik.Example.Chat.Client.Implementation

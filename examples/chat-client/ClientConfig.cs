@@ -1,20 +1,16 @@
+using JetBrains.Annotations;
+
 namespace Lemvik.Example.Chat.Client.Example.TCP
 {
     public class ClientConfig
     {
+        [UsedImplicitly]
         public class ServerAddress
         {
-            public string Host { get; set; }
-            public int Port { get; set; }
+            public string Host { get; [UsedImplicitly] set; }
+            public int Port { get; [UsedImplicitly] set; }
         }
 
-        public class ChatClientConfig : IChatClientConfiguration
-        {
-            public string UserName { get; set; }
-            public string RoomToCreate { get; set; }
-        }
-        
-        public ServerAddress Server { get; set; }
-        public ChatClientConfig ChatConfig { get; set; }
+        public ServerAddress Server { get; [UsedImplicitly] set; }
     }
 }

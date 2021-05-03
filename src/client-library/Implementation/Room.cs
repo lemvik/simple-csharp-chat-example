@@ -15,7 +15,7 @@ namespace Lemvik.Example.Chat.Client.Implementation
         private readonly Channel<ChatMessage> messages;
         private readonly IChatExchangeTransport transport;
         private readonly CancellationTokenSource roomLifetime;
-        
+
         public Room(ChatClient client, ChatRoom room, IChatExchangeTransport chatTransport)
         {
             this.client = client;
@@ -37,7 +37,7 @@ namespace Lemvik.Example.Chat.Client.Implementation
         public async Task<IReadOnlyCollection<ChatUser>> ListUsers(CancellationToken token = default)
         {
             var operationToken = CancellationTokenSource.CreateLinkedTokenSource(roomLifetime.Token, token).Token;
-            
+
             var listRequest = new ListUsersRequest(ChatRoom);
 
             var response = await transport.Exchange<ListUsersResponse>(listRequest, operationToken);
@@ -48,7 +48,7 @@ namespace Lemvik.Example.Chat.Client.Implementation
         public Task SendMessage(string message, CancellationToken token = default)
         {
             var operationToken = CancellationTokenSource.CreateLinkedTokenSource(roomLifetime.Token, token).Token;
-            
+
             var chatMessage = new ChatMessage(client.User, ChatRoom, message);
             return transport.Send(chatMessage, operationToken);
         }
@@ -56,7 +56,7 @@ namespace Lemvik.Example.Chat.Client.Implementation
         public async Task<ChatMessage> GetMessage(CancellationToken token = default)
         {
             var operationToken = CancellationTokenSource.CreateLinkedTokenSource(roomLifetime.Token, token).Token;
-            
+
             return await messages.Reader.ReadAsync(operationToken);
         }
 
@@ -69,17 +69,12 @@ namespace Lemvik.Example.Chat.Client.Implementation
             }
             finally
             {
-                Stop();
+                this.roomLifetime.Cancel();
+                this.client.RemoveRoom(this);
+                this.messages.Writer.Complete();
             }
         }
 
-        public void Stop()
-        {
-            this.roomLifetime.Cancel();
-            this.client.RemoveRoom(this);
-            this.messages.Writer.Complete();
-        }
-        
         public override string ToString()
         {
             return $"Room[ChatRoom={ChatRoom},Client={client}]";

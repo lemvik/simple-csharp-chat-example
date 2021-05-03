@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace Lemvik.Example.Chat.Server.Implementation
@@ -110,9 +111,9 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
         }
 
-        private async Task HandshakeAsync(ChatUser chatUser,
-                                          IChatTransport transport,
-                                          CancellationToken token = default)
+        private static async Task HandshakeAsync(ChatUser chatUser,
+                                                 IChatTransport transport,
+                                                 CancellationToken token = default)
         {
             var handshake = new HandshakeRequest(chatUser);
             await transport.Send(handshake, token);
@@ -133,7 +134,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             {
                 switch (exchangeMessage.Message)
                 {
-                    case ListRoomsRequest _:
+                    case ListRoomsRequest:
                     {
                         var rooms = await roomsRegistry.ListRooms();
                         var chatRooms = rooms.Select(room => room.ChatRoom).ToList();
@@ -199,6 +200,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 var clientRooms = client.Rooms;
                 foreach (var room in clientRooms)
                 {
+                    // No cancellation here as this has to complete.
                     await room.RemoveUser(client);
                 }
                 

@@ -12,7 +12,7 @@ namespace Lemvik.Example.Chat.Client.Implementation
             this.loggerFactory = loggerFactory;
         }
 
-        public IChatClient CreateClient(IChatTransport clientTransport, IChatClientConfiguration configuration)
+        public IChatClient CreateClient(IChatTransport clientTransport)
         {
             return new ChatClient(loggerFactory.CreateLogger<ChatClient>(), clientTransport);
         }

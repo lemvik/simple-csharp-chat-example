@@ -1,7 +1,6 @@
 using Lemvik.Example.Chat.Client.Implementation;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Protobuf;
-using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

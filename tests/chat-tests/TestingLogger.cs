@@ -5,11 +5,6 @@ namespace Lemvik.Example.Chat.Testing
 {
     internal static class TestingLogger
     {
-        public static ILogger<T> CreateLogger<T>()
-        {
-            return new ConsoleLogger<T>();
-        }
-
         public static ILoggerFactory CreateFactory()
         {
             return new ConsoleLoggerFactory();
@@ -39,14 +34,9 @@ namespace Lemvik.Example.Chat.Testing
                                     Exception exception,
                                     Func<TState, Exception, string> formatter)
             {
-                if (exception != null)
-                {
-                    Console.WriteLine($"{formatter(state, exception)}: {exception.Message} - {exception.StackTrace}");
-                }
-                else
-                {
-                    Console.WriteLine(formatter(state, exception));
-                }
+                Console.WriteLine(exception != null
+                                      ? $"{formatter(state, exception)}: {exception.Message} - {exception.StackTrace}"
+                                      : formatter(state, null));
             }
 
             public bool IsEnabled(LogLevel logLevel)

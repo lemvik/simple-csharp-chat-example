@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Shared;
-using Microsoft.Extensions.Logging;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
     public class RoomRegistry : IRoomRegistry
     {
-        private readonly ILogger<RoomRegistry> logger;
         private readonly IRoomSource roomSource;
         private readonly AsyncRunnableTracker<string, IRoom> roomsTracker;
         private readonly CancellationTokenSource registryLifetime;
 
-        public RoomRegistry(ILogger<RoomRegistry> logger, IRoomSource roomSource)
+        public RoomRegistry(IRoomSource roomSource)
         {
-            this.logger = logger;
             this.roomSource = roomSource;
             this.registryLifetime = new CancellationTokenSource();
             this.roomsTracker = new AsyncRunnableTracker<string, IRoom>(registryLifetime.Token);

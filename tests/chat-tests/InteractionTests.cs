@@ -10,6 +10,7 @@ using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Transport;
 using Lemvik.Example.Chat.Server;
 using Lemvik.Example.Chat.Server.Implementation;
+using Lemvik.Example.Chat.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lemvik.Example.Chat.Testing
@@ -311,31 +312,21 @@ namespace Lemvik.Example.Chat.Testing
             }
         }
 
-        private class TestClientConfig : IChatClientConfiguration
-        {
-            public string UserName { get; }
-
-            public TestClientConfig(string userName)
-            {
-                UserName = userName;
-            }
-        }
-
         private (IChatClient, IChatTransport) CreateClient(CancellationToken token = default)
         {
             var clientToken = CancellationTokenSource.CreateLinkedTokenSource(testsLifetime.Token, token).Token;
             var (connectedClient, clientTransport) = TestingTransport.CreatePair();
-            var chatClient = clientFactory.CreateClient(clientTransport, new TestClientConfig("TestUser"));
+            var chatClient = clientFactory.CreateClient(clientTransport);
             pendingTasks.Add(chatClient.RunAsync(clientToken));
             return (chatClient, connectedClient);
         }
 
-        private async Task<IChatServer> CreateServer(IReadOnlyCollection<ChatRoom> initialRooms)
+        private async Task<IChatServer> CreateServer(IEnumerable<ChatRoom> initialRooms)
         {
             var trackingFactory = InMemoryMessageTracker.Factory;
             var roomsSource = new TransientRoomSource(trackingFactory);
             await roomsSource.Initialize(initialRooms);
-            var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>(), roomsSource);
+            var roomRegistry = new RoomRegistry(roomsSource);
             var chatServer = new ChatServer(TestingLogger.CreateFactory(), roomRegistry);
 
             pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token));

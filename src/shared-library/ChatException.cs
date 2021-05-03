@@ -1,6 +1,6 @@
 using System;
 
-namespace Lemvik.Example.Chat.Server
+namespace Lemvik.Example.Chat.Shared
 {
     public class ChatException : Exception
     {

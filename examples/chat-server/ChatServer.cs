@@ -51,7 +51,7 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
 
             listener.Start();
 
-            using (cancellationToken.Register(() => listener.Stop()))
+            await using (cancellationToken.Register(() => listener.Stop()))
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
@@ -70,7 +70,7 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
                     }
                     catch (Exception error)
                     {
-                        logger.LogError("Caught generic [error={error}]", error);
+                        logger.LogError(error, "Caught generic error while accepting clients");
                     }
                 }
             }
