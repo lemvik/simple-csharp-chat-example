@@ -10,5 +10,10 @@ namespace Lemvik.Example.Chat.Protocol.Messages
         {
             Rooms = rooms;
         }
+
+        public override string ToString()
+        {
+            return $"ListRoomsResponse[Rooms={string.Join(",", Rooms)}]";
+        }
     }
 }

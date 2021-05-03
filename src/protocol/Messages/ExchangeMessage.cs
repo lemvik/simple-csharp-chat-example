@@ -18,5 +18,10 @@ namespace Lemvik.Example.Chat.Protocol.Messages
         {
             return new(ExchangeId, responsePayload);
         }
+        
+        public override string ToString()
+        {
+            return $"ExchangeMessage[ExchangeId={ExchangeId},Message={Message}]";
+        }
     }
 }

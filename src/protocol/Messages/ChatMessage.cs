@@ -12,5 +12,10 @@ namespace Lemvik.Example.Chat.Protocol.Messages
             Room = room;
             Body = body;
         }
+
+        public override string ToString()
+        {
+            return $"ChatMessage[Sender={Sender},Room={Room},Body={Body}]";
+        }
     }
 }

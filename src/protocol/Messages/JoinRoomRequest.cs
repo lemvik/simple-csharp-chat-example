@@ -8,5 +8,10 @@ namespace Lemvik.Example.Chat.Protocol.Messages
         {
             RoomId = roomId;
         }
+
+        public override string ToString()
+        {
+            return $"JoinRoomRequest[RoomId={RoomId}]";
+        }
     }
 }

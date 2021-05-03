@@ -8,5 +8,10 @@ namespace Lemvik.Example.Chat.Protocol.Messages
         {
             User = user;
         }
+
+        public override string ToString()
+        {
+            return $"HandshakeRequest[User={User}]";
+        }
     }
 }

@@ -12,5 +12,10 @@ namespace Lemvik.Example.Chat.Protocol.Messages
             Room = room;
             Users = users;
         }
+
+        public override string ToString()
+        {
+            return $"ListUsersResponse[Room={Room},Users={string.Join(",", Users)}]";
+        }
     }
 }

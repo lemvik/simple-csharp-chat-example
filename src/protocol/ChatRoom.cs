@@ -10,5 +10,10 @@ namespace Lemvik.Example.Chat.Protocol
             Id = id;
             Name = name;
         }
+
+        public override string ToString()
+        {
+            return $"ChatRoom[Id={Id},Name={Name}]";
+        }
     }
 }

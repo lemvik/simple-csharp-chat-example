@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lemvik.Example.Chat.Protocol.Messages
 {
@@ -11,6 +12,11 @@ namespace Lemvik.Example.Chat.Protocol.Messages
         {
             Room = room;
             Messages = messages;
+        }
+
+        public override string ToString()
+        {
+            return $"JoinRoomResponse[Room={Room},Messages={string.Join(",", Messages)}]";
         }
     }
 }
