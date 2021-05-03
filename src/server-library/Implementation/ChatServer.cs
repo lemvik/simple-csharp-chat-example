@@ -175,6 +175,9 @@ namespace Lemvik.Example.Chat.Server.Implementation
             {
                 await client.RunAsync(token);
             }
+            catch (OperationCanceledException)
+            {
+            }
             catch (Exception error)
             {
                 logger.LogError(error, "Encountered an error running [client={Client}] task", client);

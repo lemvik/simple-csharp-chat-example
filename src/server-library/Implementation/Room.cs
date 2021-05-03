@@ -15,14 +15,16 @@ namespace Lemvik.Example.Chat.Server.Implementation
         public ChatRoom ChatRoom { get; }
         public ChannelWriter<(IMessage, IClient)> MessagesSink => messages.Writer;
 
+        private readonly IMessageTracker messageTracker;
         private readonly ConcurrentDictionary<string, IClient> clients;
         private readonly Channel<(IMessage, IClient)> messages;
 
-        internal Room(ChatRoom room)
+        internal Room(ChatRoom room, IMessageTracker messageTracker)
         {
             ChatRoom = room;
-            clients = new ConcurrentDictionary<string, IClient>();
-            messages = Channel.CreateUnbounded<(IMessage, IClient)>();
+            this.messageTracker = messageTracker;
+            this.clients = new ConcurrentDictionary<string, IClient>();
+            this.messages = Channel.CreateUnbounded<(IMessage, IClient)>();
         }
 
         public Task AddUser(IClient client, CancellationToken token = default)
@@ -58,7 +60,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
         public Task<IReadOnlyCollection<ChatMessage>> MostRecentMessages(uint maxMessages, 
                                                                          CancellationToken token = default)
         {
-            return Task.FromResult<IReadOnlyCollection<ChatMessage>>(Array.Empty<ChatMessage>());
+            return messageTracker.LastMessages(maxMessages, token);
         }
 
         public async Task RunAsync(CancellationToken token = default)
@@ -116,6 +118,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             {
                 case ChatMessage chatMessage:
                 {
+                    await messageTracker.TrackMessage(chatMessage, token);
                     var sendTasks = clients.Values.Select(chatClient => chatClient.SendMessage(chatMessage, token));
                     await Task.WhenAll(sendTasks);
                     break;

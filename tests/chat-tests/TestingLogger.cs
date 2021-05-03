@@ -33,13 +33,20 @@ namespace Lemvik.Example.Chat.Testing
 
         private class ConsoleLogger<T> : ILogger<T>, IDisposable
         {
-            public void Log<TState>(LogLevel logLevel, 
-                                    EventId eventId, 
-                                    TState state, 
+            public void Log<TState>(LogLevel logLevel,
+                                    EventId eventId,
+                                    TState state,
                                     Exception exception,
                                     Func<TState, Exception, string> formatter)
             {
-                Console.WriteLine(formatter(state, exception));
+                if (exception != null)
+                {
+                    Console.WriteLine($"{formatter(state, exception)}: {exception.Message} - {exception.StackTrace}");
+                }
+                else
+                {
+                    Console.WriteLine(formatter(state, exception));
+                }
             }
 
             public bool IsEnabled(LogLevel logLevel)

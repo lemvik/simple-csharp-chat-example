@@ -144,6 +144,35 @@ namespace Lemvik.Example.Chat.Testing
             Assert.AreEqual(chatRoom.Id, secondIncoming.Room.Id);
         }
 
+        [TestMethod, Timeout(1000)]
+        public async Task CheckExistingMessages()
+        {
+            var chatServer = CreateServer();
+            const string roomName = "testRoom";
+            var (firstClient, firstConnection) = CreateClient();
+            var firstUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
+
+            await chatServer.AddClientAsync(firstUser, firstConnection, testsLifetime.Token);
+            var chatRoom = await firstClient.CreateRoom(roomName, testsLifetime.Token);
+            var firstRoom = await firstClient.JoinRoom(chatRoom, testsLifetime.Token);
+
+            var messages = new[] {"Spam!", "Spam, spam, spam!", "More spam!"};
+
+            await Task.WhenAll(messages.Select(message => firstRoom.SendMessage(message, testsLifetime.Token)));
+            
+            var (secondClient, secondConnection) = CreateClient();
+            var secondUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
+            
+            await chatServer.AddClientAsync(secondUser, secondConnection, testsLifetime.Token);
+            var secondRoom = await secondClient.JoinRoom(chatRoom, testsLifetime.Token);
+
+            foreach (var message in messages)
+            {
+                var receivedMessage = await secondRoom.GetMessage(testsLifetime.Token);
+                Assert.AreEqual(message, receivedMessage.Body);
+            }
+        }
+
         private class TestClientConfig : IChatClientConfiguration
         {
             public string UserName { get; }
@@ -164,7 +193,9 @@ namespace Lemvik.Example.Chat.Testing
 
         private IChatServer CreateServer()
         {
-            var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>(), new RoomSource());
+            var trackingFactory = InMemoryMessageTracker.Factory;
+            var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>(), 
+                                                new TransientRoomSource(trackingFactory));
             var chatServer = new ChatServer(TestingLogger.CreateLogger<ChatServer>(), roomRegistry);
 
             pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token));
