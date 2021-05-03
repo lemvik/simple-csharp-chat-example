@@ -10,21 +10,30 @@ namespace Lemvik.Example.Chat.Testing
     {
         private readonly ChannelWriter<IMessage> sendingSink;
         private readonly ChannelReader<IMessage> receivingSource;
+        private readonly CancellationTokenSource transportLifetime;
 
-        public TestingTransport(ChannelWriter<IMessage> sendingSink, ChannelReader<IMessage> receivingSource)
+        private TestingTransport(ChannelWriter<IMessage> sendingSink, ChannelReader<IMessage> receivingSource)
         {
             this.sendingSink = sendingSink;
             this.receivingSource = receivingSource;
+            this.transportLifetime = new CancellationTokenSource();
         }
 
         public Task Send(IMessage message, CancellationToken token = default)
         {
-            return sendingSink.WriteAsync(message, token).AsTask();
+            var operationToken = CancellationTokenSource.CreateLinkedTokenSource(transportLifetime.Token, token).Token;
+            return sendingSink.WriteAsync(message, operationToken).AsTask();
         }
 
         public Task<IMessage> Receive(CancellationToken token = default)
         {
-            return receivingSource.ReadAsync(token).AsTask();
+            var operationToken = CancellationTokenSource.CreateLinkedTokenSource(transportLifetime.Token, token).Token;
+            return receivingSource.ReadAsync(operationToken).AsTask();
+        }
+
+        public void Close()
+        {
+            sendingSink.Complete();
         }
 
         public static (TestingTransport, TestingTransport) CreatePair()

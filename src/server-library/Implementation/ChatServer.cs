@@ -14,15 +14,17 @@ namespace Lemvik.Example.Chat.Server.Implementation
     public class ChatServer : IChatServer
     {
         private readonly ILogger<ChatServer> logger;
+        private readonly ILoggerFactory loggerFactory;
         private readonly Channel<(IClient, IMessage)> messages;
         private readonly SemaphoreSlim clientsLock;
         private readonly ConcurrentDictionary<string, ClientTask> clientTasks;
         private readonly IRoomRegistry roomsRegistry;
         private readonly CancellationTokenSource lifetime;
 
-        public ChatServer(ILogger<ChatServer> logger, IRoomRegistry roomsRegistry)
+        public ChatServer(ILoggerFactory loggerFactory, IRoomRegistry roomsRegistry)
         {
-            this.logger = logger;
+            this.logger = loggerFactory.CreateLogger<ChatServer>();
+            this.loggerFactory = loggerFactory;
             this.roomsRegistry = roomsRegistry;
             this.messages = Channel.CreateUnbounded<(IClient, IMessage)>(new UnboundedChannelOptions
             {
@@ -69,7 +71,10 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 await clientsLock.WaitAsync(token);
 
                 logger.LogDebug("Handshaking [client={ChatUser}][connection={Connection}]", chatUser, transport);
-                var connectedClient = new Client(chatUser, transport, messages.Writer);
+                var connectedClient = new Client(loggerFactory.CreateLogger<Client>(),
+                                                 chatUser,
+                                                 transport,
+                                                 messages.Writer);
                 var clientTask = new ClientTask();
 
                 // If we fail to add client we should not run it's `RunAsync` method, so first add, then fire the task.
@@ -170,7 +175,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
         }
 
-        private async Task RunClient(IClient client, CancellationToken token = default)
+        private async Task RunClient(Client client, CancellationToken token = default)
         {
             try
             {
@@ -185,10 +190,19 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
             finally
             {
+                logger.LogDebug("Cleaning up client resources [client={Client}]", client);
                 if (!clientTasks.TryRemove(client.User.Id, out _))
                 {
                     logger.LogError("Unable to remove [client={Client}] from server", client);
                 }
+
+                var clientRooms = client.Rooms;
+                foreach (var room in clientRooms)
+                {
+                    await room.RemoveUser(client);
+                }
+                
+                logger.LogDebug("Client task completed for [client={Client}]", client);
             }
         }
 

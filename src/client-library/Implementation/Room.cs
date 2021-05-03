@@ -73,7 +73,7 @@ namespace Lemvik.Example.Chat.Client.Implementation
             }
         }
 
-        private void Stop()
+        public void Stop()
         {
             this.roomLifetime.Cancel();
             this.client.RemoveRoom(this);

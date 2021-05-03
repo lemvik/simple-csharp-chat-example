@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,10 +38,26 @@ namespace Lemvik.Example.Chat.Client.Implementation
 
             logger.LogDebug("Handshake successful [chatUser={ChatUser}]", User);
 
-            while (!token.IsCancellationRequested)
+            try
             {
-                var incomingMessage = await transport.Receive(token);
-                DispatchMessage(incomingMessage);
+                while (!token.IsCancellationRequested)
+                {
+                    var incomingMessage = await transport.Receive(token);
+                    DispatchMessage(incomingMessage);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+            }
+            catch (Exception error)
+            {
+                logger.LogError(error, "Encountered an error in client loop");
+                throw;
+            }
+            finally
+            {
+                clientLifetime.Cancel();
+                transport.Close();
             }
         }
 

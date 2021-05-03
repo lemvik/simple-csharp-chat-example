@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
@@ -10,5 +9,7 @@ namespace Lemvik.Example.Chat.Protocol.Transport
         Task Send(IMessage message, CancellationToken token = default);
 
         Task<IMessage> Receive(CancellationToken token = default);
+
+        void Close();
     }
 }

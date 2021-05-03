@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Client;
@@ -42,7 +41,7 @@ namespace Lemvik.Example.Chat.Testing
 
             pendingTasks.Clear();
         }
-
+        
         [TestMethod, Timeout(10000)]
         public async Task ListRoomsUponConnectionTest()
         {
@@ -60,6 +59,63 @@ namespace Lemvik.Example.Chat.Testing
             var rooms = await chatClient.ListRooms(testsLifetime.Token);
 
             Assert.AreEqual(existingRooms.Length, rooms.Count);
+        }
+
+
+        [TestMethod, Timeout(1000)]
+        public async Task CancellationStopsClients()
+        {
+            var clientControl = new CancellationTokenSource();
+            var existingRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");
+            var chatServer = await CreateServer(new []{existingRoom});
+            
+            var (client, connectingClient) = CreateClient(clientControl.Token);
+            var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
+            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+
+            var rooms = await client.ListRooms(testsLifetime.Token);
+            
+            Assert.AreEqual(1, rooms.Count);
+            
+            var (observerClient, observerConnection) = CreateClient();
+            var observerUser = new ChatUser(Guid.NewGuid().ToString(), "Observer");
+            await chatServer.AddClientAsync(observerUser, observerConnection, testsLifetime.Token);
+
+            var observerRoom = await observerClient.JoinRoom(existingRoom, testsLifetime.Token);
+
+            var clientRoom = await client.JoinRoom(existingRoom, testsLifetime.Token);
+
+            var users = await clientRoom.ListUsers(testsLifetime.Token);
+            
+            Assert.AreEqual(2, users.Count);
+            
+            clientControl.Cancel();
+            
+            try
+            {
+                await client.ListRooms(testsLifetime.Token);
+                Assert.Fail("After client has been stopped we should not be able to use it.");
+            }
+            catch (OperationCanceledException)
+            {
+            }
+            
+            try
+            {
+                await clientRoom.ListUsers(testsLifetime.Token);
+                Assert.Fail("After client has been stopped related rooms should not be functional.");
+            }
+            catch (OperationCanceledException)
+            {
+            }
+
+            // This is needed here as terminating the client on server side is an operation that:
+            // 1. takes some time
+            // 2. not awaited anywhere in these tests
+            await Task.Delay(10, testsLifetime.Token);
+            var postCancelUsers = await observerRoom.ListUsers(testsLifetime.Token);
+            
+            Assert.AreEqual(1, postCancelUsers.Count);
         }
 
         [TestMethod, Timeout(1000)]
@@ -237,7 +293,10 @@ namespace Lemvik.Example.Chat.Testing
 
             var messages = new[] {"Spam!", "Spam, spam, spam!", "More spam!"};
 
-            await Task.WhenAll(messages.Select(message => firstRoom.SendMessage(message, testsLifetime.Token)));
+            foreach (var message in messages)
+            {
+                await firstRoom.SendMessage(message, testsLifetime.Token);
+            }
 
             var (secondClient, secondConnection) = CreateClient();
             var secondUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
@@ -262,11 +321,12 @@ namespace Lemvik.Example.Chat.Testing
             }
         }
 
-        private (IChatClient, IChatTransport) CreateClient()
+        private (IChatClient, IChatTransport) CreateClient(CancellationToken token = default)
         {
+            var clientToken = CancellationTokenSource.CreateLinkedTokenSource(testsLifetime.Token, token).Token;
             var (connectedClient, clientTransport) = TestingTransport.CreatePair();
             var chatClient = clientFactory.CreateClient(clientTransport, new TestClientConfig("TestUser"));
-            pendingTasks.Add(chatClient.RunAsync(testsLifetime.Token));
+            pendingTasks.Add(chatClient.RunAsync(clientToken));
             return (chatClient, connectedClient);
         }
 
@@ -276,7 +336,7 @@ namespace Lemvik.Example.Chat.Testing
             var roomsSource = new TransientRoomSource(trackingFactory);
             await roomsSource.Initialize(initialRooms);
             var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>(), roomsSource);
-            var chatServer = new ChatServer(TestingLogger.CreateLogger<ChatServer>(), roomRegistry);
+            var chatServer = new ChatServer(TestingLogger.CreateFactory(), roomRegistry);
 
             pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token));
             pendingTasks.Add(roomRegistry.RunAsync(testsLifetime.Token));
