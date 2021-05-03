@@ -23,7 +23,10 @@ Design and implement a chat service. Make it as clean as you can.
 - [x] Server application has a chat room object
   Server operates on `IServerChatRoom` implementations, those can have any 
   behavior in addition to explicit interface implementation.
-- [ ] Chat room object stores chat history
+- [x] Chat room object stores chat history
+  This one was a bit unclear - shall it store internally or persist chat history. There is an interface `IMessageTracker` that allows 
+  providing an entity that will either store messages in memory (as bundled `InMemoryMessageTracker` does) or persist it somewhere
+  (I didn't provide implementation for that). Chat rooms on server use that interface.
 - [x] Both applications have debug logging
   This is somewhat hazy as there is indeed some debug logging here and there, 
   but I'm not sure if it's sufficient.
@@ -44,3 +47,12 @@ Design and implement a chat service. Make it as clean as you can.
 
 - [ ] Manual user input is not mandatory
 
+### Some notes 
+
+- The chat library itself relies on the underlying transport (implementation of `IChatTransport`) to throw an error from `Receive` call on disconnection. 
+  Unfortunately, with plain TCP implementation that is bundled in examples one can wait for quite a while until OS closes the socket and `Receive` errors out. 
+  One possible workaround is to have a transport-level keepalive but I didn't implement it.
+  - In tests this is achieved by closing writing part of the `Channel`-based transport, which is instantaneous.
+- The API provided is centered around proxy-like objects (especially on the client - `IRoom` there is a proxy), so some scenarios like "listen to any message in any room"
+  will required something like `Task.WhenAny(rooms.Select(room => room.GetMessage()))` polling.
+- Polling - the API doesn't use callbacks as it's simpler to use polling on `Task`s and it gives more control. But implementing callback-based API on top of `Task` is entirely possible, just like it's possible to do the other way round.
