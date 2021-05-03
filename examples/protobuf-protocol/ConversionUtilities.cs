@@ -18,11 +18,11 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
 
         private static ChatMessage FromProtobuf(this UserMessage message)
         {
-            return new ChatMessage(message.User.FromProtobuf(), 
+            return new ChatMessage(message.User.FromProtobuf(),
                                    message.Room.FromProtobuf(),
                                    message.Message);
         }
-        
+
         private static ChatRoom ToProtobuf(this Protocol.ChatRoom chatRoom)
         {
             return new ChatRoom()
@@ -76,21 +76,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
                                 })
                             }
                         }
-                    };
-                case Messages.HandshakeRequest handshakeRequest:
-                    return new ProtocolExchange
-                    {
-                        ExchangeId = message.ExchangeId,
-                        HandshakeRequest = new HandshakeRequest
-                        {
-                            User = handshakeRequest.User.ToProtobuf()
-                        }
-                    };
-                case Messages.HandshakeResponse _:
-                    return new ProtocolExchange
-                    {
-                        ExchangeId = message.ExchangeId,
-                        HandshakeResponse = new HandshakeResponse()
                     };
                 case Messages.CreateRoomRequest createRoomRequest:
                     return new ProtocolExchange
@@ -163,6 +148,11 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
                     return new ProtocolMessage {ExchangeMessage = exchangeMessage.ToProtocolExchange()};
                 case ChatMessage chatMessage:
                     return new ProtocolMessage {UserMessage = chatMessage.ToProtobuf()};
+                case Messages.HandshakeRequest handshakeRequest:
+                    return new ProtocolMessage
+                        {HandshakeRequest = new HandshakeRequest {User = handshakeRequest.User.ToProtobuf()}};
+                case Messages.HandshakeResponse _:
+                    return new ProtocolMessage {HandshakeResponse = new HandshakeResponse()};
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -177,6 +167,10 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
                     return message.ExchangeMessage.FromProtobuf();
                 case ProtocolMessage.MessageOneofCase.UserMessage:
                     return message.UserMessage.FromProtobuf();
+                case ProtocolMessage.MessageOneofCase.HandshakeRequest:
+                    return new Messages.HandshakeRequest(message.HandshakeRequest.User.FromProtobuf());
+                case ProtocolMessage.MessageOneofCase.HandshakeResponse:
+                    return new Messages.HandshakeResponse();
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -191,10 +185,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
         {
             switch (protocolExchange.MessageCase)
             {
-                case ProtocolExchange.MessageOneofCase.HandshakeRequest:
-                    return new Messages.HandshakeRequest(protocolExchange.HandshakeRequest.User.FromProtobuf());
-                case ProtocolExchange.MessageOneofCase.HandshakeResponse:
-                    return new Messages.HandshakeResponse();
                 case ProtocolExchange.MessageOneofCase.CreateRoomRequest:
                     return new Messages.CreateRoomRequest(protocolExchange.CreateRoomRequest.RoomName);
                 case ProtocolExchange.MessageOneofCase.CreateRoomResponse:

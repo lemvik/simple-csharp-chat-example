@@ -15,7 +15,10 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
         {
             return serviceCollection
                    .AddSingleton<IChatServer, Implementation.ChatServer>()
+                   .AddSingleton<IRoomSource, TransientRoomSource>()
                    .AddSingleton<IRoomRegistry, RoomRegistry>()
+                   .AddSingleton<IMessageTrackerFactory>(InMemoryMessageTracker.Factory)
+                   .AddSingleton<IChatUserIdentityProvider, RandomChatUserIdentityProvider>()
                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>()
                    .AddSingleton<IHostedService, ChatServer>();
         }

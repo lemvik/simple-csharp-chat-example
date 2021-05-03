@@ -37,23 +37,23 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             "cXVlc3QSFwoEcm9vbRgBIAEoCzIJLkNoYXRSb29tIiwKEUxlYXZlUm9vbVJl",
             "c3BvbnNlEhcKBHJvb20YASABKAsyCS5DaGF0Um9vbSJQCgtVc2VyTWVzc2Fn",
             "ZRIXCgR1c2VyGAEgASgLMgkuQ2hhdFVzZXISFwoEcm9vbRgCIAEoCzIJLkNo",
-            "YXRSb29tEg8KB21lc3NhZ2UYAyABKAkiogQKEFByb3RvY29sRXhjaGFuZ2US",
-            "EwoLZXhjaGFuZ2VfaWQYASABKAQSLgoRaGFuZHNoYWtlX3JlcXVlc3QYAiAB",
-            "KAsyES5IYW5kc2hha2VSZXF1ZXN0SAASMAoSaGFuZHNoYWtlX3Jlc3BvbnNl",
-            "GAMgASgLMhIuSGFuZHNoYWtlUmVzcG9uc2VIABIxChNjcmVhdGVfcm9vbV9y",
-            "ZXF1ZXN0GAQgASgLMhIuQ3JlYXRlUm9vbVJlcXVlc3RIABIzChRjcmVhdGVf",
-            "cm9vbV9yZXNwb25zZRgFIAEoCzITLkNyZWF0ZVJvb21SZXNwb25zZUgAEi4K",
-            "EWxpc3Rfcm9vbV9yZXF1ZXN0GAYgASgLMhEuTGlzdFJvb21zUmVxdWVzdEgA",
-            "EjAKEmxpc3Rfcm9vbV9yZXNwb25zZRgHIAEoCzISLkxpc3RSb29tc1Jlc3Bv",
-            "bnNlSAASLQoRam9pbl9yb29tX3JlcXVlc3QYCCABKAsyEC5Kb2luUm9vbVJl",
-            "cXVlc3RIABIvChJqb2luX3Jvb21fcmVzcG9uc2UYCSABKAsyES5Kb2luUm9v",
-            "bVJlc3BvbnNlSAASLwoSbGVhdmVfcm9vbV9yZXF1ZXN0GAogASgLMhEuTGVh",
-            "dmVSb29tUmVxdWVzdEgAEjEKE2xlYXZlX3Jvb21fcmVzcG9uc2UYCyABKAsy",
-            "Ei5MZWF2ZVJvb21SZXNwb25zZUgAQgkKB21lc3NhZ2UicAoPUHJvdG9jb2xN",
-            "ZXNzYWdlEi0KEGV4Y2hhbmdlX21lc3NhZ2UYASABKAsyES5Qcm90b2NvbEV4",
-            "Y2hhbmdlSAASIwoLdXNlck1lc3NhZ2UYAiABKAsyDC5Vc2VyTWVzc2FnZUgA",
-            "QgkKB21lc3NhZ2VCKKoCJUxlbXZpay5FeGFtcGxlLkNoYXQuUHJvdG9jb2wu",
-            "UHJvdG9idWZiBnByb3RvMw=="));
+            "YXRSb29tEg8KB21lc3NhZ2UYAyABKAkiwAMKEFByb3RvY29sRXhjaGFuZ2US",
+            "EwoLZXhjaGFuZ2VfaWQYASABKAQSMQoTY3JlYXRlX3Jvb21fcmVxdWVzdBgC",
+            "IAEoCzISLkNyZWF0ZVJvb21SZXF1ZXN0SAASMwoUY3JlYXRlX3Jvb21fcmVz",
+            "cG9uc2UYAyABKAsyEy5DcmVhdGVSb29tUmVzcG9uc2VIABIuChFsaXN0X3Jv",
+            "b21fcmVxdWVzdBgEIAEoCzIRLkxpc3RSb29tc1JlcXVlc3RIABIwChJsaXN0",
+            "X3Jvb21fcmVzcG9uc2UYBSABKAsyEi5MaXN0Um9vbXNSZXNwb25zZUgAEi0K",
+            "EWpvaW5fcm9vbV9yZXF1ZXN0GAYgASgLMhAuSm9pblJvb21SZXF1ZXN0SAAS",
+            "LwoSam9pbl9yb29tX3Jlc3BvbnNlGAcgASgLMhEuSm9pblJvb21SZXNwb25z",
+            "ZUgAEi8KEmxlYXZlX3Jvb21fcmVxdWVzdBgIIAEoCzIRLkxlYXZlUm9vbVJl",
+            "cXVlc3RIABIxChNsZWF2ZV9yb29tX3Jlc3BvbnNlGAkgASgLMhIuTGVhdmVS",
+            "b29tUmVzcG9uc2VIAEIJCgdtZXNzYWdlItABCg9Qcm90b2NvbE1lc3NhZ2US",
+            "LQoQZXhjaGFuZ2VfbWVzc2FnZRgBIAEoCzIRLlByb3RvY29sRXhjaGFuZ2VI",
+            "ABIjCgt1c2VyTWVzc2FnZRgCIAEoCzIMLlVzZXJNZXNzYWdlSAASLQoQaGFu",
+            "ZHNoYWtlUmVxdWVzdBgDIAEoCzIRLkhhbmRzaGFrZVJlcXVlc3RIABIvChFo",
+            "YW5kc2hha2VSZXNwb25zZRgEIAEoCzISLkhhbmRzaGFrZVJlc3BvbnNlSABC",
+            "CQoHbWVzc2FnZUIoqgIlTGVtdmlrLkV4YW1wbGUuQ2hhdC5Qcm90b2NvbC5Q",
+            "cm90b2J1ZmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -70,8 +70,8 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest), global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest.Parser, new[]{ "Room" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse), global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage), global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage.Parser, new[]{ "User", "Room", "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange.Parser, new[]{ "ExchangeId", "HandshakeRequest", "HandshakeResponse", "CreateRoomRequest", "CreateRoomResponse", "ListRoomRequest", "ListRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "LeaveRoomRequest", "LeaveRoomResponse" }, new[]{ "Message" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolMessage), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolMessage.Parser, new[]{ "ExchangeMessage", "UserMessage" }, new[]{ "Message" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange.Parser, new[]{ "ExchangeId", "CreateRoomRequest", "CreateRoomResponse", "ListRoomRequest", "ListRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "LeaveRoomRequest", "LeaveRoomResponse" }, new[]{ "Message" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolMessage), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolMessage.Parser, new[]{ "ExchangeMessage", "UserMessage", "HandshakeRequest", "HandshakeResponse" }, new[]{ "Message" }, null, null, null)
           }));
     }
     #endregion
@@ -2494,12 +2494,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     public ProtocolExchange(ProtocolExchange other) : this() {
       exchangeId_ = other.exchangeId_;
       switch (other.MessageCase) {
-        case MessageOneofCase.HandshakeRequest:
-          HandshakeRequest = other.HandshakeRequest.Clone();
-          break;
-        case MessageOneofCase.HandshakeResponse:
-          HandshakeResponse = other.HandshakeResponse.Clone();
-          break;
         case MessageOneofCase.CreateRoomRequest:
           CreateRoomRequest = other.CreateRoomRequest.Clone();
           break;
@@ -2545,30 +2539,8 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       }
     }
 
-    /// <summary>Field number for the "handshake_request" field.</summary>
-    public const int HandshakeRequestFieldNumber = 2;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest HandshakeRequest {
-      get { return messageCase_ == MessageOneofCase.HandshakeRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest) message_ : null; }
-      set {
-        message_ = value;
-        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.HandshakeRequest;
-      }
-    }
-
-    /// <summary>Field number for the "handshake_response" field.</summary>
-    public const int HandshakeResponseFieldNumber = 3;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse HandshakeResponse {
-      get { return messageCase_ == MessageOneofCase.HandshakeResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse) message_ : null; }
-      set {
-        message_ = value;
-        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.HandshakeResponse;
-      }
-    }
-
     /// <summary>Field number for the "create_room_request" field.</summary>
-    public const int CreateRoomRequestFieldNumber = 4;
+    public const int CreateRoomRequestFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest CreateRoomRequest {
       get { return messageCase_ == MessageOneofCase.CreateRoomRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest) message_ : null; }
@@ -2579,7 +2551,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     }
 
     /// <summary>Field number for the "create_room_response" field.</summary>
-    public const int CreateRoomResponseFieldNumber = 5;
+    public const int CreateRoomResponseFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse CreateRoomResponse {
       get { return messageCase_ == MessageOneofCase.CreateRoomResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse) message_ : null; }
@@ -2590,7 +2562,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     }
 
     /// <summary>Field number for the "list_room_request" field.</summary>
-    public const int ListRoomRequestFieldNumber = 6;
+    public const int ListRoomRequestFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest ListRoomRequest {
       get { return messageCase_ == MessageOneofCase.ListRoomRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest) message_ : null; }
@@ -2601,7 +2573,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     }
 
     /// <summary>Field number for the "list_room_response" field.</summary>
-    public const int ListRoomResponseFieldNumber = 7;
+    public const int ListRoomResponseFieldNumber = 5;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse ListRoomResponse {
       get { return messageCase_ == MessageOneofCase.ListRoomResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse) message_ : null; }
@@ -2612,7 +2584,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     }
 
     /// <summary>Field number for the "join_room_request" field.</summary>
-    public const int JoinRoomRequestFieldNumber = 8;
+    public const int JoinRoomRequestFieldNumber = 6;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest JoinRoomRequest {
       get { return messageCase_ == MessageOneofCase.JoinRoomRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest) message_ : null; }
@@ -2623,7 +2595,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     }
 
     /// <summary>Field number for the "join_room_response" field.</summary>
-    public const int JoinRoomResponseFieldNumber = 9;
+    public const int JoinRoomResponseFieldNumber = 7;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse JoinRoomResponse {
       get { return messageCase_ == MessageOneofCase.JoinRoomResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse) message_ : null; }
@@ -2634,7 +2606,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     }
 
     /// <summary>Field number for the "leave_room_request" field.</summary>
-    public const int LeaveRoomRequestFieldNumber = 10;
+    public const int LeaveRoomRequestFieldNumber = 8;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest LeaveRoomRequest {
       get { return messageCase_ == MessageOneofCase.LeaveRoomRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest) message_ : null; }
@@ -2645,7 +2617,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     }
 
     /// <summary>Field number for the "leave_room_response" field.</summary>
-    public const int LeaveRoomResponseFieldNumber = 11;
+    public const int LeaveRoomResponseFieldNumber = 9;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse LeaveRoomResponse {
       get { return messageCase_ == MessageOneofCase.LeaveRoomResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse) message_ : null; }
@@ -2659,16 +2631,14 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     /// <summary>Enum of possible cases for the "message" oneof.</summary>
     public enum MessageOneofCase {
       None = 0,
-      HandshakeRequest = 2,
-      HandshakeResponse = 3,
-      CreateRoomRequest = 4,
-      CreateRoomResponse = 5,
-      ListRoomRequest = 6,
-      ListRoomResponse = 7,
-      JoinRoomRequest = 8,
-      JoinRoomResponse = 9,
-      LeaveRoomRequest = 10,
-      LeaveRoomResponse = 11,
+      CreateRoomRequest = 2,
+      CreateRoomResponse = 3,
+      ListRoomRequest = 4,
+      ListRoomResponse = 5,
+      JoinRoomRequest = 6,
+      JoinRoomResponse = 7,
+      LeaveRoomRequest = 8,
+      LeaveRoomResponse = 9,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2696,8 +2666,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         return true;
       }
       if (ExchangeId != other.ExchangeId) return false;
-      if (!object.Equals(HandshakeRequest, other.HandshakeRequest)) return false;
-      if (!object.Equals(HandshakeResponse, other.HandshakeResponse)) return false;
       if (!object.Equals(CreateRoomRequest, other.CreateRoomRequest)) return false;
       if (!object.Equals(CreateRoomResponse, other.CreateRoomResponse)) return false;
       if (!object.Equals(ListRoomRequest, other.ListRoomRequest)) return false;
@@ -2714,8 +2682,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
     public override int GetHashCode() {
       int hash = 1;
       if (ExchangeId != 0UL) hash ^= ExchangeId.GetHashCode();
-      if (messageCase_ == MessageOneofCase.HandshakeRequest) hash ^= HandshakeRequest.GetHashCode();
-      if (messageCase_ == MessageOneofCase.HandshakeResponse) hash ^= HandshakeResponse.GetHashCode();
       if (messageCase_ == MessageOneofCase.CreateRoomRequest) hash ^= CreateRoomRequest.GetHashCode();
       if (messageCase_ == MessageOneofCase.CreateRoomResponse) hash ^= CreateRoomResponse.GetHashCode();
       if (messageCase_ == MessageOneofCase.ListRoomRequest) hash ^= ListRoomRequest.GetHashCode();
@@ -2745,44 +2711,36 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         output.WriteRawTag(8);
         output.WriteUInt64(ExchangeId);
       }
-      if (messageCase_ == MessageOneofCase.HandshakeRequest) {
-        output.WriteRawTag(18);
-        output.WriteMessage(HandshakeRequest);
-      }
-      if (messageCase_ == MessageOneofCase.HandshakeResponse) {
-        output.WriteRawTag(26);
-        output.WriteMessage(HandshakeResponse);
-      }
       if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(18);
         output.WriteMessage(CreateRoomRequest);
       }
       if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(26);
         output.WriteMessage(CreateRoomResponse);
       }
       if (messageCase_ == MessageOneofCase.ListRoomRequest) {
-        output.WriteRawTag(50);
+        output.WriteRawTag(34);
         output.WriteMessage(ListRoomRequest);
       }
       if (messageCase_ == MessageOneofCase.ListRoomResponse) {
-        output.WriteRawTag(58);
+        output.WriteRawTag(42);
         output.WriteMessage(ListRoomResponse);
       }
       if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
-        output.WriteRawTag(66);
+        output.WriteRawTag(50);
         output.WriteMessage(JoinRoomRequest);
       }
       if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
-        output.WriteRawTag(74);
+        output.WriteRawTag(58);
         output.WriteMessage(JoinRoomResponse);
       }
       if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
-        output.WriteRawTag(82);
+        output.WriteRawTag(66);
         output.WriteMessage(LeaveRoomRequest);
       }
       if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
-        output.WriteRawTag(90);
+        output.WriteRawTag(74);
         output.WriteMessage(LeaveRoomResponse);
       }
       if (_unknownFields != null) {
@@ -2798,44 +2756,36 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         output.WriteRawTag(8);
         output.WriteUInt64(ExchangeId);
       }
-      if (messageCase_ == MessageOneofCase.HandshakeRequest) {
-        output.WriteRawTag(18);
-        output.WriteMessage(HandshakeRequest);
-      }
-      if (messageCase_ == MessageOneofCase.HandshakeResponse) {
-        output.WriteRawTag(26);
-        output.WriteMessage(HandshakeResponse);
-      }
       if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(18);
         output.WriteMessage(CreateRoomRequest);
       }
       if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(26);
         output.WriteMessage(CreateRoomResponse);
       }
       if (messageCase_ == MessageOneofCase.ListRoomRequest) {
-        output.WriteRawTag(50);
+        output.WriteRawTag(34);
         output.WriteMessage(ListRoomRequest);
       }
       if (messageCase_ == MessageOneofCase.ListRoomResponse) {
-        output.WriteRawTag(58);
+        output.WriteRawTag(42);
         output.WriteMessage(ListRoomResponse);
       }
       if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
-        output.WriteRawTag(66);
+        output.WriteRawTag(50);
         output.WriteMessage(JoinRoomRequest);
       }
       if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
-        output.WriteRawTag(74);
+        output.WriteRawTag(58);
         output.WriteMessage(JoinRoomResponse);
       }
       if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
-        output.WriteRawTag(82);
+        output.WriteRawTag(66);
         output.WriteMessage(LeaveRoomRequest);
       }
       if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
-        output.WriteRawTag(90);
+        output.WriteRawTag(74);
         output.WriteMessage(LeaveRoomResponse);
       }
       if (_unknownFields != null) {
@@ -2849,12 +2799,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       int size = 0;
       if (ExchangeId != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ExchangeId);
-      }
-      if (messageCase_ == MessageOneofCase.HandshakeRequest) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(HandshakeRequest);
-      }
-      if (messageCase_ == MessageOneofCase.HandshakeResponse) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(HandshakeResponse);
       }
       if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(CreateRoomRequest);
@@ -2895,18 +2839,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         ExchangeId = other.ExchangeId;
       }
       switch (other.MessageCase) {
-        case MessageOneofCase.HandshakeRequest:
-          if (HandshakeRequest == null) {
-            HandshakeRequest = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
-          }
-          HandshakeRequest.MergeFrom(other.HandshakeRequest);
-          break;
-        case MessageOneofCase.HandshakeResponse:
-          if (HandshakeResponse == null) {
-            HandshakeResponse = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
-          }
-          HandshakeResponse.MergeFrom(other.HandshakeResponse);
-          break;
         case MessageOneofCase.CreateRoomRequest:
           if (CreateRoomRequest == null) {
             CreateRoomRequest = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest();
@@ -2976,24 +2908,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             break;
           }
           case 18: {
-            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
-            if (messageCase_ == MessageOneofCase.HandshakeRequest) {
-              subBuilder.MergeFrom(HandshakeRequest);
-            }
-            input.ReadMessage(subBuilder);
-            HandshakeRequest = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
-            if (messageCase_ == MessageOneofCase.HandshakeResponse) {
-              subBuilder.MergeFrom(HandshakeResponse);
-            }
-            input.ReadMessage(subBuilder);
-            HandshakeResponse = subBuilder;
-            break;
-          }
-          case 34: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest();
             if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
               subBuilder.MergeFrom(CreateRoomRequest);
@@ -3002,7 +2916,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             CreateRoomRequest = subBuilder;
             break;
           }
-          case 42: {
+          case 26: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse();
             if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
               subBuilder.MergeFrom(CreateRoomResponse);
@@ -3011,7 +2925,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             CreateRoomResponse = subBuilder;
             break;
           }
-          case 50: {
+          case 34: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest();
             if (messageCase_ == MessageOneofCase.ListRoomRequest) {
               subBuilder.MergeFrom(ListRoomRequest);
@@ -3020,7 +2934,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             ListRoomRequest = subBuilder;
             break;
           }
-          case 58: {
+          case 42: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse();
             if (messageCase_ == MessageOneofCase.ListRoomResponse) {
               subBuilder.MergeFrom(ListRoomResponse);
@@ -3029,7 +2943,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             ListRoomResponse = subBuilder;
             break;
           }
-          case 66: {
+          case 50: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest();
             if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
               subBuilder.MergeFrom(JoinRoomRequest);
@@ -3038,7 +2952,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             JoinRoomRequest = subBuilder;
             break;
           }
-          case 74: {
+          case 58: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse();
             if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
               subBuilder.MergeFrom(JoinRoomResponse);
@@ -3047,7 +2961,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             JoinRoomResponse = subBuilder;
             break;
           }
-          case 82: {
+          case 66: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest();
             if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
               subBuilder.MergeFrom(LeaveRoomRequest);
@@ -3056,7 +2970,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             LeaveRoomRequest = subBuilder;
             break;
           }
-          case 90: {
+          case 74: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse();
             if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
               subBuilder.MergeFrom(LeaveRoomResponse);
@@ -3084,24 +2998,6 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             break;
           }
           case 18: {
-            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
-            if (messageCase_ == MessageOneofCase.HandshakeRequest) {
-              subBuilder.MergeFrom(HandshakeRequest);
-            }
-            input.ReadMessage(subBuilder);
-            HandshakeRequest = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
-            if (messageCase_ == MessageOneofCase.HandshakeResponse) {
-              subBuilder.MergeFrom(HandshakeResponse);
-            }
-            input.ReadMessage(subBuilder);
-            HandshakeResponse = subBuilder;
-            break;
-          }
-          case 34: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomRequest();
             if (messageCase_ == MessageOneofCase.CreateRoomRequest) {
               subBuilder.MergeFrom(CreateRoomRequest);
@@ -3110,7 +3006,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             CreateRoomRequest = subBuilder;
             break;
           }
-          case 42: {
+          case 26: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.CreateRoomResponse();
             if (messageCase_ == MessageOneofCase.CreateRoomResponse) {
               subBuilder.MergeFrom(CreateRoomResponse);
@@ -3119,7 +3015,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             CreateRoomResponse = subBuilder;
             break;
           }
-          case 50: {
+          case 34: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsRequest();
             if (messageCase_ == MessageOneofCase.ListRoomRequest) {
               subBuilder.MergeFrom(ListRoomRequest);
@@ -3128,7 +3024,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             ListRoomRequest = subBuilder;
             break;
           }
-          case 58: {
+          case 42: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ListRoomsResponse();
             if (messageCase_ == MessageOneofCase.ListRoomResponse) {
               subBuilder.MergeFrom(ListRoomResponse);
@@ -3137,7 +3033,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             ListRoomResponse = subBuilder;
             break;
           }
-          case 66: {
+          case 50: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomRequest();
             if (messageCase_ == MessageOneofCase.JoinRoomRequest) {
               subBuilder.MergeFrom(JoinRoomRequest);
@@ -3146,7 +3042,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             JoinRoomRequest = subBuilder;
             break;
           }
-          case 74: {
+          case 58: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.JoinRoomResponse();
             if (messageCase_ == MessageOneofCase.JoinRoomResponse) {
               subBuilder.MergeFrom(JoinRoomResponse);
@@ -3155,7 +3051,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             JoinRoomResponse = subBuilder;
             break;
           }
-          case 82: {
+          case 66: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest();
             if (messageCase_ == MessageOneofCase.LeaveRoomRequest) {
               subBuilder.MergeFrom(LeaveRoomRequest);
@@ -3164,7 +3060,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             LeaveRoomRequest = subBuilder;
             break;
           }
-          case 90: {
+          case 74: {
             global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse();
             if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
               subBuilder.MergeFrom(LeaveRoomResponse);
@@ -3216,6 +3112,12 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         case MessageOneofCase.UserMessage:
           UserMessage = other.UserMessage.Clone();
           break;
+        case MessageOneofCase.HandshakeRequest:
+          HandshakeRequest = other.HandshakeRequest.Clone();
+          break;
+        case MessageOneofCase.HandshakeResponse:
+          HandshakeResponse = other.HandshakeResponse.Clone();
+          break;
       }
 
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -3248,12 +3150,36 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       }
     }
 
+    /// <summary>Field number for the "handshakeRequest" field.</summary>
+    public const int HandshakeRequestFieldNumber = 3;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest HandshakeRequest {
+      get { return messageCase_ == MessageOneofCase.HandshakeRequest ? (global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.HandshakeRequest;
+      }
+    }
+
+    /// <summary>Field number for the "handshakeResponse" field.</summary>
+    public const int HandshakeResponseFieldNumber = 4;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse HandshakeResponse {
+      get { return messageCase_ == MessageOneofCase.HandshakeResponse ? (global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.HandshakeResponse;
+      }
+    }
+
     private object message_;
     /// <summary>Enum of possible cases for the "message" oneof.</summary>
     public enum MessageOneofCase {
       None = 0,
       ExchangeMessage = 1,
       UserMessage = 2,
+      HandshakeRequest = 3,
+      HandshakeResponse = 4,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3282,6 +3208,8 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       }
       if (!object.Equals(ExchangeMessage, other.ExchangeMessage)) return false;
       if (!object.Equals(UserMessage, other.UserMessage)) return false;
+      if (!object.Equals(HandshakeRequest, other.HandshakeRequest)) return false;
+      if (!object.Equals(HandshakeResponse, other.HandshakeResponse)) return false;
       if (MessageCase != other.MessageCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -3291,6 +3219,8 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       int hash = 1;
       if (messageCase_ == MessageOneofCase.ExchangeMessage) hash ^= ExchangeMessage.GetHashCode();
       if (messageCase_ == MessageOneofCase.UserMessage) hash ^= UserMessage.GetHashCode();
+      if (messageCase_ == MessageOneofCase.HandshakeRequest) hash ^= HandshakeRequest.GetHashCode();
+      if (messageCase_ == MessageOneofCase.HandshakeResponse) hash ^= HandshakeResponse.GetHashCode();
       hash ^= (int) messageCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -3316,6 +3246,14 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         output.WriteRawTag(18);
         output.WriteMessage(UserMessage);
       }
+      if (messageCase_ == MessageOneofCase.HandshakeRequest) {
+        output.WriteRawTag(26);
+        output.WriteMessage(HandshakeRequest);
+      }
+      if (messageCase_ == MessageOneofCase.HandshakeResponse) {
+        output.WriteRawTag(34);
+        output.WriteMessage(HandshakeResponse);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -3333,6 +3271,14 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         output.WriteRawTag(18);
         output.WriteMessage(UserMessage);
       }
+      if (messageCase_ == MessageOneofCase.HandshakeRequest) {
+        output.WriteRawTag(26);
+        output.WriteMessage(HandshakeRequest);
+      }
+      if (messageCase_ == MessageOneofCase.HandshakeResponse) {
+        output.WriteRawTag(34);
+        output.WriteMessage(HandshakeResponse);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -3347,6 +3293,12 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       }
       if (messageCase_ == MessageOneofCase.UserMessage) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserMessage);
+      }
+      if (messageCase_ == MessageOneofCase.HandshakeRequest) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(HandshakeRequest);
+      }
+      if (messageCase_ == MessageOneofCase.HandshakeResponse) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(HandshakeResponse);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3371,6 +3323,18 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             UserMessage = new global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage();
           }
           UserMessage.MergeFrom(other.UserMessage);
+          break;
+        case MessageOneofCase.HandshakeRequest:
+          if (HandshakeRequest == null) {
+            HandshakeRequest = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
+          }
+          HandshakeRequest.MergeFrom(other.HandshakeRequest);
+          break;
+        case MessageOneofCase.HandshakeResponse:
+          if (HandshakeResponse == null) {
+            HandshakeResponse = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
+          }
+          HandshakeResponse.MergeFrom(other.HandshakeResponse);
           break;
       }
 
@@ -3406,6 +3370,24 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             UserMessage = subBuilder;
             break;
           }
+          case 26: {
+            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
+            if (messageCase_ == MessageOneofCase.HandshakeRequest) {
+              subBuilder.MergeFrom(HandshakeRequest);
+            }
+            input.ReadMessage(subBuilder);
+            HandshakeRequest = subBuilder;
+            break;
+          }
+          case 34: {
+            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
+            if (messageCase_ == MessageOneofCase.HandshakeResponse) {
+              subBuilder.MergeFrom(HandshakeResponse);
+            }
+            input.ReadMessage(subBuilder);
+            HandshakeResponse = subBuilder;
+            break;
+          }
         }
       }
     #endif
@@ -3436,6 +3418,24 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             }
             input.ReadMessage(subBuilder);
             UserMessage = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeRequest();
+            if (messageCase_ == MessageOneofCase.HandshakeRequest) {
+              subBuilder.MergeFrom(HandshakeRequest);
+            }
+            input.ReadMessage(subBuilder);
+            HandshakeRequest = subBuilder;
+            break;
+          }
+          case 34: {
+            global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.HandshakeResponse();
+            if (messageCase_ == MessageOneofCase.HandshakeResponse) {
+              subBuilder.MergeFrom(HandshakeResponse);
+            }
+            input.ReadMessage(subBuilder);
+            HandshakeResponse = subBuilder;
             break;
           }
         }

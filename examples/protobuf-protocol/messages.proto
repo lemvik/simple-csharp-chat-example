@@ -59,16 +59,14 @@ message UserMessage {
 message ProtocolExchange {
   uint64 exchange_id = 1;
   oneof message {
-    HandshakeRequest handshake_request = 2;
-    HandshakeResponse handshake_response = 3;
-    CreateRoomRequest create_room_request = 4;
-    CreateRoomResponse create_room_response = 5;
-    ListRoomsRequest list_room_request = 6;
-    ListRoomsResponse list_room_response = 7;
-    JoinRoomRequest join_room_request = 8;
-    JoinRoomResponse join_room_response = 9;
-    LeaveRoomRequest leave_room_request = 10;
-    LeaveRoomResponse leave_room_response = 11;
+    CreateRoomRequest create_room_request = 2;
+    CreateRoomResponse create_room_response = 3;
+    ListRoomsRequest list_room_request = 4;
+    ListRoomsResponse list_room_response = 5;
+    JoinRoomRequest join_room_request = 6;
+    JoinRoomResponse join_room_response = 7;
+    LeaveRoomRequest leave_room_request = 8;
+    LeaveRoomResponse leave_room_response = 9;
   }
 }
 
@@ -76,5 +74,7 @@ message ProtocolMessage {
   oneof message {
     ProtocolExchange exchange_message = 1;
     UserMessage userMessage = 2;
+    HandshakeRequest handshakeRequest = 3;
+    HandshakeResponse handshakeResponse = 4;
   }
 }
