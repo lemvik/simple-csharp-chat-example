@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
-    public class RoomRegistry : IRoomRegistry, IAsyncRunnable
+    public class RoomRegistry : IRoomRegistry
     {
         private readonly ILogger<RoomRegistry> logger;
         private readonly IRoomSource roomSource;
@@ -48,6 +48,16 @@ namespace Lemvik.Example.Chat.Server.Implementation
 
         public async Task RunAsync(CancellationToken token = default)
         {
+            token.Register(registryLifetime.Cancel);
+            var existingRooms = await roomSource.ExistingRooms(token);
+            foreach (var existingRoom in existingRooms)
+            {
+                if (!roomsTracker.TryAdd(existingRoom.ChatRoom.Id, existingRoom))
+                {
+                    throw new ChatException($"Failed to register existing [room={existingRoom}]");
+                }
+            }
+
             await token;
             await roomsTracker.StopTracker();
         }

@@ -75,7 +75,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 // If we fail to add client we should not run it's `RunAsync` method, so first add, then fire the task.
                 if (!clientTasks.TryAdd(chatUser.Id, clientTask))
                 {
-                    throw new Exception($"Unable to add [client={chatUser}], one is already connected");
+                    throw new ChatException($"Unable to add [client={chatUser}], one is already connected");
                 }
 
                 try
@@ -97,6 +97,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             catch (Exception error)
             {
                 logger.LogError(error, "Failed to handshake with the [client={ChatUser}]", chatUser);
+                throw;
             }
             finally
             {

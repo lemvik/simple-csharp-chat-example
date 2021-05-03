@@ -44,7 +44,12 @@ namespace Lemvik.Example.Chat.Testing
         [TestMethod, Timeout(10000)]
         public async Task ListRoomsUponConnectionTest()
         {
-            var chatServer = CreateServer();
+            var existingRooms = new[]
+            {
+                new ChatRoom(Guid.NewGuid().ToString(), "RoomA"),
+                new ChatRoom(Guid.NewGuid().ToString(), "RoomB")
+            };
+            var chatServer = await CreateServer(existingRooms);
             var (chatClient, connectingClient) = CreateClient();
             await chatServer.AddClientAsync(new ChatUser(Guid.NewGuid().ToString(), "TestUser"),
                                             connectingClient,
@@ -52,13 +57,13 @@ namespace Lemvik.Example.Chat.Testing
 
             var rooms = await chatClient.ListRooms(testsLifetime.Token);
 
-            Assert.AreEqual(rooms.Count, 0);
+            Assert.AreEqual(existingRooms.Length, rooms.Count);
         }
 
         [TestMethod, Timeout(1000)]
         public async Task ConnectTwiceWithSameClientTest()
         {
-            var chatServer = CreateServer();
+            var chatServer = await CreateServer(Array.Empty<ChatRoom>());
             var (_, connectingClient) = CreateClient();
             var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
             await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
@@ -70,9 +75,8 @@ namespace Lemvik.Example.Chat.Testing
                 Debug.WriteLine("Was not expecting this to succeed.");
                 Assert.Fail();
             }
-            catch (Exception error)
+            catch (ChatException)
             {
-                Debug.WriteLine($"{error}");
                 // expected
             }
         }
@@ -80,7 +84,7 @@ namespace Lemvik.Example.Chat.Testing
         [TestMethod, Timeout(1000)]
         public async Task CreateAndConnectToRoom()
         {
-            var chatServer = CreateServer();
+            var chatServer = await CreateServer(Array.Empty<ChatRoom>());
             var (chatClient, connectingClient) = CreateClient();
             var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
 
@@ -102,7 +106,7 @@ namespace Lemvik.Example.Chat.Testing
         [TestMethod, Timeout(1000)]
         public async Task TwoClientsJoiningSameRoom()
         {
-            var chatServer = CreateServer();
+            var chatServer = await CreateServer(Array.Empty<ChatRoom>());
             var (firstClient, firstConnection) = CreateClient();
             var firstUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
             var (secondClient, secondConnection) = CreateClient();
@@ -147,7 +151,7 @@ namespace Lemvik.Example.Chat.Testing
         [TestMethod, Timeout(1000)]
         public async Task CheckExistingMessages()
         {
-            var chatServer = CreateServer();
+            var chatServer = await CreateServer(Array.Empty<ChatRoom>());
             const string roomName = "testRoom";
             var (firstClient, firstConnection) = CreateClient();
             var firstUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
@@ -191,11 +195,12 @@ namespace Lemvik.Example.Chat.Testing
             return (chatClient, connectedClient);
         }
 
-        private IChatServer CreateServer()
+        private async Task<IChatServer> CreateServer(IReadOnlyCollection<ChatRoom> initialRooms)
         {
             var trackingFactory = InMemoryMessageTracker.Factory;
-            var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>(), 
-                                                new TransientRoomSource(trackingFactory));
+            var roomsSource = new TransientRoomSource(trackingFactory);
+            await roomsSource.Initialize(initialRooms);
+            var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>(), roomsSource);
             var chatServer = new ChatServer(TestingLogger.CreateLogger<ChatServer>(), roomRegistry);
 
             pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token));
