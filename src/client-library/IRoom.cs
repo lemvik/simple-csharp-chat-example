@@ -6,14 +6,16 @@ using Lemvik.Example.Chat.Protocol.Messages;
 
 namespace Lemvik.Example.Chat.Client
 {
-    public interface IClientChatRoom 
+    public interface IRoom 
     {
-        ChatRoom Room { get; } 
+        ChatRoom ChatRoom { get; } 
         
         Task<IReadOnlyCollection<ChatUser>> ListUsers(CancellationToken token = default);
         
         Task SendMessage(string message, CancellationToken token = default);
 
         Task<ChatMessage> GetMessage(CancellationToken token = default);
+
+        Task Leave(CancellationToken token = default);
     }
 }

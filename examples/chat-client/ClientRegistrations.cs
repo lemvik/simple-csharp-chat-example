@@ -1,3 +1,4 @@
+using Lemvik.Example.Chat.Client.Implementation;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Protobuf;
 using Lemvik.Example.Chat.Protocol.Transport;

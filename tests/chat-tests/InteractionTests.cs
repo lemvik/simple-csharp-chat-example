@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Client;
+using Lemvik.Example.Chat.Client.Implementation;
 using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Transport;
 using Lemvik.Example.Chat.Server;
@@ -104,9 +106,54 @@ namespace Lemvik.Example.Chat.Testing
         }
 
         [TestMethod, Timeout(1000)]
+        public async Task EnterLeaveAndEnterRoom()
+        {
+            var existingRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");
+            var chatServer = await CreateServer(new []{existingRoom});
+            var (chatClient, connectingClient) = CreateClient();
+            var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
+
+            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            
+            var (observerClient, observerConnection) = CreateClient();
+            var observerUser = new ChatUser(Guid.NewGuid().ToString(), "Observer");
+            await chatServer.AddClientAsync(observerUser, observerConnection, testsLifetime.Token);
+
+            var observerRoom = await observerClient.JoinRoom(existingRoom, testsLifetime.Token);
+
+            var clientRoom = await chatClient.JoinRoom(existingRoom, testsLifetime.Token);
+
+            var firstUsers = await clientRoom.ListUsers(testsLifetime.Token);
+            
+            Assert.AreEqual(2, firstUsers.Count);
+
+            await clientRoom.Leave(testsLifetime.Token);
+
+            var observerUsers = await observerRoom.ListUsers(testsLifetime.Token);
+            
+            Assert.AreEqual(1, observerUsers.Count);
+
+            try
+            {
+                await clientRoom.SendMessage("Should not be delivered", testsLifetime.Token);
+                Assert.Fail("Sending message after leaving room should fail.");
+            }
+            catch (OperationCanceledException)
+            {
+            }
+
+            var anotherRoomInstance = await chatClient.JoinRoom(existingRoom, testsLifetime.Token);
+
+            var secondUsers = await anotherRoomInstance.ListUsers(testsLifetime.Token);
+            
+            Assert.AreEqual(2, secondUsers.Count);
+        }
+
+        [TestMethod, Timeout(1000)]
         public async Task TwoClientsJoiningSameRoom()
         {
-            var chatServer = await CreateServer(Array.Empty<ChatRoom>());
+            var chatRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");
+            var chatServer = await CreateServer(new [] {chatRoom});
             var (firstClient, firstConnection) = CreateClient();
             var firstUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
             var (secondClient, secondConnection) = CreateClient();
@@ -115,8 +162,6 @@ namespace Lemvik.Example.Chat.Testing
             await Task.WhenAll(chatServer.AddClientAsync(firstUser, firstConnection, testsLifetime.Token),
                                chatServer.AddClientAsync(secondUser, secondConnection, testsLifetime.Token));
 
-            var chatRoom = await firstClient.CreateRoom("testRoom", testsLifetime.Token);
-
             var connections = await Task.WhenAll(firstClient.JoinRoom(chatRoom, testsLifetime.Token),
                                                  secondClient.JoinRoom(chatRoom, testsLifetime.Token));
             Assert.AreEqual(connections.Length, 2);
@@ -124,7 +169,7 @@ namespace Lemvik.Example.Chat.Testing
             var firstRoom = connections[0];
             var secondRoom = connections[1];
 
-            Assert.AreEqual(firstRoom.Room.Id, secondRoom.Room.Id);
+            Assert.AreEqual(firstRoom.ChatRoom.Id, secondRoom.ChatRoom.Id);
 
             var firstMessage = $"Hello from {firstUser.Name}";
             var secondMessage = $"Hello from {secondUser.Name}";
@@ -136,13 +181,13 @@ namespace Lemvik.Example.Chat.Testing
             Assert.AreEqual(firstMessage, firstIncoming.Body);
             Assert.AreEqual(firstUser.Id, firstIncoming.Sender.Id);
             Assert.AreEqual(chatRoom.Id, firstIncoming.Room.Id);
-            
+
             await secondRoom.SendMessage(secondMessage, testsLifetime.Token);
 
             // Note that we check `secondRoom`'s messages again to see if messages are echoed (and because
             // first room still have first message unhandled).
             var secondIncoming = await secondRoom.GetMessage(testsLifetime.Token);
-            
+
             Assert.AreEqual(secondMessage, secondIncoming.Body);
             Assert.AreEqual(secondUser.Id, secondIncoming.Sender.Id);
             Assert.AreEqual(chatRoom.Id, secondIncoming.Room.Id);
@@ -163,10 +208,10 @@ namespace Lemvik.Example.Chat.Testing
             var messages = new[] {"Spam!", "Spam, spam, spam!", "More spam!"};
 
             await Task.WhenAll(messages.Select(message => firstRoom.SendMessage(message, testsLifetime.Token)));
-            
+
             var (secondClient, secondConnection) = CreateClient();
             var secondUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
-            
+
             await chatServer.AddClientAsync(secondUser, secondConnection, testsLifetime.Token);
             var secondRoom = await secondClient.JoinRoom(chatRoom, testsLifetime.Token);
 

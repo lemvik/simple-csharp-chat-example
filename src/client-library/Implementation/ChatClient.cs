@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
@@ -6,28 +7,34 @@ using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Logging;
 
-namespace Lemvik.Example.Chat.Client
+namespace Lemvik.Example.Chat.Client.Implementation
 {
     internal class ChatClient : IChatClient
     {
+        public ChatUser User { get; private set; }
+        public CancellationToken ClientCancellation { get; }
+
         private readonly ILogger<ChatClient> logger;
         private readonly IChatExchangeTransport transport;
-        private readonly IDictionary<string, ClientChatRoom> rooms;
-        private ChatUser assignedUser;
+        private readonly ConcurrentDictionary<string, Room> rooms;
+        private readonly CancellationTokenSource clientLifetime;
 
         internal ChatClient(ILogger<ChatClient> logger,
                             IChatTransport transport)
         {
             this.logger = logger;
             this.transport = new ChatExchangeTransport(transport);
-            this.rooms = new Dictionary<string, ClientChatRoom>();
+            this.rooms = new ConcurrentDictionary<string, Room>();
+            this.clientLifetime = new CancellationTokenSource();
+            this.ClientCancellation = this.clientLifetime.Token;
         }
 
         public async Task RunAsync(CancellationToken token = default)
         {
+            token.Register(clientLifetime.Cancel);
             await HandshakeAsync(token);
 
-            logger.LogDebug("Handshake successful [chatUser={ChatUser}]", assignedUser);
+            logger.LogDebug("Handshake successful [chatUser={ChatUser}]", User);
 
             while (!token.IsCancellationRequested)
             {
@@ -54,15 +61,17 @@ namespace Lemvik.Example.Chat.Client
             return response.Room;
         }
 
-        public async Task<IClientChatRoom> JoinRoom(ChatRoom room, CancellationToken token = default)
+        public async Task<IRoom> JoinRoom(ChatRoom room, CancellationToken token = default)
         {
             var request = new JoinRoomRequest(room.Id);
 
             var response = await transport.Exchange<JoinRoomResponse>(request, token);
 
-            var chatRoom = new ClientChatRoom(assignedUser, response.Room, transport);
+            var chatRoom = new Room(this, response.Room, transport);
 
-            rooms.Add(chatRoom.Room.Id, chatRoom);
+            if (!rooms.TryAdd(chatRoom.ChatRoom.Id, chatRoom))
+            {
+            }
 
             foreach (var chatMessage in response.Messages)
             {
@@ -84,9 +93,8 @@ namespace Lemvik.Example.Chat.Client
                 var incomingMessage = await transport.Receive(token);
                 if (incomingMessage is HandshakeRequest handshakeRequest)
                 {
-                    assignedUser = handshakeRequest.User;
-                    var response = new HandshakeResponse();
-                    await transport.Send(response, token);
+                    User = handshakeRequest.User;
+                    await transport.Send(new HandshakeResponse(), token);
                     return;
                 }
 
@@ -118,6 +126,11 @@ namespace Lemvik.Example.Chat.Client
             }
             
             return Task.CompletedTask;
+        }
+
+        public void RemoveRoom(Room stoppedRoom)
+        {
+            rooms.TryRemove(stoppedRoom.ChatRoom.Id, out _);
         }
     }
 }
