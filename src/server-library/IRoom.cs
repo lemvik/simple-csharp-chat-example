@@ -4,18 +4,19 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Shared;
 
 namespace Lemvik.Example.Chat.Server
 {
-    public interface IServerChatRoom 
+    public interface IRoom : IAsyncRunnable
     {
-        ChatRoom Room { get; } 
+        ChatRoom ChatRoom { get; } 
         
-        ChannelWriter<(IMessage, IConnectedClient)> MessagesSink { get; }
+        ChannelWriter<(IMessage, IClient)> MessagesSink { get; }
 
-        Task AddUser(IConnectedClient connectedClient, CancellationToken token = default);
+        Task AddUser(IClient client, CancellationToken token = default);
 
-        Task RemoveUser(IConnectedClient connectedClient, CancellationToken token = default);
+        Task RemoveUser(IClient client, CancellationToken token = default);
 
         Task<IReadOnlyCollection<ChatMessage>> MostRecentMessages(uint maxMessages, CancellationToken token = default);
     }

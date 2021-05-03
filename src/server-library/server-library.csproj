@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\protocol\protocol.csproj" />
+    <ProjectReference Include="..\shared-library\shared-library.csproj" />
   </ItemGroup>
 
 </Project>

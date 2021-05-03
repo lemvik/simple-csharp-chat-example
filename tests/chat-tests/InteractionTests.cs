@@ -164,10 +164,11 @@ namespace Lemvik.Example.Chat.Testing
 
         private IChatServer CreateServer()
         {
-            var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>());
+            var roomRegistry = new RoomRegistry(TestingLogger.CreateLogger<RoomRegistry>(), new RoomSource());
             var chatServer = new ChatServer(TestingLogger.CreateLogger<ChatServer>(), roomRegistry);
 
-            pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token).ContinueWith(_ => roomRegistry.Close()));
+            pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token));
+            pendingTasks.Add(roomRegistry.RunAsync(testsLifetime.Token));
             return chatServer;
         }
     }

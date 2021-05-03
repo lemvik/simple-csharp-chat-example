@@ -9,21 +9,21 @@ using Lemvik.Example.Chat.Protocol.Transport;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
-    public class ConnectedClient : IConnectedClient
+    public class Client : IClient
     {
         public ChatUser User { get; }
         private readonly IChatTransport transport;
-        private readonly ChannelWriter<(IConnectedClient, IMessage)> serverSink;
-        private readonly ConcurrentDictionary<string, IServerChatRoom> rooms;
+        private readonly ChannelWriter<(IClient, IMessage)> serverSink;
+        private readonly ConcurrentDictionary<string, IRoom> rooms;
 
-        public ConnectedClient(ChatUser user,
+        public Client(ChatUser user,
                                IChatTransport transport,
-                               ChannelWriter<(IConnectedClient, IMessage)> serverSink)
+                               ChannelWriter<(IClient, IMessage)> serverSink)
         {
             User = user;
             this.transport = transport;
             this.serverSink = serverSink;
-            this.rooms = new ConcurrentDictionary<string, IServerChatRoom>();
+            this.rooms = new ConcurrentDictionary<string, IRoom>();
         }
 
         public async Task RunAsync(CancellationToken token = default)
@@ -61,19 +61,19 @@ namespace Lemvik.Example.Chat.Server.Implementation
             return transport.Send(message, token);
         }
 
-        public void EnterRoom(IServerChatRoom serverChatRoom)
+        public void EnterRoom(IRoom room)
         {
-            if (!rooms.TryAdd(serverChatRoom.Room.Id, serverChatRoom))
+            if (!rooms.TryAdd(room.ChatRoom.Id, room))
             {
-                throw new Exception($"Failed to enter [room={serverChatRoom}][client={this}]");
+                throw new Exception($"Failed to enter [room={room}][client={this}]");
             }
         }
 
-        public void LeaveRoom(IServerChatRoom serverChatRoom)
+        public void LeaveRoom(IRoom room)
         {
-            if (!rooms.TryRemove(serverChatRoom.Room.Id, out _))
+            if (!rooms.TryRemove(room.ChatRoom.Id, out _))
             {
-                throw new Exception($"Failed to leave [room={serverChatRoom}][client={this}]");
+                throw new Exception($"Failed to leave [room={room}][client={this}]");
             }
         }
     }

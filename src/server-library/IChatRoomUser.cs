@@ -6,6 +6,6 @@ namespace Lemvik.Example.Chat.Server
     {
         ChatUser User { get; }
         ChatRoom Room { get; }
-        IConnectedClient Client { get; }
+        IClient Client { get; }
     }
 }

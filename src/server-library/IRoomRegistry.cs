@@ -1,20 +1,16 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Shared;
 
 namespace Lemvik.Example.Chat.Server
 {
-    public interface IRoomRegistry
+    public interface IRoomRegistry : IAsyncRunnable
     {
-        Task<IServerChatRoom> CreateRoom(string roomName, CancellationToken roomLifetimeToken = default);
+        Task<IRoom> CreateRoom(string roomName, CancellationToken roomLifetimeToken = default);
 
-        Task<IServerChatRoom> GetRoom(string roomId, CancellationToken token = default);
+        Task<IRoom> GetRoom(string roomId, CancellationToken token = default);
 
-        Task<IReadOnlyCollection<IServerChatRoom>> ListRooms();
-
-        Task CloseRoom(ChatRoom room);
-
-        Task Close();
+        Task<IReadOnlyCollection<IRoom>> ListRooms();
     }
 }

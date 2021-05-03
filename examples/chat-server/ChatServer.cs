@@ -18,16 +18,19 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
         private readonly IChatUserIdentityProvider identityProvider;
         private readonly IMessageProtocol messageProtocol;
         private readonly IChatServer chatServer;
+        private readonly IRoomRegistry roomRegistry;
 
         public ChatServer(ILogger<ChatServer> logger,
                           IOptions<ServerConfig> serverConfig,
                           IChatUserIdentityProvider identityProvider,
                           IMessageProtocol messageProtocol,
-                          IChatServer chatServer)
+                          IChatServer chatServer, 
+                          IRoomRegistry roomRegistry)
         {
             this.logger = logger;
             this.messageProtocol = messageProtocol;
             this.chatServer = chatServer;
+            this.roomRegistry = roomRegistry;
             this.identityProvider = identityProvider;
             var listeningConfig = serverConfig.Value.Listening;
             var listeningHost = IPAddress.Parse(listeningConfig.Host);
@@ -70,7 +73,8 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
         {
             var serverTask = chatServer.RunAsync(stoppingToken);
             var acceptTask = AcceptClients(stoppingToken);
-            return Task.WhenAny(serverTask, acceptTask);
+            var registryTask = roomRegistry.RunAsync(stoppingToken);
+            return Task.WhenAny(serverTask, acceptTask, registryTask);
         }
     }
 }

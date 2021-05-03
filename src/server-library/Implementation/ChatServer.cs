@@ -14,7 +14,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
     public class ChatServer : IChatServer
     {
         private readonly ILogger<ChatServer> logger;
-        private readonly Channel<(IConnectedClient, IMessage)> messages;
+        private readonly Channel<(IClient, IMessage)> messages;
         private readonly SemaphoreSlim clientsLock;
         private readonly ConcurrentDictionary<string, ClientTask> clientTasks;
         private readonly IRoomRegistry roomsRegistry;
@@ -24,7 +24,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
         {
             this.logger = logger;
             this.roomsRegistry = roomsRegistry;
-            this.messages = Channel.CreateUnbounded<(IConnectedClient, IMessage)>(new UnboundedChannelOptions
+            this.messages = Channel.CreateUnbounded<(IClient, IMessage)>(new UnboundedChannelOptions
             {
                 SingleReader = true,
                 SingleWriter = false
@@ -69,7 +69,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 await clientsLock.WaitAsync(token);
 
                 logger.LogDebug("Handshaking [client={ChatUser}][connection={Connection}]", chatUser, transport);
-                var connectedClient = new ConnectedClient(chatUser, transport, messages.Writer);
+                var connectedClient = new Client(chatUser, transport, messages.Writer);
                 var clientTask = new ClientTask();
 
                 // If we fail to add client we should not run it's `RunAsync` method, so first add, then fire the task.
@@ -119,7 +119,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             throw new Exception($"Expected to receive handshake response [received={response}]");
         }
 
-        private async Task DispatchAsync(IConnectedClient client,
+        private async Task DispatchAsync(IClient client,
                                          IMessage message,
                                          CancellationToken token = default)
         {
@@ -130,7 +130,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     case ListRoomsRequest _:
                     {
                         var rooms = await roomsRegistry.ListRooms();
-                        var chatRooms = rooms.Select(room => room.Room).ToList();
+                        var chatRooms = rooms.Select(room => room.ChatRoom).ToList();
                         var response = exchangeMessage.MakeResponse(new ListRoomsResponse(chatRooms));
                         await client.SendMessage(response, token);
                         break;
@@ -139,7 +139,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     {
                         var room = await roomsRegistry.CreateRoom(createRoomRequest.RoomName, token);
                         var response =
-                            exchangeMessage.MakeResponse(new CreateRoomResponse(room.Room));
+                            exchangeMessage.MakeResponse(new CreateRoomResponse(room.ChatRoom));
                         await client.SendMessage(response, token);
                         break;
                     }
@@ -149,7 +149,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                         await room.AddUser(client, token);
                         var mostRecentMessages = await room.MostRecentMessages(5, token);
                         var response =
-                            exchangeMessage.MakeResponse(new JoinRoomResponse(room.Room,
+                            exchangeMessage.MakeResponse(new JoinRoomResponse(room.ChatRoom,
                                                                               mostRecentMessages));
                         await client.SendMessage(response, token);
                         break;
@@ -158,7 +158,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     {
                         var room = await roomsRegistry.GetRoom(leaveRoomRequest.Room.Id, token);
                         await room.RemoveUser(client, token);
-                        var response = exchangeMessage.MakeResponse(new LeaveRoomResponse(room.Room));
+                        var response = exchangeMessage.MakeResponse(new LeaveRoomResponse(room.ChatRoom));
                         await client.SendMessage(response, token);
                         break;
                     }
@@ -169,7 +169,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
         }
 
-        private async Task RunClient(IConnectedClient client, CancellationToken token = default)
+        private async Task RunClient(IClient client, CancellationToken token = default)
         {
             try
             {

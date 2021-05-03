@@ -10,48 +10,48 @@ using Lemvik.Example.Chat.Protocol.Messages;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
-    internal class ServerChatRoom : IServerChatRoom
+    internal class Room : IRoom
     {
-        public ChatRoom Room { get; }
-        public ChannelWriter<(IMessage, IConnectedClient)> MessagesSink => messages.Writer;
+        public ChatRoom ChatRoom { get; }
+        public ChannelWriter<(IMessage, IClient)> MessagesSink => messages.Writer;
 
-        private readonly ConcurrentDictionary<string, IConnectedClient> clients;
-        private readonly Channel<(IMessage, IConnectedClient)> messages;
+        private readonly ConcurrentDictionary<string, IClient> clients;
+        private readonly Channel<(IMessage, IClient)> messages;
 
-        internal ServerChatRoom(ChatRoom room)
+        internal Room(ChatRoom room)
         {
-            Room = room;
-            clients = new ConcurrentDictionary<string, IConnectedClient>();
-            messages = Channel.CreateUnbounded<(IMessage, IConnectedClient)>();
+            ChatRoom = room;
+            clients = new ConcurrentDictionary<string, IClient>();
+            messages = Channel.CreateUnbounded<(IMessage, IClient)>();
         }
 
-        public Task AddUser(IConnectedClient connectedClient, CancellationToken token = default)
+        public Task AddUser(IClient client, CancellationToken token = default)
         {
-            if (!clients.TryAdd(connectedClient.User.Id, connectedClient))
+            if (!clients.TryAdd(client.User.Id, client))
             {
-                throw new Exception($"Cannot add [client={connectedClient}] to chat [room={this}]");
+                throw new ChatException($"There already was a [user={client.User}] in [room={this}]");
             }
 
-            connectedClient.EnterRoom(this);
+            client.EnterRoom(this);
 
             return Task.CompletedTask;
         }
 
-        public Task RemoveUser(IConnectedClient connectedClient, CancellationToken token = default)
+        public Task RemoveUser(IClient client, CancellationToken token = default)
         {
-            if (!clients.TryRemove(connectedClient.User.Id, out var _))
+            if (!clients.TryRemove(client.User.Id, out _))
             {
-                throw new Exception($"Cannot remove [client={connectedClient}] to chat [room={this}]");
+                throw new ChatException($"There was no [user={client.User}] in [room={this}]");
             }
 
-            connectedClient.LeaveRoom(this);
+            client.LeaveRoom(this);
 
             return Task.CompletedTask;
         }
 
         private IReadOnlyCollection<IChatRoomUser> ListUsers()
         {
-            var users = clients.Values.Select(client => new ChatRoomUser(Room, client)).ToList();
+            var users = clients.Values.Select(client => new ChatRoomUser(ChatRoom, client)).ToList();
             return users;
         }
 
@@ -72,7 +72,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
         }
 
         private Task DispatchMessage(IMessage message,
-                                     IConnectedClient client,
+                                     IClient client,
                                      CancellationToken token = default)
         {
             if (message is ExchangeMessage exchangeMessage)
@@ -89,7 +89,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
         }
 
         private async Task HandleRequest(ExchangeMessage exchangeMessage,
-                                         IConnectedClient client,
+                                         IClient client,
                                          CancellationToken token = default)
         {
             switch (exchangeMessage.Message)
@@ -97,7 +97,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 case ListUsersRequest _:
                 {
                     var users = ListUsers().Select(user => user.User).ToList();
-                    var response = exchangeMessage.MakeResponse(new ListUsersResponse(Room, users));
+                    var response = exchangeMessage.MakeResponse(new ListUsersResponse(ChatRoom, users));
                     await client.SendMessage(response, token);
                     break;
                 }
@@ -127,9 +127,9 @@ namespace Lemvik.Example.Chat.Server.Implementation
         {
             public ChatUser User => Client.User;
             public ChatRoom Room { get; }
-            public IConnectedClient Client { get; }
+            public IClient Client { get; }
 
-            public ChatRoomUser(ChatRoom room, IConnectedClient client)
+            public ChatRoomUser(ChatRoom room, IClient client)
             {
                 Room = room;
                 Client = client;
