@@ -106,6 +106,36 @@ namespace Lemvik.Example.Chat.Testing
         }
 
         [TestMethod, Timeout(1000)]
+        public async Task FailToEnterRoomTwice()
+        {
+            var existingRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");
+            var chatServer = await CreateServer(new []{existingRoom});
+            var (chatClient, connectingClient) = CreateClient();
+            var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
+
+            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            
+            var clientRoom = await chatClient.JoinRoom(existingRoom, testsLifetime.Token);
+
+            var users = await clientRoom.ListUsers(testsLifetime.Token);
+            
+            Assert.AreEqual(1, users.Count);
+
+            try
+            {
+                await chatClient.JoinRoom(existingRoom, testsLifetime.Token);
+            }
+            catch (ChatException)
+            {
+                // expected
+            }
+
+            users = await clientRoom.ListUsers(testsLifetime.Token);
+            
+            Assert.AreEqual(1, users.Count);
+        }
+
+        [TestMethod, Timeout(1000)]
         public async Task EnterLeaveAndEnterRoom()
         {
             var existingRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");

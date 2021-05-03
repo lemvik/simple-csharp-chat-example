@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Server;
 using Microsoft.Extensions.Logging;
 
 namespace Lemvik.Example.Chat.Client.Implementation
@@ -39,39 +40,45 @@ namespace Lemvik.Example.Chat.Client.Implementation
             while (!token.IsCancellationRequested)
             {
                 var incomingMessage = await transport.Receive(token);
-                await DispatchMessage(incomingMessage, token);
+                DispatchMessage(incomingMessage);
             }
         }
 
         public async Task<IReadOnlyCollection<ChatRoom>> ListRooms(CancellationToken token = default)
         {
+            var operationToken = CancellationTokenSource.CreateLinkedTokenSource(clientLifetime.Token, token).Token;
+            
             var request = new ListRoomsRequest();
 
-            var response = await transport.Exchange<ListRoomsResponse>(request, token);
+            var response = await transport.Exchange<ListRoomsResponse>(request, operationToken);
 
             return response.Rooms;
         }
 
         public async Task<ChatRoom> CreateRoom(string roomName, CancellationToken token = default)
         {
+            var operationToken = CancellationTokenSource.CreateLinkedTokenSource(clientLifetime.Token, token).Token;
+            
             var request = new CreateRoomRequest(roomName);
 
-            var response = await transport.Exchange<CreateRoomResponse>(request, token);
+            var response = await transport.Exchange<CreateRoomResponse>(request, operationToken);
 
             return response.Room;
         }
 
         public async Task<IRoom> JoinRoom(ChatRoom room, CancellationToken token = default)
         {
-            var request = new JoinRoomRequest(room.Id);
-
-            var response = await transport.Exchange<JoinRoomResponse>(request, token);
-
-            var chatRoom = new Room(this, response.Room, transport);
+            var operationToken = CancellationTokenSource.CreateLinkedTokenSource(clientLifetime.Token, token).Token;
+            
+            var chatRoom = new Room(this, room, transport);
 
             if (!rooms.TryAdd(chatRoom.ChatRoom.Id, chatRoom))
             {
+                throw new ChatException($"Cannot add room that already exists [room={chatRoom}]");
             }
+            
+            var request = new JoinRoomRequest(room.Id);
+            var response = await transport.Exchange<JoinRoomResponse>(request, operationToken);
 
             foreach (var chatMessage in response.Messages)
             {
@@ -102,7 +109,7 @@ namespace Lemvik.Example.Chat.Client.Implementation
             }
         }
 
-        private Task DispatchMessage(IMessage message, CancellationToken token = default)
+        private void DispatchMessage(IMessage message)
         {
             logger.LogDebug("Dispatching [message={Message}]", message);
 
@@ -124,13 +131,16 @@ namespace Lemvik.Example.Chat.Client.Implementation
                     logger.LogWarning("Unexpected message to be handled [message={Message}]", message);
                     break;
             }
-            
-            return Task.CompletedTask;
         }
 
         public void RemoveRoom(Room stoppedRoom)
         {
             rooms.TryRemove(stoppedRoom.ChatRoom.Id, out _);
+        }
+
+        public override string ToString()
+        {
+            return $"ChatClient[User={User},Rooms={rooms.Count}]";
         }
     }
 }
