@@ -56,3 +56,4 @@ Design and implement a chat service. Make it as clean as you can.
 - The API provided is centered around proxy-like objects (especially on the client - `IRoom` there is a proxy), so some scenarios like "listen to any message in any room"
   will required something like `Task.WhenAny(rooms.Select(room => room.GetMessage()))` polling.
 - Polling - the API doesn't use callbacks as it's simpler to use polling on `Task`s and it gives more control. But implementing callback-based API on top of `Task` is entirely possible, just like it's possible to do the other way round.
+- ! First build after `dotnet clean` fails: see [non-reproducible issue on GitHub](https://github.com/grpc/grpc/issues/18625) that reproduces all-right on my machine.

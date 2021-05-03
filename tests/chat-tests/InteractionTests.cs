@@ -112,7 +112,7 @@ namespace Lemvik.Example.Chat.Testing
             // This is needed here as terminating the client on server side is an operation that:
             // 1. takes some time
             // 2. not awaited anywhere in these tests
-            await Task.Delay(10, testsLifetime.Token);
+            await Task.Delay(100, testsLifetime.Token);
             var postCancelUsers = await observerRoom.ListUsers(testsLifetime.Token);
             
             Assert.AreEqual(1, postCancelUsers.Count);
