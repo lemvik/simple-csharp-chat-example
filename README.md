@@ -24,15 +24,16 @@ Implements test assignment from a company I was interviewing for.
    ```
 3. Some interaction in client terminal
    ```
-:l
-Barrens-General
-LFG
-:j LFG
-[room=LFG][user=Victor]: HEllo
-Joined ChatRoom[Id=2,Name=LFG]
-:s LFG Hello from another window
-[room=LFG][user=Antti]: Hello from another window
-[room=LFG][user=Victor]: Well, hello there
+   Victor entered the chat
+   :l
+   Barrens-General
+   LFG
+   :j LFG
+   [room=LFG][user=Victor]: HEllo
+   Joined ChatRoom[Id=2,Name=LFG]
+   :s LFG Hello from another window
+   [room=LFG][user=Antti]: Hello from another window
+   [room=LFG][user=Victor]: Well, hello there
    ```
 
 ## Some notes 
