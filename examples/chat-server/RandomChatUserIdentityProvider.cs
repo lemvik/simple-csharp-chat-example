@@ -8,9 +8,12 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
 {
     public class RandomChatUserIdentityProvider : IChatUserIdentityProvider
     {
+        private readonly Random generator = new();
+        private readonly string[] names = {"Victor", "Alexander", "Antti", "Timo"};
+
         public Task<ChatUser> Identify(TcpClient client, CancellationToken token = default)
         {
-            return Task.FromResult(new ChatUser(Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+            return Task.FromResult(new ChatUser(Guid.NewGuid().ToString(), names[generator.Next(names.Length)]));
         }
     }
 }

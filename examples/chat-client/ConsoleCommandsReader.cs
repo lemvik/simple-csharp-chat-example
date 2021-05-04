@@ -73,6 +73,11 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
                 return new ListRoomsCommand();
             }
 
+            if (trimmed.Equals(":i"))
+            {
+                return new InfoCommand();
+            }
+
             if (trimmed.StartsWith(":j"))
             {
                 var roomName = trimmed[2..].Trim();

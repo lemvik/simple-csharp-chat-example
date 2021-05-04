@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -97,9 +98,11 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
 
                     roomInstances[roomName] = await chatClient.JoinRoom(room, stoppingToken);
 
-                    logger.LogInformation("Joined [room={Room}]", roomInstances[roomName]);
+                    logger.LogDebug("Joined [room={Room}]", roomInstances[roomName]);
 
                     roomsTasks.Add(ListenForMessages(roomInstances[roomName], stoppingToken));
+                    
+                    Console.WriteLine($"Joined {room}");
 
                     break;
                 }
@@ -111,8 +114,13 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
                     {
                         if (knownRooms.TryAdd(chatRoom.Name, chatRoom))
                         {
-                            logger.LogInformation("Added [room={Room}]", chatRoom);
+                            logger.LogDebug("Added [room={Room}]", chatRoom);
                         }
+                    }
+
+                    foreach (var (room, _) in knownRooms)
+                    {
+                        Console.WriteLine($"{room}"); 
                     }
 
                     break;
@@ -130,9 +138,13 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
 
                     await room.SendMessage(sendMessageCommand.Message, stoppingToken);
 
-                    logger.LogInformation("Sent [message={Message}] to [room={Room}]", sendMessageCommand.Message,
-                                          room);
+                    logger.LogDebug("Sent [message={Message}] to [room={Room}]", sendMessageCommand.Message, room);
 
+                    break;
+                }
+                case InfoCommand:
+                {
+                    Console.WriteLine($"Name: {chatClient.User.Name}");
                     break;
                 }
                 default:
@@ -148,7 +160,8 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
             while (!token.IsCancellationRequested)
             {
                 var message = await room.GetMessage(token);
-                logger.LogInformation("Message in [room={Room}]: {Message}", message.Room.Name, message.Body);
+                logger.LogDebug("Message in [room={Room}]: {Message}", message.Room.Name, message.Body);
+                Console.WriteLine($"[room={message.Room.Name}][user={message.Sender.Name}]: {message.Body}");
             }
         }
     }

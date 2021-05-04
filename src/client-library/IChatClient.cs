@@ -8,6 +8,8 @@ namespace Lemvik.Example.Chat.Client
 {
     public interface IChatClient : IAsyncRunnable
     {
+        ChatUser User { get; }
+        
         Task<IReadOnlyCollection<ChatRoom>> ListRooms(CancellationToken token = default);
 
         Task<ChatRoom> CreateRoom(string roomName, CancellationToken token = default);
