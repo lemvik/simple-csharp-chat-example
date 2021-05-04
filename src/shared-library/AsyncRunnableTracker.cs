@@ -21,13 +21,13 @@ namespace Lemvik.Example.Chat.Shared
         public bool TryAdd(TId id, TTracked runnable, CancellationToken token = default)
         {
             var lifetime = CancellationTokenSource.CreateLinkedTokenSource(trackerLifetime.Token, token);
-            var captured = new CapturedRunnable(runnable, lifetime);
+            var captured = new CapturedRunnable(id, runnable, lifetime);
             if (!trackedRunnables.TryAdd(id, captured))
             {
                 return false;
             }
 
-            captured.Task = captured.Tracked.RunAsync(lifetime.Token);
+            RunTracked(captured);
             return true;
         }
 
@@ -43,16 +43,17 @@ namespace Lemvik.Example.Chat.Shared
             return true;
         }
 
-        public async Task<TTracked> StopAndRemoveIfTracked(TId id)
+        public bool TryRemoveAndStop(TId id, out Task runningTask)
         {
             if (!trackedRunnables.TryRemove(id, out var captured))
             {
-                return default;
+                runningTask = Task.CompletedTask;
+                return false;
             }
 
+            runningTask = captured.Task;
             captured.Lifetime.Cancel();
-            await captured.Task;
-            return captured.Tracked;
+            return true;
         }
 
         public IReadOnlyCollection<TTracked> GetAll()
@@ -62,9 +63,9 @@ namespace Lemvik.Example.Chat.Shared
 
         public async Task StopTracker()
         {
-            var tracked = trackedRunnables.Values; 
+            var tracked = trackedRunnables.Values;
             trackedRunnables.Clear();
-            
+
             foreach (var capturedRunnable in tracked)
             {
                 capturedRunnable.Lifetime.Cancel();
@@ -73,14 +74,24 @@ namespace Lemvik.Example.Chat.Shared
             await Task.WhenAll(tracked.Select(captured => captured.Task));
         }
 
+        private void RunTracked(CapturedRunnable runnable)
+        {
+            runnable.Task = runnable.Tracked.RunAsync(runnable.Lifetime.Token).ContinueWith(result =>
+            {
+                trackedRunnables.TryRemove(runnable.Id, out _);
+            });
+        }
+
         private class CapturedRunnable
         {
+            public TId Id { get; }
             public TTracked Tracked { get; }
             public Task Task { get; set; }
             public CancellationTokenSource Lifetime { get; }
 
-            public CapturedRunnable(TTracked tracked, CancellationTokenSource lifetime)
+            public CapturedRunnable(TId id, TTracked tracked, CancellationTokenSource lifetime)
             {
+                Id = id;
                 Tracked = tracked;
                 Lifetime = lifetime;
             }

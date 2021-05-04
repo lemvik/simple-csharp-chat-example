@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
@@ -17,10 +16,9 @@ namespace Lemvik.Example.Chat.Server.Implementation
         private readonly ILogger<ChatServer> logger;
         private readonly ILoggerFactory loggerFactory;
         private readonly Channel<(Client, IMessage)> messages;
-        private readonly SemaphoreSlim clientsLock;
-        private readonly ConcurrentDictionary<string, ClientTask> clientTasks;
         private readonly IRoomRegistry roomsRegistry;
         private readonly CancellationTokenSource lifetime;
+        private readonly AsyncRunnableTracker<string, ClientRunnable> clientTracker;
 
         public ChatServer(ILoggerFactory loggerFactory, IRoomRegistry roomsRegistry)
         {
@@ -32,9 +30,8 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 SingleReader = true,
                 SingleWriter = false
             });
-            this.clientsLock = new SemaphoreSlim(1, 1);
-            this.clientTasks = new ConcurrentDictionary<string, ClientTask>();
             this.lifetime = new CancellationTokenSource();
+            this.clientTracker = new AsyncRunnableTracker<string, ClientRunnable>(lifetime.Token);
         }
 
         public async Task RunAsync(CancellationToken token = default)
@@ -69,45 +66,49 @@ namespace Lemvik.Example.Chat.Server.Implementation
             var token = CancellationTokenSource.CreateLinkedTokenSource(lifetime.Token, clientToken).Token;
             try
             {
-                await clientsLock.WaitAsync(token);
-
                 logger.LogDebug("Handshaking [client={ChatUser}][connection={Connection}]", chatUser, transport);
                 var connectedClient = new Client(loggerFactory.CreateLogger<Client>(),
                                                  chatUser,
                                                  transport,
                                                  messages.Writer);
-                var clientTask = new ClientTask();
-
-                // If we fail to add client we should not run it's `RunAsync` method, so first add, then fire the task.
-                if (!clientTasks.TryAdd(chatUser.Id, clientTask))
+                var handshakeComplete = new TaskCompletionSource<bool>();
+                var runnable = new ClientRunnable(handshakeComplete.Task, token, connectedClient, this);
+                if (!clientTracker.TryAdd(chatUser.Id, runnable))
                 {
-                    throw new ChatException($"Unable to add [client={chatUser}], one is already connected");
+                    var exception = new ChatException($"Unable to add [client={chatUser}], one is already connected");
+                    handshakeComplete.SetException(exception);
+                    throw exception;
                 }
 
                 try
                 {
                     await HandshakeAsync(chatUser, transport, token);
+                    handshakeComplete.SetResult(true);
                 }
-                catch (Exception)
+                catch (Exception reason)
                 {
-                    clientTasks.TryRemove(chatUser.Id, out _);
-                    throw;
+                    clientTracker.TryRemoveAndStop(chatUser.Id, out var clientTask);
+                    try
+                    {
+                        await clientTask;
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                    finally
+                    {
+                        throw reason;
+                    }
                 }
 
-                logger.LogDebug("Handshake successful, adding [client={ChatUser}][connection={Connection}]",
+                logger.LogDebug("Added [client={ChatUser}][connection={Connection}]",
                                 chatUser,
                                 transport);
-
-                clientTask.Task = RunClient(connectedClient, token);
             }
             catch (Exception error)
             {
                 logger.LogError(error, "Failed to handshake with the [client={ChatUser}]", chatUser);
                 throw;
-            }
-            finally
-            {
-                clientsLock.Release();
             }
         }
 
@@ -194,18 +195,12 @@ namespace Lemvik.Example.Chat.Server.Implementation
             finally
             {
                 logger.LogDebug("Cleaning up client resources [client={Client}]", client);
-                if (!clientTasks.TryRemove(client.User.Id, out _))
-                {
-                    logger.LogError("Unable to remove [client={Client}] from server", client);
-                }
+                clientTracker.TryRemoveAndStop(client.User.Id, out _);
 
                 var clientRooms = client.Rooms;
-                foreach (var room in clientRooms)
-                {
-                    // No cancellation here as this has to complete.
-                    await room.RemoveUser(client);
-                }
-                
+                // ReSharper disable once MethodSupportsCancellation
+                await Task.WhenAll(clientRooms.Select(room => room.RemoveUser(client)));
+
                 logger.LogDebug("Client task completed for [client={Client}]", client);
             }
         }
@@ -229,25 +224,32 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
         }
 
-        private async Task CleanUp()
+        private Task CleanUp()
         {
-            try
-            {
-                await clientsLock.WaitAsync();
-
-                var tasks = clientTasks.Values.Select(task => task.Task);
-
-                await Task.WhenAll(tasks);
-            }
-            finally
-            {
-                clientsLock.Release();
-            }
+            return clientTracker.StopTracker();
         }
 
-        private class ClientTask
+        private class ClientRunnable : IAsyncRunnable
         {
-            public Task Task { get; set; }
+            private readonly CancellationToken clientLifetime;
+            private readonly Task preRun;
+            private readonly Client client;
+            private readonly ChatServer server;
+
+            public ClientRunnable(Task preRun, CancellationToken clientLifetime, Client client, ChatServer server)
+            {
+                this.preRun = preRun;
+                this.clientLifetime = clientLifetime;
+                this.client = client;
+                this.server = server;
+            }
+
+            public async Task RunAsync(CancellationToken token = default)
+            {
+                await preRun;
+                var operationToken = CancellationTokenSource.CreateLinkedTokenSource(clientLifetime, token).Token;
+                await server.RunClient(client, operationToken);
+            }
         }
     }
 }
