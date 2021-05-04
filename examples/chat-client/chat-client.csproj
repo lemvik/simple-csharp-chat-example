@@ -21,6 +21,7 @@
     <RootNamespace>Lemvik.Example.Chat.Client.Example.TCP</RootNamespace>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory> 
   </PropertyGroup>
 
 </Project>
