@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Messages;
@@ -10,14 +9,14 @@ namespace Lemvik.Example.Chat.Server
 {
     public interface IRoom : IAsyncRunnable
     {
-        ChatRoom ChatRoom { get; } 
-        
-        ChannelWriter<(IMessage, IClient)> MessagesSink { get; }
+        ChatRoom ChatRoom { get; }
+
+        Task AddMessage(IMessage message, IClient client, CancellationToken token = default);
+
+        Task<IReadOnlyCollection<ChatMessage>> MostRecentMessages(uint maxMessages, CancellationToken token = default);
 
         Task AddUser(IClient client, CancellationToken token = default);
 
         Task RemoveUser(IClient client, CancellationToken token = default);
-
-        Task<IReadOnlyCollection<ChatMessage>> MostRecentMessages(uint maxMessages, CancellationToken token = default);
     }
 }

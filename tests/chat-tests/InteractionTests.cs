@@ -43,7 +43,7 @@ namespace Lemvik.Example.Chat.Testing
             pendingTasks.Clear();
         }
         
-        [TestMethod, Timeout(10000)]
+        [TestMethod, Timeout(1000)]
         public async Task ListRoomsUponConnectionTest()
         {
             var existingRooms = new[]

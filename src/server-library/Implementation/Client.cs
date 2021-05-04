@@ -11,19 +11,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
-    public class Client : IClient
+    internal class Client : IClient
     {
         public ChatUser User { get; }
         public IEnumerable<IRoom> Rooms => rooms.Values;
         private readonly ILogger<Client> logger;
         private readonly IChatTransport transport;
-        private readonly ChannelWriter<(IClient, IMessage)> serverSink;
+        private readonly ChannelWriter<(Client, IMessage)> serverSink;
         private readonly ConcurrentDictionary<string, IRoom> rooms;
 
         public Client(ILogger<Client> logger,
                       ChatUser user,
                       IChatTransport transport,
-                      ChannelWriter<(IClient, IMessage)> serverSink)
+                      ChannelWriter<(Client, IMessage)> serverSink)
         {
             User = user;
             this.logger = logger;
@@ -54,7 +54,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             {
                 if (rooms.TryGetValue(targetRoom.Id, out var chatRoom))
                 {
-                    await chatRoom.MessagesSink.WriteAsync((message, this), token);
+                    await chatRoom.AddMessage(message, this, token);
                 }
                 else
                 {

@@ -13,7 +13,6 @@ namespace Lemvik.Example.Chat.Server.Implementation
     internal class Room : IRoom
     {
         public ChatRoom ChatRoom { get; }
-        public ChannelWriter<(IMessage, IClient)> MessagesSink => messages.Writer;
 
         private readonly IMessageTracker messageTracker;
         private readonly ConcurrentDictionary<string, IClient> clients;
@@ -27,15 +26,18 @@ namespace Lemvik.Example.Chat.Server.Implementation
             this.messages = Channel.CreateUnbounded<(IMessage, IClient)>();
         }
 
+        public Task AddMessage(IMessage message, IClient client, CancellationToken token = default)
+        {
+            return messages.Writer.WriteAsync((message, client), token).AsTask();
+        }
+
         public Task AddUser(IClient client, CancellationToken token = default)
         {
             if (!clients.TryAdd(client.User.Id, client))
             {
                 throw new ChatException($"There already was a [user={client.User}] in [room={this}]");
             }
-
-            client.EnterRoom(this);
-
+            
             return Task.CompletedTask;
         }
 
@@ -45,8 +47,6 @@ namespace Lemvik.Example.Chat.Server.Implementation
             {
                 throw new ChatException($"There was no [user={client.User}] in [room={this}]");
             }
-
-            client.LeaveRoom(this);
 
             return Task.CompletedTask;
         }

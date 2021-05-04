@@ -10,10 +10,6 @@ namespace Lemvik.Example.Chat.Server
     {
         ChatUser User { get; } 
         
-        void EnterRoom(IRoom room);
-
-        void LeaveRoom(IRoom room);
-        
         Task SendMessage(IMessage message, CancellationToken token = default);
     }
 }

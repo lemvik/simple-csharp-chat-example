@@ -43,11 +43,11 @@ namespace Lemvik.Example.Chat.Shared
             return true;
         }
 
-        public async Task<TTracked> StopAndRemove(TId id)
+        public async Task<TTracked> StopAndRemoveIfTracked(TId id)
         {
             if (!trackedRunnables.TryRemove(id, out var captured))
             {
-                throw new Exception($"No tracked runnable with [id={id}]");
+                return default;
             }
 
             captured.Lifetime.Cancel();

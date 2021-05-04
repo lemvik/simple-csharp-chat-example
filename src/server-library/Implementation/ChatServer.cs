@@ -16,7 +16,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
     {
         private readonly ILogger<ChatServer> logger;
         private readonly ILoggerFactory loggerFactory;
-        private readonly Channel<(IClient, IMessage)> messages;
+        private readonly Channel<(Client, IMessage)> messages;
         private readonly SemaphoreSlim clientsLock;
         private readonly ConcurrentDictionary<string, ClientTask> clientTasks;
         private readonly IRoomRegistry roomsRegistry;
@@ -27,7 +27,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             this.logger = loggerFactory.CreateLogger<ChatServer>();
             this.loggerFactory = loggerFactory;
             this.roomsRegistry = roomsRegistry;
-            this.messages = Channel.CreateUnbounded<(IClient, IMessage)>(new UnboundedChannelOptions
+            this.messages = Channel.CreateUnbounded<(Client, IMessage)>(new UnboundedChannelOptions
             {
                 SingleReader = true,
                 SingleWriter = false
@@ -126,7 +126,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             throw new Exception($"Expected to receive handshake response [received={response}]");
         }
 
-        private async Task DispatchAsync(IClient client,
+        private async Task DispatchAsync(Client client,
                                          IMessage message,
                                          CancellationToken token = default)
         {
@@ -154,6 +154,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     {
                         var room = await roomsRegistry.GetRoom(joinRoomRequest.RoomId, token);
                         await room.AddUser(client, token);
+                        client.EnterRoom(room);
                         var mostRecentMessages = await room.MostRecentMessages(5, token);
                         var response =
                             exchangeMessage.MakeResponse(new JoinRoomResponse(room.ChatRoom,
@@ -165,6 +166,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     {
                         var room = await roomsRegistry.GetRoom(leaveRoomRequest.Room.Id, token);
                         await room.RemoveUser(client, token);
+                        client.LeaveRoom(room);
                         var response = exchangeMessage.MakeResponse(new LeaveRoomResponse(room.ChatRoom));
                         await client.SendMessage(response, token);
                         break;
