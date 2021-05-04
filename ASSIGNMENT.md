@@ -30,7 +30,7 @@ Design and implement a chat service. Make it as clean as you can.
   The code uses `Microsoft.Extensions.Logging.Abstractions` everywhere, so
   injecting own logger boils down to writing an `ILogger` implementation and injecting
   it via DI (which is `Microsoft.Extensions.DependencyInjection` in examples).
-  Tests actualy inject custom logger as otherwise it won't capture the output.
+  Tests actually inject custom logger as otherwise it won't capture the output.
 - [x] Has tests
   See [tests project](./tests/chat-tests)
 
