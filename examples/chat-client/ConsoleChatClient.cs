@@ -50,6 +50,10 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
             var inputTask = commandsReader.RunAsync(stoppingToken);
             var interactionTask = InteractionLoop(commandsReader, chatClient, stoppingToken);
 
+            // In retrospect I could have provided some event or different API to wait for client connection
+            await Task.Delay(100, stoppingToken);
+            Console.WriteLine($"{chatClient.User.Name} entered the chat");
+
             await Task.WhenAny(connectionTask, inputTask, interactionTask);
         }
 
