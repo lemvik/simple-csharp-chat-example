@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\protocol\protocol.csproj" />
-    <ProjectReference Include="..\..\src\client-library\client-library.csproj" />
-    <ProjectReference Include="..\protobuf-protocol\protobuf-protocol.csproj" />
+    <ProjectReference Include="..\..\..\src\protocol\protocol.csproj" />
+    <ProjectReference Include="..\..\..\src\client-library\client-library.csproj" />
+    <ProjectReference Include="..\..\protobuf-protocol\protobuf-protocol.csproj" />
   </ItemGroup>
 
 

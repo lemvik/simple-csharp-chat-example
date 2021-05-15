@@ -1,0 +1,11 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS builder
+WORKDIR /build
+### See commend at the top.
+COPY . .
+RUN dotnet publish
+
+FROM mcr.microsoft.com/dotnet/runtime:5.0 AS azure-websockets-server
+WORKDIR /app
+COPY --from=builder /build/examples/azure-websockets/published/server/ .
+EXPOSE 12345
+ENTRYPOINT ["dotnet", "chat-server.dll"]

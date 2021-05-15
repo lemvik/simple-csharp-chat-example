@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\protocol\protocol.csproj" />
-    <ProjectReference Include="..\..\src\server-library\server-library.csproj" />
-    <ProjectReference Include="..\protobuf-protocol\protobuf-protocol.csproj" />
+    <ProjectReference Include="..\..\..\src\protocol\protocol.csproj" />
+    <ProjectReference Include="..\..\..\src\server-library\server-library.csproj" />
+    <ProjectReference Include="..\..\protobuf-protocol\protobuf-protocol.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +23,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Lemvik.Example.Chat.Server.Examples.TCP</RootNamespace>
+    <RootNamespace>Lemvik.Example.Chat.Server.Examples.Azure</RootNamespace>
     <RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory> 
     <OutDir>$(MSBuildProjectName)/../../published/server</OutDir>
   </PropertyGroup>
