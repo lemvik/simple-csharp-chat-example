@@ -7,7 +7,7 @@ resource "azurerm_kubernetes_cluster" "websocket_chat_cluster" {
   default_node_pool {
     name       = "default"
     node_count = 2
-    vm_size    = "Standard_B1ms"
+    vm_size    = "Standard_B2s"
   }
 
   identity {
