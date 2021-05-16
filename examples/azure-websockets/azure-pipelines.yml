@@ -17,6 +17,7 @@ variables:
   repositoryName: 'websocketchatacr'
   repositoryUrl: 'websocketchatacr.azurecr.io'
   imageName: 'websockets-chat-example'
+  isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
   DOCKER_BUILDKIT: 1
 
 steps:
@@ -31,6 +32,7 @@ steps:
     
 - task: KubernetesManifest@0
   displayName: Deploy
+  condition: and(succeeded(), eq(variables.isMaster, true))
   inputs:
     kubernetesServiceConnection: $(kubernetesConnection)
     namespace: default
