@@ -18,3 +18,9 @@ resource "azurerm_kubernetes_cluster" "websocket_chat_cluster" {
     Environment = "Production"
   }
 }
+
+resource "azurerm_role_assignment" "cluster_to_acr" {
+  scope                = azurerm_container_registry.websocketchatacr.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_kubernetes_cluster.websocket_chat_cluster.kubelet_identity[0].object_id
+}

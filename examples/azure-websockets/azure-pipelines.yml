@@ -13,7 +13,9 @@ pool:
   vmImage: ubuntu-20.04
 
 variables:
+  kubernetesConnection: 'websocket-chat-cluster'
   repositoryName: 'websocketchatacr'
+  repositoryUrl: 'websocketchatacr.azurecr.io'
   imageName: 'websockets-chat-example'
   DOCKER_BUILDKIT: 1
 
@@ -27,7 +29,13 @@ steps:
     Dockerfile: examples/azure-websockets/Dockerfile.server
     buildContext: $(Build.Repository.LocalPath)
     
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: KubernetesManifest@0
+  displayName: Deploy
+  inputs:
+    kubernetesServiceConnection: $(kubernetesConnection)
+    namespace: default
+    manifests: |
+      examples/azure-websockets/manifests/service-chat.yaml
+      examples/azure-websockets/manifests/deployment-chat.yaml
+    containers: |
+      $(repositoryUrl)/$(imageName):$(Build.BuildId)

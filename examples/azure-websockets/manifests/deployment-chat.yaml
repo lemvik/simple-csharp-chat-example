@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: websockets-chat-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: websockets-chat-backend
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: websockets-chat-backend
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: websockets-chat-backend
+        image: websocketchatacr.azurecr.io/websockets-chat-example
+        ports:
+        - containerPort: 12345 
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
