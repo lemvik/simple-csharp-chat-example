@@ -14,6 +14,13 @@ resource "azurerm_kubernetes_cluster" "websocket_chat_cluster" {
     type = "SystemAssigned"
   }
 
+  addon_profile {
+    oms_agent {
+      enabled = true
+      log_analytics_workspace_id = azurerm_log_analytics_workspace.websocket_chat_logs.id
+    }
+  }
+
   tags = {
     Environment = "Production"
   }
