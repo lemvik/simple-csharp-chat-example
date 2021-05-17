@@ -29,10 +29,21 @@ steps:
     command: buildAndPush
     Dockerfile: examples/azure-websockets/Dockerfile.server
     buildContext: $(Build.Repository.LocalPath)
+
+- bash: |
+    echo "Looking for label at https://api.github.com/repos/$BUILD_REPOSITORY_ID/issues/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/labels"
+    if curl -s "https://api.github.com/repos/$BUILD_REPOSITORY_ID/issues/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/labels" | grep '"name": "deploy_k8s"'
+    then
+      echo "##vso[task.setvariable variable=deploymentRequired;isOutput=true]true"
+      echo "Label found, deployment is required."
+    fi
+  displayName: Check deployment label
+  name: checkIfDeploymentRequired
+  condition: eq(variables.isMaster, false)
     
 - task: KubernetesManifest@0
   displayName: Deploy
-  condition: and(succeeded(), eq(variables.isMaster, true))
+  condition: and(succeeded(), or(eq(variables.isMaster, true), eq(variables['checkIfDeploymentRequired.deploymentRequired'], true)))
   inputs:
     kubernetesServiceConnection: $(kubernetesConnection)
     namespace: default
