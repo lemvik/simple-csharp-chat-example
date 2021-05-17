@@ -1,5 +1,7 @@
 # Simple chat 
 
+[![Build Status](https://lemvic.visualstudio.com/websocket-chat/_apis/build/status/lemvik.simple-csharp-chat-example?branchName=master)](https://lemvic.visualstudio.com/websocket-chat/_build/latest?definitionId=1&branchName=master)
+
 Implements test assignment from a company I was interviewing for.
 
 ## Running

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace Lemvik.Example.Chat.Server.Examples.Azure
 {
@@ -24,7 +25,12 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
 
         internal static IServiceCollection AddServerLogging(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.AddLogging(logging => logging.AddConsole());
+            return serviceCollection.AddLogging(logging => logging.AddSimpleConsole(options =>
+            {
+                options.SingleLine = true;
+                options.ColorBehavior = LoggerColorBehavior.Disabled;
+                options.IncludeScopes = false;
+            }));
         }
 
         internal static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection,

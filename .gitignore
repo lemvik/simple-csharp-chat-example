@@ -5,3 +5,5 @@ examples/simple-tcp/published/
 examples/azure-websockets/published/
 .terraform/
 .terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup

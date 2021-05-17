@@ -7,14 +7,27 @@ resource "azurerm_kubernetes_cluster" "websocket_chat_cluster" {
   default_node_pool {
     name       = "default"
     node_count = 2
-    vm_size    = "Standard_B1ms"
+    vm_size    = "Standard_B2s"
   }
 
   identity {
     type = "SystemAssigned"
   }
 
+  addon_profile {
+    oms_agent {
+      enabled = true
+      log_analytics_workspace_id = azurerm_log_analytics_workspace.websocket_chat_logs.id
+    }
+  }
+
   tags = {
     Environment = "Production"
   }
+}
+
+resource "azurerm_role_assignment" "cluster_to_acr" {
+  scope                = azurerm_container_registry.websocketchatacr.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_kubernetes_cluster.websocket_chat_cluster.kubelet_identity[0].object_id
 }
