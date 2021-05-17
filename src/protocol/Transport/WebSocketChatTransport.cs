@@ -1,39 +1,34 @@
-using System.Net.Sockets;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
 
 namespace Lemvik.Example.Chat.Protocol.Transport
 {
-    public class TcpChatTransport : IChatTransport
+    public class WebSocketChatTransport : IChatTransport
     {
-        private readonly TcpClient client;
+        private readonly ClientWebSocket webSocket;
         private readonly IMessageProtocol protocol;
-
-        public TcpChatTransport(TcpClient client, IMessageProtocol protocol)
+        
+        public WebSocketChatTransport(ClientWebSocket webSocket, IMessageProtocol protocol)
         {
-            this.client = client;
+            this.webSocket = webSocket;
             this.protocol = protocol;
         }
 
         public Task Send(IMessage message, CancellationToken token = default)
         {
-            var stream = client.GetStream();
-
-            return protocol.Serialize(message, stream, token);
+            throw new System.NotImplementedException();
         }
 
         public Task<IMessage> Receive(CancellationToken token = default)
         {
-            var stream = client.GetStream();
-
-            return protocol.Parse(stream, token);
+            throw new System.NotImplementedException();
         }
 
         public Task Close()
         {
-            client.Close();
-            return Task.CompletedTask;
+            return webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Transport closed", CancellationToken.None);
         }
     }
 }

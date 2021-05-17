@@ -67,10 +67,10 @@ namespace Lemvik.Example.Chat.Protocol.Transport
             }
         }
         
-        public void Close()
+        public Task Close()
         {
             exchangeLifetime.Cancel();
-            transport.Close();
+            return transport.Close();
         }
 
     }

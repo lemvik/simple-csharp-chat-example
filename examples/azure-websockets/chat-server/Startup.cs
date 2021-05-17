@@ -46,16 +46,18 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
                     await requestContext.Response.WriteAsync("OK");
                 });
 
-                endpointsBuilder.Map("/ws", requestContext =>
+                endpointsBuilder.Map("/ws", async requestContext =>
                 {
                     if (!requestContext.WebSockets.IsWebSocketRequest)
                     {
                         requestContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
                     }
+
+                    var socket = await requestContext.WebSockets.AcceptWebSocketAsync();
                     
-                    
-                    
-                    return Task.CompletedTask;
+                    var server = requestContext.RequestServices.GetRequiredService<ChatServer>();
+
+                    await server.AcceptWebSocket(requestContext, socket);
                 });
             });
         }

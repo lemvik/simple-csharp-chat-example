@@ -10,6 +10,6 @@ namespace Lemvik.Example.Chat.Protocol.Transport
 
         Task<IMessage> Receive(CancellationToken token = default);
 
-        void Close();
+        Task Close();
     }
 }

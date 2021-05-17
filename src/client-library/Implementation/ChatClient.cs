@@ -57,7 +57,7 @@ namespace Lemvik.Example.Chat.Client.Implementation
             finally
             {
                 clientLifetime.Cancel();
-                transport.Close();
+                await transport.Close();
             }
         }
 
