@@ -1,3 +1,6 @@
+using System;
+using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +33,10 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
                 appBuilder.UseDeveloperExceptionPage();
             }
 
+            appBuilder.UseWebSockets(new WebSocketOptions
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(60),
+            });
             appBuilder.UseRouting();
 
             appBuilder.UseEndpoints(endpointsBuilder =>
@@ -37,6 +44,18 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
                 endpointsBuilder.MapGet("/health", async requestContext =>
                 {
                     await requestContext.Response.WriteAsync("OK");
+                });
+
+                endpointsBuilder.Map("/ws", requestContext =>
+                {
+                    if (!requestContext.WebSockets.IsWebSocketRequest)
+                    {
+                        requestContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    }
+                    
+                    
+                    
+                    return Task.CompletedTask;
                 });
             });
         }

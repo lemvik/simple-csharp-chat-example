@@ -20,7 +20,9 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
                    .AddSingleton(InMemoryMessageTracker.Factory)
                    .AddSingleton<IChatUserIdentityProvider, RandomChatUserIdentityProvider>()
                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>()
-                   .AddSingleton<IHostedService, ChatServer>();
+                   .AddSingleton<ChatServer>()
+                   .AddSingleton<IHostedService>(provider => provider.GetRequiredService<ChatServer>())
+                   .AddSingleton<IWebSocketAcceptor>(provider => provider.GetRequiredService<ChatServer>());
         }
 
         internal static IServiceCollection AddServerLogging(this IServiceCollection serviceCollection)
