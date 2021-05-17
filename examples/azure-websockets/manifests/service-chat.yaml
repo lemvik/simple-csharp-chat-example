@@ -6,7 +6,6 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetPort: 12345
     protocol: TCP
   selector:
     app: websockets-chat-backend

@@ -23,7 +23,13 @@ spec:
       - name: websockets-chat-backend
         image: websocketchatacr.azurecr.io/websockets-chat-example
         ports:
-        - containerPort: 12345 
+        - containerPort: 80
+        livenessProbe:
+          initialDelaySeconds: 2
+          periodSeconds: 5
+          httpGet:
+            path: /health
+            port: 80 
         resources:
           requests:
             cpu: 250m

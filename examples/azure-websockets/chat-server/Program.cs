@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace Lemvik.Example.Chat.Server.Examples.Azure
@@ -8,11 +9,9 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
         private static Task Main(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                       .ConfigureServices((builder, services) =>
+                       .ConfigureWebHostDefaults(configure =>
                        {
-                           services.AddChatServer()
-                                   .AddServerLogging()
-                                   .AddConfiguration(builder.Configuration);
+                           configure.UseStartup<Startup>();
                        })
                        .RunConsoleAsync();
         }
