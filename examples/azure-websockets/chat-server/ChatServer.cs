@@ -4,6 +4,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Lemvik.Example.Chat.Server.Implementation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
@@ -53,23 +54,11 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
             await Task.WhenAll(serverTask, registryTask);
         }
 
-        public async Task AcceptWebSocket(HttpContext socketContext, WebSocket socket)
+        public async Task AcceptWebSocket(HttpContext socketContext, WebSocket socket, CancellationToken token = default)
         {
             // This is taken from https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-5.0
-            var buffer = new byte[4096];
-            var receiveResult = await socket.ReceiveAsync(buffer, CancellationToken.None);
-            while (!receiveResult.CloseStatus.HasValue)
-            {
-                await socket.SendAsync(new ArraySegment<byte>(buffer, 0, receiveResult.Count),
-                                       receiveResult.MessageType,
-                                       receiveResult.EndOfMessage,
-                                       CancellationToken.None);
-                receiveResult = await socket.ReceiveAsync(buffer, CancellationToken.None);
-            }
-
-            await socket.CloseAsync(receiveResult.CloseStatus.Value, 
-                                    receiveResult.CloseStatusDescription,
-                                    CancellationToken.None);
+            var chatUser = await identityProvider.Identify(socketContext, token);
+            await chatServer.AddClientAsync(chatUser, new WebSocketChatTransport(socket, messageProtocol), token);
         }
     }
 }

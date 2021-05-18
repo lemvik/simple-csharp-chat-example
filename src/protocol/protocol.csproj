@@ -4,7 +4,13 @@
     <RootNamespace>Lemvik.Example.Chat.Protocol</RootNamespace>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+    
   <ItemGroup>
+    <ProjectReference Include="..\shared-library\shared-library.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Memory" Version="4.5.4" />
     <PackageReference Include="System.Threading.Channels" Version="5.0.0" />
   </ItemGroup>

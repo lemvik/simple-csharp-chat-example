@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Google.Protobuf;
+using Lemvik.Example.Chat.Shared;
 using IMessage = Lemvik.Example.Chat.Protocol.Messages.IMessage;
 
 namespace Lemvik.Example.Chat.Protocol.Protobuf

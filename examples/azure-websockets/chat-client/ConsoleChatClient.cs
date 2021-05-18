@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Protocol.Transport;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -31,23 +32,10 @@ namespace Lemvik.Example.Chat.Client.Examples.Azure
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var wsClient = await Connect(stoppingToken);
-            // var chatClient =
-            //     clientFactory.CreateClient(new WebSocketChatTransport(wsClient, messageProtocol));
+            logger.LogInformation("Connected to [remote={Remote}]", remoteUrl);
+            var chatClient = clientFactory.CreateClient(new WebSocketChatTransport(wsClient, messageProtocol));
 
-            logger.LogInformation("Connected to [remote={Remote}]", wsClient.SubProtocol);
-
-            var shouldStop = false;
-            var buffer = new byte[4096];
-            while (!shouldStop)
-            {
-                var bytes = Encoding.UTF8.GetBytes("Hello world");
-                await wsClient.SendAsync(bytes, WebSocketMessageType.Text, true, stoppingToken);
-                var response = await wsClient.ReceiveAsync(buffer, stoppingToken);
-                logger.LogInformation("Received response [response={Response}]", 
-                                      Encoding.UTF8.GetString(buffer, 0, response.Count));
-                await Task.Delay(TimeSpan.FromSeconds(2));
-                shouldStop = response.CloseStatus.HasValue;
-            }
+            await chatClient.RunAsync(stoppingToken);
         }
 
         private async Task<ClientWebSocket> Connect(CancellationToken token)
