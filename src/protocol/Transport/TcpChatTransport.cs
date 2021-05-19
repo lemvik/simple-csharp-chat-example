@@ -30,9 +30,10 @@ namespace Lemvik.Example.Chat.Protocol.Transport
             return protocol.Parse(stream, token);
         }
 
-        public void Close()
+        public Task Close()
         {
             client.Close();
+            return Task.CompletedTask;
         }
     }
 }

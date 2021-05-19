@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Transport;
 using Lemvik.Example.Chat.Server.Implementation;
+using Lemvik.Example.Chat.Shared;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -23,6 +24,7 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
         private readonly IRoomRegistry roomRegistry;
         private readonly IRoomSource roomSource;
         private readonly ServerConfig config;
+        private readonly TaskTracker tracker;
 
         public ChatServer(ILogger<ChatServer> logger,
                           IOptions<ServerConfig> serverConfig,
@@ -43,6 +45,7 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
             var listeningPort = listeningConfig.Port;
             this.listener = new TcpListener(listeningHost, listeningPort);
             this.roomSource = transientRoomSource;
+            this.tracker = new TaskTracker();
         }
 
         private async Task AcceptClients(CancellationToken cancellationToken = default)
@@ -61,7 +64,8 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
                         logger.LogDebug("Client connected [client={@Client}]", client.Client.RemoteEndPoint);
                         var chatUser = await identityProvider.Identify(client, cancellationToken);
                         var tcpTransport = new TcpChatTransport(client, messageProtocol);
-                        await chatServer.AddClientAsync(chatUser, tcpTransport, cancellationToken);
+                        tracker.Run(await chatServer.AddClientAsync(chatUser, tcpTransport, cancellationToken),
+                                    cancellationToken);
                     }
                     catch (InvalidOperationException)
                     {

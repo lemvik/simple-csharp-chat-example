@@ -1,17 +1,18 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Lemvik.Example.Chat.Server.Examples.Azure
+namespace Lemvik.Example.Chat.Client.Examples.Azure
 {
     internal static class Program
     {
         private static Task Main(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                       .ConfigureWebHostDefaults(configure =>
+                       .ConfigureServices((builder, services) =>
                        {
-                           configure.UseStartup<Startup>();
+                           services.AddChatClient()
+                                   .AddClientLogging()
+                                   .AddConfiguration(builder.Configuration);
                        })
                        .RunConsoleAsync();
         }

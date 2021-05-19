@@ -1,22 +1,21 @@
 using System;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Transport;
 using Lemvik.Example.Chat.Server.Implementation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Lemvik.Example.Chat.Server.Examples.Azure
 {
-    internal class ChatServer : BackgroundService
+    internal class ChatServer : BackgroundService, IWebSocketAcceptor
     {
         private readonly ILogger<ChatServer> logger;
-        private readonly TcpListener listener;
         private readonly IChatUserIdentityProvider identityProvider;
         private readonly IMessageProtocol messageProtocol;
         private readonly IChatServer chatServer;
@@ -38,42 +37,7 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
             this.chatServer = chatServer;
             this.roomRegistry = roomRegistry;
             this.identityProvider = identityProvider;
-            var listeningConfig = serverConfig.Value.Listening;
-            var listeningHost = IPAddress.Parse(listeningConfig.Host);
-            var listeningPort = listeningConfig.Port;
-            this.listener = new TcpListener(listeningHost, listeningPort);
             this.roomSource = transientRoomSource;
-        }
-
-        private async Task AcceptClients(CancellationToken cancellationToken = default)
-        {
-            logger.LogInformation("Server accepting clients [endpoint={@Endpoint}]", listener.LocalEndpoint);
-
-            listener.Start();
-
-            await using (cancellationToken.Register(() => listener.Stop()))
-            {
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    try
-                    {
-                        var client = await listener.AcceptTcpClientAsync();
-                        logger.LogDebug("Client connected [client={@Client}]", client.Client.RemoteEndPoint);
-                        var chatUser = await identityProvider.Identify(client, cancellationToken);
-                        var tcpTransport = new TcpChatTransport(client, messageProtocol);
-                        await chatServer.AddClientAsync(chatUser, tcpTransport, cancellationToken);
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        throw;
-                    }
-                    catch (Exception error)
-                    {
-                        logger.LogError(error, "Caught generic error while accepting clients");
-                    }
-                }
-            }
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -86,9 +50,18 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
             }
 
             var serverTask = chatServer.RunAsync(stoppingToken);
-            var acceptTask = AcceptClients(stoppingToken);
             var registryTask = roomRegistry.RunAsync(stoppingToken);
-            await Task.WhenAny(serverTask, acceptTask, registryTask);
+            await Task.WhenAll(serverTask, registryTask);
+        }
+
+        public async Task AcceptWebSocket(HttpContext socketContext, WebSocket socket,
+                                          CancellationToken token = default)
+        {
+            // This is taken from https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-5.0
+            var chatUser = await identityProvider.Identify(socketContext, token);
+            var clientExchange =
+                await chatServer.AddClientAsync(chatUser, new WebSocketChatTransport(socket, messageProtocol), token);
+            await clientExchange;
         }
     }
 }

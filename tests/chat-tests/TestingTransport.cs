@@ -31,9 +31,10 @@ namespace Lemvik.Example.Chat.Testing
             return receivingSource.ReadAsync(operationToken).AsTask();
         }
 
-        public void Close()
+        public Task Close()
         {
             sendingSink.Complete();
+            return Task.CompletedTask;
         }
 
         public static (TestingTransport, TestingTransport) CreatePair()
