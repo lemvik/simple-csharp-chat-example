@@ -54,11 +54,14 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
             await Task.WhenAll(serverTask, registryTask);
         }
 
-        public async Task AcceptWebSocket(HttpContext socketContext, WebSocket socket, CancellationToken token = default)
+        public async Task AcceptWebSocket(HttpContext socketContext, WebSocket socket,
+                                          CancellationToken token = default)
         {
             // This is taken from https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-5.0
             var chatUser = await identityProvider.Identify(socketContext, token);
-            await chatServer.AddClientAsync(chatUser, new WebSocketChatTransport(socket, messageProtocol), token);
+            var clientExchange =
+                await chatServer.AddClientAsync(chatUser, new WebSocketChatTransport(socket, messageProtocol), token);
+            await clientExchange;
         }
     }
 }

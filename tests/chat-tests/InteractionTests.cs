@@ -42,7 +42,7 @@ namespace Lemvik.Example.Chat.Testing
 
             pendingTasks.Clear();
         }
-        
+
         [TestMethod, Timeout(1000)]
         public async Task ListRoomsUponConnectionTest()
         {
@@ -53,9 +53,10 @@ namespace Lemvik.Example.Chat.Testing
             };
             var chatServer = await CreateServer(existingRooms);
             var (chatClient, connectingClient) = CreateClient();
-            await chatServer.AddClientAsync(new ChatUser(Guid.NewGuid().ToString(), "TestUser"),
-                                            connectingClient,
-                                            testsLifetime.Token);
+            var clientTask = await chatServer.AddClientAsync(new ChatUser(Guid.NewGuid().ToString(), "TestUser"),
+                                                             connectingClient,
+                                                             testsLifetime.Token);
+            pendingTasks.Add(clientTask);
 
             var rooms = await chatClient.ListRooms(testsLifetime.Token);
 
@@ -68,30 +69,32 @@ namespace Lemvik.Example.Chat.Testing
         {
             var clientControl = new CancellationTokenSource();
             var existingRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");
-            var chatServer = await CreateServer(new []{existingRoom});
-            
+            var chatServer = await CreateServer(new[] {existingRoom});
+
             var (client, connectingClient) = CreateClient(clientControl.Token);
             var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
-            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            var clientTask = await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
 
             var rooms = await client.ListRooms(testsLifetime.Token);
-            
+
             Assert.AreEqual(1, rooms.Count);
-            
+
             var (observerClient, observerConnection) = CreateClient();
             var observerUser = new ChatUser(Guid.NewGuid().ToString(), "Observer");
-            await chatServer.AddClientAsync(observerUser, observerConnection, testsLifetime.Token);
+            clientTask = await chatServer.AddClientAsync(observerUser, observerConnection, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
 
             var observerRoom = await observerClient.JoinRoom(existingRoom, testsLifetime.Token);
 
             var clientRoom = await client.JoinRoom(existingRoom, testsLifetime.Token);
 
             var users = await clientRoom.ListUsers(testsLifetime.Token);
-            
+
             Assert.AreEqual(2, users.Count);
-            
+
             clientControl.Cancel();
-            
+
             try
             {
                 await client.ListRooms(testsLifetime.Token);
@@ -100,7 +103,7 @@ namespace Lemvik.Example.Chat.Testing
             catch (OperationCanceledException)
             {
             }
-            
+
             try
             {
                 await clientRoom.ListUsers(testsLifetime.Token);
@@ -115,7 +118,7 @@ namespace Lemvik.Example.Chat.Testing
             // 2. not awaited anywhere in these tests
             await Task.Delay(100, testsLifetime.Token);
             var postCancelUsers = await observerRoom.ListUsers(testsLifetime.Token);
-            
+
             Assert.AreEqual(1, postCancelUsers.Count);
         }
 
@@ -125,7 +128,8 @@ namespace Lemvik.Example.Chat.Testing
             var chatServer = await CreateServer(Array.Empty<ChatRoom>());
             var (_, connectingClient) = CreateClient();
             var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
-            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            var clientTask = await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
 
             try
             {
@@ -147,7 +151,8 @@ namespace Lemvik.Example.Chat.Testing
             var (chatClient, connectingClient) = CreateClient();
             var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
 
-            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            var clientTask = await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
 
             var room = await chatClient.CreateRoom("testRoom", testsLifetime.Token);
 
@@ -166,16 +171,17 @@ namespace Lemvik.Example.Chat.Testing
         public async Task FailToEnterRoomTwice()
         {
             var existingRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");
-            var chatServer = await CreateServer(new []{existingRoom});
+            var chatServer = await CreateServer(new[] {existingRoom});
             var (chatClient, connectingClient) = CreateClient();
             var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
 
-            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
-            
+            var clientTask = await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
+
             var clientRoom = await chatClient.JoinRoom(existingRoom, testsLifetime.Token);
 
             var users = await clientRoom.ListUsers(testsLifetime.Token);
-            
+
             Assert.AreEqual(1, users.Count);
 
             try
@@ -188,7 +194,7 @@ namespace Lemvik.Example.Chat.Testing
             }
 
             users = await clientRoom.ListUsers(testsLifetime.Token);
-            
+
             Assert.AreEqual(1, users.Count);
         }
 
@@ -196,28 +202,30 @@ namespace Lemvik.Example.Chat.Testing
         public async Task EnterLeaveAndEnterRoom()
         {
             var existingRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");
-            var chatServer = await CreateServer(new []{existingRoom});
+            var chatServer = await CreateServer(new[] {existingRoom});
             var (chatClient, connectingClient) = CreateClient();
             var chatUser = new ChatUser(Guid.NewGuid().ToString(), "TestUser");
 
-            await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
-            
+            var clientTask = await chatServer.AddClientAsync(chatUser, connectingClient, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
+
             var (observerClient, observerConnection) = CreateClient();
             var observerUser = new ChatUser(Guid.NewGuid().ToString(), "Observer");
-            await chatServer.AddClientAsync(observerUser, observerConnection, testsLifetime.Token);
+            clientTask = await chatServer.AddClientAsync(observerUser, observerConnection, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
 
             var observerRoom = await observerClient.JoinRoom(existingRoom, testsLifetime.Token);
 
             var clientRoom = await chatClient.JoinRoom(existingRoom, testsLifetime.Token);
 
             var firstUsers = await clientRoom.ListUsers(testsLifetime.Token);
-            
+
             Assert.AreEqual(2, firstUsers.Count);
 
             await clientRoom.Leave(testsLifetime.Token);
 
             var observerUsers = await observerRoom.ListUsers(testsLifetime.Token);
-            
+
             Assert.AreEqual(1, observerUsers.Count);
 
             try
@@ -232,7 +240,7 @@ namespace Lemvik.Example.Chat.Testing
             var anotherRoomInstance = await chatClient.JoinRoom(existingRoom, testsLifetime.Token);
 
             var secondUsers = await anotherRoomInstance.ListUsers(testsLifetime.Token);
-            
+
             Assert.AreEqual(2, secondUsers.Count);
         }
 
@@ -240,14 +248,14 @@ namespace Lemvik.Example.Chat.Testing
         public async Task TwoClientsJoiningSameRoom()
         {
             var chatRoom = new ChatRoom(Guid.NewGuid().ToString(), "TestRoom");
-            var chatServer = await CreateServer(new [] {chatRoom});
+            var chatServer = await CreateServer(new[] {chatRoom});
             var (firstClient, firstConnection) = CreateClient();
             var firstUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
             var (secondClient, secondConnection) = CreateClient();
             var secondUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserB");
 
-            await Task.WhenAll(chatServer.AddClientAsync(firstUser, firstConnection, testsLifetime.Token),
-                               chatServer.AddClientAsync(secondUser, secondConnection, testsLifetime.Token));
+            pendingTasks.Add(await chatServer.AddClientAsync(firstUser, firstConnection, testsLifetime.Token));
+            pendingTasks.Add(await chatServer.AddClientAsync(secondUser, secondConnection, testsLifetime.Token));
 
             var connections = await Task.WhenAll(firstClient.JoinRoom(chatRoom, testsLifetime.Token),
                                                  secondClient.JoinRoom(chatRoom, testsLifetime.Token));
@@ -288,7 +296,8 @@ namespace Lemvik.Example.Chat.Testing
             var (firstClient, firstConnection) = CreateClient();
             var firstUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
 
-            await chatServer.AddClientAsync(firstUser, firstConnection, testsLifetime.Token);
+            var clientTask = await chatServer.AddClientAsync(firstUser, firstConnection, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
             var chatRoom = await firstClient.CreateRoom(roomName, testsLifetime.Token);
             var firstRoom = await firstClient.JoinRoom(chatRoom, testsLifetime.Token);
 
@@ -302,7 +311,8 @@ namespace Lemvik.Example.Chat.Testing
             var (secondClient, secondConnection) = CreateClient();
             var secondUser = new ChatUser(Guid.NewGuid().ToString(), "TestUserA");
 
-            await chatServer.AddClientAsync(secondUser, secondConnection, testsLifetime.Token);
+            clientTask = await chatServer.AddClientAsync(secondUser, secondConnection, testsLifetime.Token);
+            pendingTasks.Add(clientTask);
             var secondRoom = await secondClient.JoinRoom(chatRoom, testsLifetime.Token);
 
             foreach (var message in messages)

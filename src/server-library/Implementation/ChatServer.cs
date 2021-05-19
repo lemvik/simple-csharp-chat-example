@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Transport;
+using Lemvik.Example.Chat.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace Lemvik.Example.Chat.Server.Implementation
@@ -17,6 +19,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
         private readonly Channel<(Client, IMessage)> messages;
         private readonly IRoomRegistry roomsRegistry;
         private readonly CancellationTokenSource lifetime;
+        private readonly ConcurrentDictionary<string, CancellationToken> clientHandles;
 
         public ChatServer(ILoggerFactory loggerFactory, IRoomRegistry roomsRegistry)
         {
@@ -29,6 +32,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 SingleWriter = false
             });
             this.lifetime = new CancellationTokenSource();
+            this.clientHandles = new ConcurrentDictionary<string, CancellationToken>();
         }
 
         public async Task RunAsync(CancellationToken token = default)
@@ -47,18 +51,27 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 {
                     logger.LogError(error, "Server loop encountered error");
                 }
+                finally
+                {
+                    this.lifetime.Cancel();
+                }
 
                 logger.LogDebug("Chat server main loop completed");
             }
         }
 
-        public async Task AddClientAsync(ChatUser chatUser,
-                                         IChatTransport transport,
-                                         CancellationToken clientToken = default)
+        public async Task<Task> AddClientAsync(ChatUser chatUser,
+                                               IChatTransport transport,
+                                               CancellationToken clientToken = default)
         {
             var token = CancellationTokenSource.CreateLinkedTokenSource(lifetime.Token, clientToken).Token;
             try
             {
+                if (!clientHandles.TryAdd(chatUser.Id, token))
+                {
+                    throw new ChatException("Cannot add already added client");
+                }
+                
                 logger.LogDebug("Handshaking [client={ChatUser}][connection={Connection}]", chatUser, transport);
                 var connectedClient = new Client(loggerFactory.CreateLogger<Client>(),
                                                  chatUser,
@@ -71,10 +84,11 @@ namespace Lemvik.Example.Chat.Server.Implementation
                                 chatUser,
                                 transport);
 
-                await RunClient(connectedClient, token);
+                return RunClient(connectedClient, token);
             }
             catch (OperationCanceledException)
             {
+                throw;
             }
             catch (Exception error)
             {
@@ -165,6 +179,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
             }
             finally
             {
+                clientHandles.TryRemove(client.User.Id, out _);
                 logger.LogDebug("Cleaning up client resources [client={Client}]", client);
                 var clientRooms = client.Rooms;
                 // ReSharper disable once MethodSupportsCancellation

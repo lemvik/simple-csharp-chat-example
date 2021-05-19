@@ -64,7 +64,7 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
                         logger.LogDebug("Client connected [client={@Client}]", client.Client.RemoteEndPoint);
                         var chatUser = await identityProvider.Identify(client, cancellationToken);
                         var tcpTransport = new TcpChatTransport(client, messageProtocol);
-                        tracker.Run(chatServer.AddClientAsync(chatUser, tcpTransport, cancellationToken),
+                        tracker.Run(await chatServer.AddClientAsync(chatUser, tcpTransport, cancellationToken),
                                     cancellationToken);
                     }
                     catch (InvalidOperationException)
