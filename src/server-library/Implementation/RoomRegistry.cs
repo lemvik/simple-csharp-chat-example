@@ -13,14 +13,11 @@ namespace Lemvik.Example.Chat.Server.Implementation
         private readonly AsyncRunnableTracker<string, IRoom> roomsTracker;
         private readonly CancellationTokenSource registryLifetime;
 
-        public RoomRegistry(IRoomSource roomSource)
+        public RoomRegistry(IRoomSourceFactory roomSourceFactory)
         {
             this.registryLifetime = new CancellationTokenSource();
-            this.roomSource = new AsyncLazy<IRoomSource>(async () =>
-            {
-                await roomSource.InitializeAsync(registryLifetime.Token);
-                return roomSource;
-            });
+            this.roomSource =
+                new AsyncLazy<IRoomSource>(async () => await roomSourceFactory.CreateAsync(registryLifetime.Token));
             this.roomsTracker = new AsyncRunnableTracker<string, IRoom>(registryLifetime.Token);
         }
 
@@ -36,17 +33,18 @@ namespace Lemvik.Example.Chat.Server.Implementation
             return newRoom;
         }
 
-        public Task<IRoom> GetRoom(string roomId, CancellationToken token = default)
+        public async Task<IRoom> GetRoom(string roomId, CancellationToken token = default)
         {
-            return roomsTracker.TryGet(roomId, out var room)
-                ? Task.FromResult(room)
-                : Task.FromResult<IRoom>(null);
+            // Need to make sure we are initialized.
+            await roomSource;
+            return roomsTracker.TryGet(roomId, out var room) ? room : null;
         }
 
-        public Task<IReadOnlyCollection<IRoom>> ListRooms()
+        public async Task<IReadOnlyCollection<IRoom>> ListRooms()
         {
+            await roomSource;
             var chatRooms = roomsTracker.GetAll();
-            return Task.FromResult(chatRooms);
+            return chatRooms;
         }
 
         public async Task RunAsync(CancellationToken token = default)

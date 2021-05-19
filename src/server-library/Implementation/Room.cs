@@ -17,11 +17,13 @@ namespace Lemvik.Example.Chat.Server.Implementation
         private readonly IMessageTracker messageTracker;
         private readonly ConcurrentDictionary<string, IClient> clients;
         private readonly Channel<(IMessage, IClient)> messages;
+        private readonly IRoomBackplane backplane;
 
-        internal Room(ChatRoom room, IMessageTracker messageTracker)
+        internal Room(ChatRoom room, IMessageTracker messageTracker, IRoomBackplane backplane)
         {
             ChatRoom = room;
             this.messageTracker = messageTracker;
+            this.backplane = backplane;
             this.clients = new ConcurrentDictionary<string, IClient>();
             this.messages = Channel.CreateUnbounded<(IMessage, IClient)>();
         }
@@ -64,11 +66,27 @@ namespace Lemvik.Example.Chat.Server.Implementation
 
         public async Task RunAsync(CancellationToken token = default)
         {
+            await Task.WhenAll(ReadLocalMessages(token), ReadBackplaneMessages(token));
+        }
+
+        private async Task ReadLocalMessages(CancellationToken token = default)
+        {
             while (!token.IsCancellationRequested)
             {
                 var (message, client) = await messages.Reader.ReadAsync(token);
 
                 await DispatchMessage(message, client, token);
+            }
+        }
+
+        private async Task ReadBackplaneMessages(CancellationToken token = default)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                var message = await backplane.ReceiveMessage(token);
+
+                var sendTasks = clients.Values.Select(chatClient => chatClient.SendMessage(message, token));
+                await Task.WhenAll(sendTasks);
             }
         }
 
@@ -97,12 +115,6 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     await client.SendMessage(response, token);
                     break;
                 }
-                case ChatMessage chatMessage:
-                {
-                    var sendTasks = clients.Values.Select(chatClient => chatClient.SendMessage(chatMessage, token));
-                    await Task.WhenAll(sendTasks);
-                    break;
-                }
             }
         }
 
@@ -113,8 +125,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 case ChatMessage chatMessage:
                 {
                     await messageTracker.TrackMessage(chatMessage, token);
-                    var sendTasks = clients.Values.Select(chatClient => chatClient.SendMessage(chatMessage, token));
-                    await Task.WhenAll(sendTasks);
+                    await backplane.AddMessage(chatMessage, token);
                     break;
                 }
             }

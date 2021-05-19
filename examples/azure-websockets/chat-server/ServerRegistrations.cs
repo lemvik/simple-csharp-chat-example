@@ -24,7 +24,8 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
                        var serverConf = provider.GetRequiredService<IOptions<ServerConfig>>().Value;
                        return serverConf.PredefinedRooms.Select(conf => new ChatRoom(conf.Id, conf.Name)).ToList();
                    })
-                   .AddSingleton<IRoomSource, TransientRoomSource>()
+                   .AddSingleton<IRoomBackplaneFactory, InMemoryRoomBackplaneFactory>()
+                   .AddSingleton<IRoomSourceFactory, InMemoryRoomSourceFactory>()
                    .AddSingleton<IRoomRegistry, RoomRegistry>()
                    .AddSingleton(InMemoryMessageTracker.Factory)
                    .AddSingleton<IChatUserIdentityProvider, RandomChatUserIdentityProvider>()

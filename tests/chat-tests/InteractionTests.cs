@@ -334,7 +334,8 @@ namespace Lemvik.Example.Chat.Testing
         private Task<IChatServer> CreateServer(ICollection<ChatRoom> initialRooms)
         {
             var trackingFactory = InMemoryMessageTracker.Factory;
-            var roomsSource = new TransientRoomSource(trackingFactory, initialRooms);
+            var roomsSource =
+                new InMemoryRoomSourceFactory(trackingFactory, new InMemoryRoomBackplaneFactory(), initialRooms);
             var roomRegistry = new RoomRegistry(roomsSource);
             var chatServer = new ChatServer(TestingLogger.CreateFactory(), roomRegistry);
 

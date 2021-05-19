@@ -8,16 +8,20 @@ using Lemvik.Example.Chat.Protocol;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
-    public class TransientRoomSource : IRoomSource
+    internal class InMemoryRoomSource : IRoomSource
     {
         private readonly IMessageTrackerFactory messageTrackerFactory;
+        private readonly IRoomBackplaneFactory roomBackplaneFactory;
         private readonly ICollection<ChatRoom> initialRooms;
         private readonly ConcurrentDictionary<string, IRoom> existingRooms;
 
-        public TransientRoomSource(IMessageTrackerFactory messageTrackerFactory, ICollection<ChatRoom> initialRooms)
+        public InMemoryRoomSource(IMessageTrackerFactory messageTrackerFactory,
+                                  IRoomBackplaneFactory roomBackplaneFactory,
+                                  ICollection<ChatRoom> initialRooms)
         {
             this.messageTrackerFactory = messageTrackerFactory;
             this.initialRooms = initialRooms;
+            this.roomBackplaneFactory = roomBackplaneFactory;
             this.existingRooms = new ConcurrentDictionary<string, IRoom>();
         }
 
@@ -28,9 +32,16 @@ namespace Lemvik.Example.Chat.Server.Implementation
 
         private async Task<IRoom> BuildRoom(ChatRoom chatRoom, CancellationToken token = default)
         {
+            //TODO: this is not task-safe.
+            if (existingRooms.TryGetValue(chatRoom.Id, out var existing))
+            {
+                return existing;
+            }
+            
             var messageTracker = await messageTrackerFactory.Create(chatRoom, token);
-            var room = new Room(chatRoom, messageTracker);
-            return existingRooms.AddOrUpdate(room.ChatRoom.Id, room, (_, existing) => existing);
+            var roomBackplane = await roomBackplaneFactory.CreateForRoom(chatRoom, token);
+            var room = new Room(chatRoom, messageTracker, roomBackplane);
+            return existingRooms.AddOrUpdate(room.ChatRoom.Id, room, (_, present) => present);
         }
 
         public Task<IRoom> BuildRoom(string roomName, CancellationToken token = default)
