@@ -9,11 +9,11 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
         public class ListeningConfig
         {
             public string Host { get; [UsedImplicitly] set; }
-            public int Port { get; [UsedImplicitly] set; } 
+            public int Port { get; [UsedImplicitly] set; }
         }
 
         [UsedImplicitly]
-        public class ChatRoomConfig 
+        public class ChatRoomConfig
         {
             public string Id { get; [UsedImplicitly] set; }
             public string Name { get; [UsedImplicitly] set; }
@@ -23,8 +23,15 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
                 return new(Id, Name);
             }
         }
-        
-        public ListeningConfig Listening { get; [UsedImplicitly] set; } 
+
+        [UsedImplicitly]
+        public class RedisConfig
+        {
+            public string Uri { get; set; }
+        }
+
+        public ListeningConfig Listening { get; [UsedImplicitly] set; }
         public ChatRoomConfig[] PredefinedRooms { get; [UsedImplicitly] set; }
+        public RedisConfig Redis { get; [UsedImplicitly] set; }
     }
 }

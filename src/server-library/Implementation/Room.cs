@@ -10,7 +10,7 @@ using Lemvik.Example.Chat.Shared;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
-    internal class Room : IRoom
+    public class Room : IRoom
     {
         public ChatRoom ChatRoom { get; }
 
@@ -19,7 +19,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
         private readonly Channel<(IMessage, IClient)> messages;
         private readonly IRoomBackplane backplane;
 
-        internal Room(ChatRoom room, IMessageTracker messageTracker, IRoomBackplane backplane)
+        public Room(ChatRoom room, IMessageTracker messageTracker, IRoomBackplane backplane)
         {
             ChatRoom = room;
             this.messageTracker = messageTracker;
