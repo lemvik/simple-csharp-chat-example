@@ -1,12 +1,10 @@
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Transport;
-using Lemvik.Example.Chat.Server.Implementation;
 using Lemvik.Example.Chat.Shared;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -22,8 +20,6 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
         private readonly IMessageProtocol messageProtocol;
         private readonly IChatServer chatServer;
         private readonly IRoomRegistry roomRegistry;
-        private readonly IRoomSource roomSource;
-        private readonly ServerConfig config;
         private readonly TaskTracker tracker;
 
         public ChatServer(ILogger<ChatServer> logger,
@@ -31,11 +27,9 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
                           IChatUserIdentityProvider identityProvider,
                           IMessageProtocol messageProtocol,
                           IChatServer chatServer,
-                          IRoomRegistry roomRegistry,
-                          IRoomSource transientRoomSource)
+                          IRoomRegistry roomRegistry)
         {
             this.logger = logger;
-            this.config = serverConfig.Value;
             this.messageProtocol = messageProtocol;
             this.chatServer = chatServer;
             this.roomRegistry = roomRegistry;
@@ -44,7 +38,6 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
             var listeningHost = IPAddress.Parse(listeningConfig.Host);
             var listeningPort = listeningConfig.Port;
             this.listener = new TcpListener(listeningHost, listeningPort);
-            this.roomSource = transientRoomSource;
             this.tracker = new TaskTracker();
         }
 
@@ -82,13 +75,6 @@ namespace Lemvik.Example.Chat.Server.Examples.TCP
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // TODO: This is ugly 
-            if (roomSource is TransientRoomSource transientRoomSource)
-            {
-                await transientRoomSource.Initialize(config.PredefinedRooms.Select(room => room.ToRoom()).ToArray(),
-                                                     stoppingToken);
-            }
-
             var serverTask = chatServer.RunAsync(stoppingToken);
             var acceptTask = AcceptClients(stoppingToken);
             var registryTask = roomRegistry.RunAsync(stoppingToken);

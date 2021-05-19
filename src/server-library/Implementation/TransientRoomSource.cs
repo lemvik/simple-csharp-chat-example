@@ -11,15 +11,17 @@ namespace Lemvik.Example.Chat.Server.Implementation
     public class TransientRoomSource : IRoomSource
     {
         private readonly IMessageTrackerFactory messageTrackerFactory;
+        private readonly ICollection<ChatRoom> initialRooms;
         private readonly ConcurrentDictionary<string, IRoom> existingRooms;
 
-        public TransientRoomSource(IMessageTrackerFactory messageTrackerFactory)
+        public TransientRoomSource(IMessageTrackerFactory messageTrackerFactory, ICollection<ChatRoom> initialRooms)
         {
             this.messageTrackerFactory = messageTrackerFactory;
+            this.initialRooms = initialRooms;
             this.existingRooms = new ConcurrentDictionary<string, IRoom>();
         }
 
-        public async Task Initialize(IEnumerable<ChatRoom> initialRooms, CancellationToken token = default)
+        public async Task InitializeAsync(CancellationToken token = default)
         {
             await Task.WhenAll(initialRooms.Select(room => BuildRoom(room, token)));
         }

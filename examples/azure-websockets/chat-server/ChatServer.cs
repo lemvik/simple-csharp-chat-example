@@ -42,13 +42,6 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // TODO: This is ugly 
-            if (roomSource is TransientRoomSource transientRoomSource)
-            {
-                await transientRoomSource.Initialize(config.PredefinedRooms.Select(room => room.ToRoom()).ToArray(),
-                                                     stoppingToken);
-            }
-
             var serverTask = chatServer.RunAsync(stoppingToken);
             var registryTask = roomRegistry.RunAsync(stoppingToken);
             await Task.WhenAll(serverTask, registryTask);

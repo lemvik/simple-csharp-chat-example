@@ -3,25 +3,31 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Shared;
+using Nito.AsyncEx;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
     public class RoomRegistry : IRoomRegistry
     {
-        private readonly IRoomSource roomSource;
+        private readonly AsyncLazy<IRoomSource> roomSource;
         private readonly AsyncRunnableTracker<string, IRoom> roomsTracker;
         private readonly CancellationTokenSource registryLifetime;
 
         public RoomRegistry(IRoomSource roomSource)
         {
-            this.roomSource = roomSource;
             this.registryLifetime = new CancellationTokenSource();
+            this.roomSource = new AsyncLazy<IRoomSource>(async () =>
+            {
+                await roomSource.InitializeAsync(registryLifetime.Token);
+                return roomSource;
+            });
             this.roomsTracker = new AsyncRunnableTracker<string, IRoom>(registryLifetime.Token);
         }
 
         public async Task<IRoom> CreateRoom(string roomName, CancellationToken token = default)
         {
-            var newRoom = await roomSource.BuildRoom(roomName, token);
+            var source = await roomSource;
+            var newRoom = await source.BuildRoom(roomName, token);
             if (!roomsTracker.TryAdd(newRoom.ChatRoom.Id, newRoom))
             {
                 throw new Exception($"Failed to create [room={roomName}]");
@@ -45,18 +51,21 @@ namespace Lemvik.Example.Chat.Server.Implementation
 
         public async Task RunAsync(CancellationToken token = default)
         {
-            token.Register(registryLifetime.Cancel);
-            var existingRooms = await roomSource.ExistingRooms(token);
-            foreach (var existingRoom in existingRooms)
+            using (token.Register(registryLifetime.Cancel))
             {
-                if (!roomsTracker.TryAdd(existingRoom.ChatRoom.Id, existingRoom))
+                var source = await roomSource;
+                var existingRooms = await source.ExistingRooms(token);
+                foreach (var existingRoom in existingRooms)
                 {
-                    throw new ChatException($"Failed to register existing [room={existingRoom}]");
+                    if (!roomsTracker.TryAdd(existingRoom.ChatRoom.Id, existingRoom))
+                    {
+                        throw new ChatException($"Failed to register existing [room={existingRoom}]");
+                    }
                 }
-            }
 
-            await token;
-            await roomsTracker.StopTracker();
+                await token;
+                await roomsTracker.StopTracker();
+            }
         }
     }
 }
