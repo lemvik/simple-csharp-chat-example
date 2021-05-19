@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\client-library\client-library.csproj" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Lemvik.Example.Chat.Client.Examples</RootNamespace>
+    </PropertyGroup>
+
+</Project>
