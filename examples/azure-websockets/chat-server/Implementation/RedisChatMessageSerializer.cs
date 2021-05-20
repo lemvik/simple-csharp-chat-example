@@ -4,7 +4,7 @@ using Lemvik.Example.Chat.Protocol.Messages;
 
 namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
 {
-    internal class RedisChatMessageSerializer
+    internal static class RedisChatMessageSerializer
     {
         public static ChatMessage FromString(ChatRoom room, string incoming)
         {

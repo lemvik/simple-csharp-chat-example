@@ -31,6 +31,16 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
                        var serverConf = provider.GetRequiredService<IOptions<ServerConfig>>().Value;
                        return ConnectionMultiplexer.Connect(serverConf.Redis.Uri);
                    })
+                   .AddSingleton<IDatabaseAsync>(provider =>
+                   {
+                       var multiplexer = provider.GetRequiredService<IConnectionMultiplexer>();
+                       return multiplexer.GetDatabase(0);
+                   })
+                   .AddSingleton<ISubscriber>(provider =>
+                   {
+                       var multiplexer = provider.GetRequiredService<IConnectionMultiplexer>();
+                       return multiplexer.GetSubscriber();
+                   })
                    .AddSingleton<IRoomBackplaneFactory, RedisRoomBackplaneFactory>()
                    .AddSingleton<IRoomSourceFactory, RedisRoomSourceFactory>()
                    .AddSingleton<IRoomRegistry, RoomRegistry>()

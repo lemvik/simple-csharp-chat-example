@@ -7,16 +7,16 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
 {
     public class RedisRoomBackplaneFactory : IRoomBackplaneFactory
     {
-        private readonly IConnectionMultiplexer multiplexer;
+        private readonly ISubscriber subscriber;
 
-        public RedisRoomBackplaneFactory(IConnectionMultiplexer multiplexer)
+        public RedisRoomBackplaneFactory(ISubscriber subscriber)
         {
-            this.multiplexer = multiplexer;
+            this.subscriber = subscriber;
         }
 
         public Task<IRoomBackplane> CreateForRoom(ChatRoom chatRoom, CancellationToken token = default)
         {
-            return Task.FromResult<IRoomBackplane>(new RedisRoomBackplane(chatRoom, multiplexer.GetSubscriber()));
+            return Task.FromResult<IRoomBackplane>(new RedisRoomBackplane(chatRoom, subscriber));
         }
     }
 }

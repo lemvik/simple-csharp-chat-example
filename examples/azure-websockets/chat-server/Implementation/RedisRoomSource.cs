@@ -70,6 +70,11 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
             var backplane = await roomBackplaneFactory.CreateForRoom(chatRoom, token);
             var room = new Room(chatRoom, tracker, backplane);
             rooms.TryAdd(chatRoom.Id, room);
+            await database.ListLeftPushAsync(roomsKey, JsonSerializer.Serialize(new RedisRoom
+            {
+                Id = chatRoom.Id,
+                Name = chatRoom.Name
+            }));
             return room;
         }
 

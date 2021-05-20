@@ -6,17 +6,17 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
 {
     public class RedisRoomSourceFactory : IRoomSourceFactory
     {
-        private readonly IConnectionMultiplexer multiplexer;
+        private readonly IDatabaseAsync database;
         private readonly IMessageTrackerFactory messageTrackerFactory;
         private readonly IRoomBackplaneFactory roomBackplaneFactory;
         private readonly string roomsKey;
 
-        public RedisRoomSourceFactory(IConnectionMultiplexer multiplexer,
+        public RedisRoomSourceFactory(IDatabaseAsync database,
                                       IMessageTrackerFactory messageTrackerFactory,
                                       IRoomBackplaneFactory roomBackplaneFactory,
                                       string roomsKey = "roomsList")
         {
-            this.multiplexer = multiplexer;
+            this.database = database;
             this.messageTrackerFactory = messageTrackerFactory;
             this.roomBackplaneFactory = roomBackplaneFactory;
             this.roomsKey = roomsKey;
@@ -24,7 +24,7 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
 
         public Task<IRoomSource> CreateAsync(CancellationToken token)
         {
-            return Task.FromResult<IRoomSource>(new RedisRoomSource(multiplexer.GetDatabase(),
+            return Task.FromResult<IRoomSource>(new RedisRoomSource(database,
                                                                     messageTrackerFactory,
                                                                     roomBackplaneFactory,
                                                                     roomsKey));
