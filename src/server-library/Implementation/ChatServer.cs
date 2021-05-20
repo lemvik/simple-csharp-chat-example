@@ -71,7 +71,7 @@ namespace Lemvik.Example.Chat.Server.Implementation
                 {
                     throw new ChatException("Cannot add already added client");
                 }
-                
+
                 logger.LogDebug("Handshaking [client={ChatUser}][connection={Connection}]", chatUser, transport);
                 var connectedClient = new Client(loggerFactory.CreateLogger<Client>(),
                                                  chatUser,
@@ -139,7 +139,14 @@ namespace Lemvik.Example.Chat.Server.Implementation
                     case JoinRoomRequest joinRoomRequest:
                     {
                         var room = await roomsRegistry.GetRoom(joinRoomRequest.RoomId, token);
-                        await room.AddUser(client, token);
+                        if (!await room.AddUser(client, token))
+                        {
+                            var error = new ChatErrorResponse($"Unable to enter [chatRoom={joinRoomRequest.RoomId}]");
+                            var errorResponse = exchangeMessage.MakeResponse(error);
+                            await client.SendMessage(errorResponse, token);
+                            break;
+                        }
+
                         client.EnterRoom(room);
                         var mostRecentMessages = await room.MostRecentMessages(5, token);
                         var response =

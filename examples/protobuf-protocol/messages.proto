@@ -56,6 +56,10 @@ message UserMessage {
   string message = 3;
 }
 
+message ChatError {
+  string message = 1;
+}
+
 message ProtocolExchange {
   uint64 exchange_id = 1;
   oneof message {
@@ -67,6 +71,7 @@ message ProtocolExchange {
     JoinRoomResponse join_room_response = 7;
     LeaveRoomRequest leave_room_request = 8;
     LeaveRoomResponse leave_room_response = 9;
+    ChatError chat_error = 10;
   }
 }
 

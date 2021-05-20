@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
 namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
@@ -10,17 +11,17 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
         private readonly IDatabaseAsync database;
         private readonly IMessageTrackerFactory messageTrackerFactory;
         private readonly IRoomBackplaneFactory roomBackplaneFactory;
-        private readonly string roomsKey;
+        private readonly ServerConfig.RoomsConfig config;
 
         public RedisRoomSourceFactory(IDatabaseAsync database,
                                       IMessageTrackerFactory messageTrackerFactory,
-                                      IRoomBackplaneFactory roomBackplaneFactory,
-                                      string roomsKey = "roomsList")
+                                      IRoomBackplaneFactory roomBackplaneFactory, 
+                                      IOptions<ServerConfig.RoomsConfig> config)
         {
             this.database = database;
             this.messageTrackerFactory = messageTrackerFactory;
             this.roomBackplaneFactory = roomBackplaneFactory;
-            this.roomsKey = roomsKey;
+            this.config = config.Value;
         }
 
         public Task<IRoomSource> CreateAsync(CancellationToken token)
@@ -28,9 +29,9 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
             return Task.FromResult<IRoomSource>(new RedisRoomSource(database,
                                                                     messageTrackerFactory,
                                                                     roomBackplaneFactory,
-                                                                    TimeSpan.FromSeconds(10),
-                                                                    5,
-                                                                    roomsKey));
+                                                                    config.PresenceThreshold,
+                                                                    config.RoomSize,
+                                                                    config.RoomsKey));
         }
     }
 }

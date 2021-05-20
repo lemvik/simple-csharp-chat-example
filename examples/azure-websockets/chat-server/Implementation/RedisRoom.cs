@@ -31,15 +31,20 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
             this.roomKey = $"room:users:{room.Id}";
         }
 
-        public override async Task AddUser(IClient client, CancellationToken token = default)
+        public override async Task<bool> AddUser(IClient client, CancellationToken token = default)
         {
             if (!await TryAddingUserToRedisAsync(client.User, token))
             {
-                // TODO: return false.
-                return;
+                return false;
             }
 
-            await base.AddUser(client, token);
+            if (await base.AddUser(client, token))
+            {
+                return true;
+            }
+            
+            await RemoveUserFromRedisAsync(client.User, token);
+            return false;
         }
 
         public override async Task RemoveUser(IClient client, CancellationToken token = default)
@@ -73,11 +78,23 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
 
         private async Task<bool> TryAddingUserToRedisAsync(ChatUser user, CancellationToken token = default)
         {
+            var present = await CountRoomUsers(token);
+            if (present >= maxSize)
+            {
+                return false;
+            }
+            
             var rec = new ChatUserRec {Id = user.Id, Name = user.Name};
             var serialized = JsonSerializer.Serialize(rec);
             var timestamp = DateTime.Now.Ticks;
 
             return await database.SortedSetAddAsync(roomKey, serialized, timestamp, When.NotExists);
+        }
+
+        private async Task<int> CountRoomUsers(CancellationToken token = default)
+        {
+            var threshold = (DateTime.Now - presenceThreshold).Ticks;
+            return (int) await database.SortedSetLengthAsync(roomKey, threshold);
         }
 
         private async Task AddUserToRedisAsync(ChatUser user, CancellationToken token = default)
@@ -106,7 +123,15 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
                 {
                     await AddUserToRedisAsync(client.User, token);
                 }
+
+                await CleanStaleEntries(token);
             }
+        }
+
+        private async Task CleanStaleEntries(CancellationToken token = default)
+        {
+            var threshold = (DateTime.Now - presenceThreshold).Ticks;
+            await database.SortedSetRemoveRangeByScoreAsync(roomKey, 0, threshold);
         }
 
         private class ChatUserRec

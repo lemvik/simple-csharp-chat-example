@@ -33,14 +33,9 @@ namespace Lemvik.Example.Chat.Server.Implementation
             return messages.Writer.WriteAsync((message, client), token).AsTask();
         }
 
-        public virtual Task AddUser(IClient client, CancellationToken token = default)
+        public virtual Task<bool> AddUser(IClient client, CancellationToken token = default)
         {
-            if (!Clients.TryAdd(client.User.Id, client))
-            {
-                throw new ChatException($"There already was a [user={client.User}] in [room={this}]");
-            }
-
-            return Task.CompletedTask;
+            return Task.FromResult(Clients.TryAdd(client.User.Id, client));
         }
 
         public virtual Task RemoveUser(IClient client, CancellationToken token = default)

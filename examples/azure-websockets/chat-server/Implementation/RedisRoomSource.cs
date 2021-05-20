@@ -43,7 +43,7 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
 
         public Task<IRoom> BuildRoom(string roomName, CancellationToken token = default)
         {
-            var chatRoom = new ChatRoom(Guid.NewGuid().ToString(), roomName);
+            var chatRoom = new ChatRoom(roomName, roomName);
             return BuildRoom(chatRoom, token);
         }
 

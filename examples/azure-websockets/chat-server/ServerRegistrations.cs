@@ -65,7 +65,9 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
         internal static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection,
                                                             IConfiguration configuration)
         {
-            return serviceCollection.Configure<ServerConfig>(configuration.GetSection(nameof(ServerConfig)));
+            return serviceCollection.Configure<ServerConfig>(configuration.GetSection(nameof(ServerConfig)))
+                                    .Configure<
+                                        ServerConfig.RoomsConfig>(configuration.GetSection("ServerConfig:Rooms"));
         }
     }
 }

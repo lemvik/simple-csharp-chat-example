@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Client.Examples.Commands;
 using Lemvik.Example.Chat.Protocol;
+using Lemvik.Example.Chat.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace Lemvik.Example.Chat.Client.Examples
@@ -66,7 +67,15 @@ namespace Lemvik.Example.Chat.Client.Examples
                         return;
                     }
 
-                    roomInstances[roomName] = await chatClient.JoinRoom(room, stoppingToken);
+                    try
+                    {
+                        roomInstances[roomName] = await chatClient.JoinRoom(room, stoppingToken);
+                    }
+                    catch (ChatException error)
+                    {
+                        logger.LogError(error, "Failed joining chat room: {Description}", error.Message);
+                        break;
+                    }
 
                     logger.LogDebug("Joined [room={Room}]", roomInstances[roomName]);
 
@@ -124,7 +133,7 @@ namespace Lemvik.Example.Chat.Client.Examples
                     }
 
                     await chatClient.CreateRoom(roomName, stoppingToken);
-                    
+
                     break;
                 }
                 case InfoCommand:
@@ -139,7 +148,7 @@ namespace Lemvik.Example.Chat.Client.Examples
                 }
             }
         }
-        
+
         private async Task ListenForMessages(IRoom room, CancellationToken token)
         {
             while (!token.IsCancellationRequested)
