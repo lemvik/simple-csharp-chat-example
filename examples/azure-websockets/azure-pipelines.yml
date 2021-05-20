@@ -20,37 +20,51 @@ variables:
   isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
   DOCKER_BUILDKIT: 1
 
-steps:
-- task: Docker@2
-  displayName: 'Build server image and push image'
-  inputs:
-    repository: $(imageName)
-    containerRegistry: $(repositoryName)
-    command: buildAndPush
-    Dockerfile: examples/azure-websockets/Dockerfile.server
-    buildContext: $(Build.Repository.LocalPath)
+stages:
+- stage: building_Docker
+  displayName: Building Docker
+  jobs:
+  - job: BuildDocker
+    steps:
+    - task: Docker@2
+      displayName: 'Build server image and push image'
+      inputs:
+        repository: $(imageName)
+        containerRegistry: $(repositoryName)
+        command: buildAndPush
+        Dockerfile: examples/azure-websockets/Dockerfile.server
+        buildContext: $(Build.Repository.LocalPath)
+    - publish: $(System.DefaultWorkingDirectory)/examples/azure-websockets
+      artifact: KubeManifests
 
-- bash: |
-    echo "Looking for label at https://api.github.com/repos/$BUILD_REPOSITORY_ID/issues/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/labels"
-    if curl -s "https://api.github.com/repos/$BUILD_REPOSITORY_ID/issues/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/labels" | grep '"name": "deploy_k8s"'
-    then
-      echo "##vso[task.setvariable variable=deploymentRequired;isOutput=true]true"
-      echo "Label found, deployment is required."
-    fi
-  displayName: Check deployment label
-  name: checkIfDeploymentRequired
-  condition: eq(variables.isMaster, false)
-    
-- task: KubernetesManifest@0
-  displayName: Deploy
-  condition: and(succeeded(), or(eq(variables.isMaster, true), eq(variables['checkIfDeploymentRequired.deploymentRequired'], true)))
-  inputs:
-    kubernetesServiceConnection: $(kubernetesConnection)
-    namespace: default
-    manifests: |
-      examples/azure-websockets/manifests/service-chat.yaml
-      examples/azure-websockets/manifests/deployment-chat.yaml
-      examples/azure-websockets/manifests/service-redis.yaml
-      examples/azure-websockets/manifests/deployment-redis.yaml
-    containers: |
-      $(repositoryUrl)/$(imageName):$(Build.BuildId)
+- stage: deployment_to_k8s
+  displayName: Deployment to Kubernetes
+  jobs:
+  - deployment: Deploy
+    environment: Websockets environment
+    strategy:
+      runOnce:
+        deploy:
+         steps:
+         - bash: |
+             echo "Looking for label at https://api.github.com/repos/$BUILD_REPOSITORY_ID/issues/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/labels"
+             if curl -s "https://api.github.com/repos/$BUILD_REPOSITORY_ID/issues/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/labels" | grep '"name": "deploy_k8s"'
+             then
+               echo "##vso[task.setvariable variable=deploymentRequired;isOutput=true]true"
+               echo "Label found, deployment is required."
+             fi
+           displayName: Check deployment label
+           name: checkIfDeploymentRequired
+           condition: eq(variables.isMaster, false)
+
+         - task: KubernetesManifest@0
+           displayName: Deploy
+           condition: and(succeeded(), or(eq(variables.isMaster, true), eq(variables['checkIfDeploymentRequired.deploymentRequired'], true)))
+           inputs:
+             action: deploy
+             kubernetesServiceConnection: $(kubernetesConnection)
+             namespace: default
+             manifests: |
+               **/*.yaml
+             containers: |
+               $(repositoryUrl)/$(imageName):$(Build.BuildId)
