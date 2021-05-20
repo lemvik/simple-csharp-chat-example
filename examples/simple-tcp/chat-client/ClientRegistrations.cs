@@ -1,3 +1,4 @@
+using Lemvik.Example.Chat.Client.Examples;
 using Lemvik.Example.Chat.Client.Implementation;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Protobuf;
@@ -14,7 +15,8 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
         {
             return serviceCollection.AddSingleton<IHostedService, ConsoleChatClient>()
                                     .AddTransient<IChatClientFactory, ChatClientFactory>()
-                                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>();
+                                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>()
+                                    .AddSingleton<IConsoleClient, ConsoleClient>();
         }
         
         internal static IServiceCollection AddClientLogging(this IServiceCollection serviceCollection)

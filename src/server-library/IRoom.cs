@@ -15,7 +15,7 @@ namespace Lemvik.Example.Chat.Server
 
         Task<IReadOnlyCollection<ChatMessage>> MostRecentMessages(uint maxMessages, CancellationToken token = default);
 
-        Task AddUser(IClient client, CancellationToken token = default);
+        Task<bool> AddUser(IClient client, CancellationToken token = default);
 
         Task RemoveUser(IClient client, CancellationToken token = default);
     }

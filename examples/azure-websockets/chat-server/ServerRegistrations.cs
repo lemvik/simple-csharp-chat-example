@@ -1,11 +1,17 @@
+using System.Collections.Generic;
+using System.Linq;
 using Lemvik.Example.Chat.Protocol.Messages;
 using Lemvik.Example.Chat.Protocol.Protobuf;
+using Lemvik.Example.Chat.Server.Examples.Azure.Implementation;
 using Lemvik.Example.Chat.Server.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.Options;
+using StackExchange.Redis;
+using ChatRoom = Lemvik.Example.Chat.Protocol.ChatRoom;
 
 namespace Lemvik.Example.Chat.Server.Examples.Azure
 {
@@ -14,10 +20,31 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
         internal static IServiceCollection AddChatServer(this IServiceCollection serviceCollection)
         {
             return serviceCollection
-                   .AddSingleton<IChatServer, Implementation.ChatServer>()
-                   .AddSingleton<IRoomSource, TransientRoomSource>()
+                   .AddSingleton<IChatServer, Chat.Server.Implementation.ChatServer>()
+                   .AddSingleton<ICollection<ChatRoom>>(provider =>
+                   {
+                       var serverConf = provider.GetRequiredService<IOptions<ServerConfig>>().Value;
+                       return serverConf.PredefinedRooms.Select(conf => new ChatRoom(conf.Id, conf.Name)).ToList();
+                   })
+                   .AddSingleton<IConnectionMultiplexer>(provider =>
+                   {
+                       var serverConf = provider.GetRequiredService<IOptions<ServerConfig>>().Value;
+                       return ConnectionMultiplexer.Connect(serverConf.Redis.Uri);
+                   })
+                   .AddSingleton<IDatabaseAsync>(provider =>
+                   {
+                       var multiplexer = provider.GetRequiredService<IConnectionMultiplexer>();
+                       return multiplexer.GetDatabase(0);
+                   })
+                   .AddSingleton<ISubscriber>(provider =>
+                   {
+                       var multiplexer = provider.GetRequiredService<IConnectionMultiplexer>();
+                       return multiplexer.GetSubscriber();
+                   })
+                   .AddSingleton<IRoomBackplaneFactory, RedisRoomBackplaneFactory>()
+                   .AddSingleton<IRoomSourceFactory, RedisRoomSourceFactory>()
                    .AddSingleton<IRoomRegistry, RoomRegistry>()
-                   .AddSingleton(InMemoryMessageTracker.Factory)
+                   .AddSingleton<IMessageTrackerFactory, RedisMessageTrackerFactory>()
                    .AddSingleton<IChatUserIdentityProvider, RandomChatUserIdentityProvider>()
                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>()
                    .AddSingleton<ChatServer>()
@@ -38,7 +65,9 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure
         internal static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection,
                                                             IConfiguration configuration)
         {
-            return serviceCollection.Configure<ServerConfig>(configuration.GetSection(nameof(ServerConfig)));
+            return serviceCollection.Configure<ServerConfig>(configuration.GetSection(nameof(ServerConfig)))
+                                    .Configure<
+                                        ServerConfig.RoomsConfig>(configuration.GetSection("ServerConfig:Rooms"));
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Net.WebSockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
@@ -16,16 +15,19 @@ namespace Lemvik.Example.Chat.Client.Examples.Azure
         private readonly ILogger<ConsoleChatClient> logger;
         private readonly IChatClientFactory clientFactory;
         private readonly IMessageProtocol messageProtocol;
+        private readonly IConsoleClient consoleClient;
         private readonly string remoteUrl;
 
         public ConsoleChatClient(ILogger<ConsoleChatClient> logger,
                                  IOptions<ClientConfig> clientConfig,
                                  IChatClientFactory clientFactory,
-                                 IMessageProtocol messageProtocol)
+                                 IMessageProtocol messageProtocol, 
+                                 IConsoleClient consoleClient)
         {
             this.logger = logger;
             this.clientFactory = clientFactory;
             this.messageProtocol = messageProtocol;
+            this.consoleClient = consoleClient;
             this.remoteUrl = clientConfig.Value.Server.Url;
         }
 
@@ -35,7 +37,14 @@ namespace Lemvik.Example.Chat.Client.Examples.Azure
             logger.LogInformation("Connected to [remote={Remote}]", remoteUrl);
             var chatClient = clientFactory.CreateClient(new WebSocketChatTransport(wsClient, messageProtocol));
 
-            await chatClient.RunAsync(stoppingToken);
+            var clientTask = chatClient.RunAsync(stoppingToken);
+            var inputTask = consoleClient.InteractAsync(chatClient, stoppingToken);
+            
+            // In retrospect I could have provided some event or different API to wait for client connection
+            await Task.Delay(100, stoppingToken);
+            Console.WriteLine($"{chatClient.User.Name} entered the chat");
+            
+            await Task.WhenAll(clientTask, inputTask);
         }
 
         private async Task<ClientWebSocket> Connect(CancellationToken token)

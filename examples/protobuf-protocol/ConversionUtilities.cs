@@ -135,6 +135,16 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
                             Room = leaveRoomResponse.Room.ToProtobuf()
                         }
                     };
+                case ChatErrorResponse errorResponse:
+                    return new ProtocolExchange
+                    {
+                        ExchangeId = message.ExchangeId,
+                        ChatError = new ChatError
+                        {
+                            Message = errorResponse.Description
+                        }
+                    };
+                
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -207,6 +217,8 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf
                 case ProtocolExchange.MessageOneofCase.LeaveRoomResponse:
                     return new
                         Messages.LeaveRoomResponse(protocolExchange.LeaveRoomResponse.Room.FromProtobuf());
+                case ProtocolExchange.MessageOneofCase.ChatError:
+                    return new ChatErrorResponse(protocolExchange.ChatError.Message);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

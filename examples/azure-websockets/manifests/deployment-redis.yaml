@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-rooms 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-rooms
+  template:
+    metadata:
+      labels:
+        app: redis-rooms 
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: redis-rooms
+        # Taken from Azure example
+        image: mcr.microsoft.com/oss/bitnami/redis:6.0.8
+        env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        ports:
+        - containerPort: 6379
+          name: redis

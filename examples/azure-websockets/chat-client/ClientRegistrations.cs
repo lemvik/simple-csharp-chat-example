@@ -14,7 +14,8 @@ namespace Lemvik.Example.Chat.Client.Examples.Azure
         {
             return serviceCollection.AddSingleton<IHostedService, ConsoleChatClient>()
                                     .AddTransient<IChatClientFactory, ChatClientFactory>()
-                                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>();
+                                    .AddTransient<IMessageProtocol, ProtobufMessageProtocol>()
+                                    .AddSingleton<IConsoleClient, ConsoleClient>();
         }
         
         internal static IServiceCollection AddClientLogging(this IServiceCollection serviceCollection)

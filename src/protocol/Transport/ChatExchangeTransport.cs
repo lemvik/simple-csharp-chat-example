@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol.Messages;
+using Lemvik.Example.Chat.Shared;
 
 namespace Lemvik.Example.Chat.Protocol.Transport
 {
@@ -52,18 +53,19 @@ namespace Lemvik.Example.Chat.Protocol.Transport
             {
                 if (!pendingMessages.TryAdd(exchangeMessage.ExchangeId, waitingTask))
                 {
-                    throw new Exception($"Failed to schedule exchange [request={request}]");
+                    throw new ChatException($"Failed to schedule exchange [request={request}]");
                 }
 
                 await transport.Send(exchangeMessage, exchangeToken);
 
                 var taskResponse = await waitingTask.Task;
-                if (taskResponse is ExchangeMessage {Message: TResponse response})
+                return taskResponse switch
                 {
-                    return response;
-                }
-
-                throw new Exception($"Received unexpected [request={request}][response={taskResponse}]");
+                    ExchangeMessage {Message: TResponse response} => response,
+                    ExchangeMessage {Message: ChatErrorResponse errorResponse} =>
+                        throw new ChatException(errorResponse.Description),
+                    _ => throw new ChatException($"Received unexpected [request={request}][response={taskResponse}]")
+                };
             }
         }
         

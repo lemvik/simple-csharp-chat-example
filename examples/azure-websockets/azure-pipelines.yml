@@ -50,5 +50,7 @@ steps:
     manifests: |
       examples/azure-websockets/manifests/service-chat.yaml
       examples/azure-websockets/manifests/deployment-chat.yaml
+      examples/azure-websockets/manifests/service-redis.yaml
+      examples/azure-websockets/manifests/deployment-redis.yaml
     containers: |
       $(repositoryUrl)/$(imageName):$(Build.BuildId)

@@ -331,17 +331,17 @@ namespace Lemvik.Example.Chat.Testing
             return (chatClient, connectedClient);
         }
 
-        private async Task<IChatServer> CreateServer(IEnumerable<ChatRoom> initialRooms)
+        private Task<IChatServer> CreateServer(ICollection<ChatRoom> initialRooms)
         {
             var trackingFactory = InMemoryMessageTracker.Factory;
-            var roomsSource = new TransientRoomSource(trackingFactory);
-            await roomsSource.Initialize(initialRooms);
+            var roomsSource =
+                new InMemoryRoomSourceFactory(trackingFactory, new InMemoryRoomBackplaneFactory(), initialRooms);
             var roomRegistry = new RoomRegistry(roomsSource);
             var chatServer = new ChatServer(TestingLogger.CreateFactory(), roomRegistry);
 
             pendingTasks.Add(chatServer.RunAsync(testsLifetime.Token));
             pendingTasks.Add(roomRegistry.RunAsync(testsLifetime.Token));
-            return chatServer;
+            return Task.FromResult<IChatServer>(chatServer);
         }
     }
 }

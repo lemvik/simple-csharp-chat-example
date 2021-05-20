@@ -37,23 +37,24 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             "cXVlc3QSFwoEcm9vbRgBIAEoCzIJLkNoYXRSb29tIiwKEUxlYXZlUm9vbVJl",
             "c3BvbnNlEhcKBHJvb20YASABKAsyCS5DaGF0Um9vbSJQCgtVc2VyTWVzc2Fn",
             "ZRIXCgR1c2VyGAEgASgLMgkuQ2hhdFVzZXISFwoEcm9vbRgCIAEoCzIJLkNo",
-            "YXRSb29tEg8KB21lc3NhZ2UYAyABKAkiwAMKEFByb3RvY29sRXhjaGFuZ2US",
-            "EwoLZXhjaGFuZ2VfaWQYASABKAQSMQoTY3JlYXRlX3Jvb21fcmVxdWVzdBgC",
-            "IAEoCzISLkNyZWF0ZVJvb21SZXF1ZXN0SAASMwoUY3JlYXRlX3Jvb21fcmVz",
-            "cG9uc2UYAyABKAsyEy5DcmVhdGVSb29tUmVzcG9uc2VIABIuChFsaXN0X3Jv",
-            "b21fcmVxdWVzdBgEIAEoCzIRLkxpc3RSb29tc1JlcXVlc3RIABIwChJsaXN0",
-            "X3Jvb21fcmVzcG9uc2UYBSABKAsyEi5MaXN0Um9vbXNSZXNwb25zZUgAEi0K",
-            "EWpvaW5fcm9vbV9yZXF1ZXN0GAYgASgLMhAuSm9pblJvb21SZXF1ZXN0SAAS",
-            "LwoSam9pbl9yb29tX3Jlc3BvbnNlGAcgASgLMhEuSm9pblJvb21SZXNwb25z",
-            "ZUgAEi8KEmxlYXZlX3Jvb21fcmVxdWVzdBgIIAEoCzIRLkxlYXZlUm9vbVJl",
-            "cXVlc3RIABIxChNsZWF2ZV9yb29tX3Jlc3BvbnNlGAkgASgLMhIuTGVhdmVS",
-            "b29tUmVzcG9uc2VIAEIJCgdtZXNzYWdlItABCg9Qcm90b2NvbE1lc3NhZ2US",
-            "LQoQZXhjaGFuZ2VfbWVzc2FnZRgBIAEoCzIRLlByb3RvY29sRXhjaGFuZ2VI",
-            "ABIjCgt1c2VyTWVzc2FnZRgCIAEoCzIMLlVzZXJNZXNzYWdlSAASLQoQaGFu",
-            "ZHNoYWtlUmVxdWVzdBgDIAEoCzIRLkhhbmRzaGFrZVJlcXVlc3RIABIvChFo",
-            "YW5kc2hha2VSZXNwb25zZRgEIAEoCzISLkhhbmRzaGFrZVJlc3BvbnNlSABC",
-            "CQoHbWVzc2FnZUIoqgIlTGVtdmlrLkV4YW1wbGUuQ2hhdC5Qcm90b2NvbC5Q",
-            "cm90b2J1ZmIGcHJvdG8z"));
+            "YXRSb29tEg8KB21lc3NhZ2UYAyABKAkiHAoJQ2hhdEVycm9yEg8KB21lc3Nh",
+            "Z2UYASABKAki4gMKEFByb3RvY29sRXhjaGFuZ2USEwoLZXhjaGFuZ2VfaWQY",
+            "ASABKAQSMQoTY3JlYXRlX3Jvb21fcmVxdWVzdBgCIAEoCzISLkNyZWF0ZVJv",
+            "b21SZXF1ZXN0SAASMwoUY3JlYXRlX3Jvb21fcmVzcG9uc2UYAyABKAsyEy5D",
+            "cmVhdGVSb29tUmVzcG9uc2VIABIuChFsaXN0X3Jvb21fcmVxdWVzdBgEIAEo",
+            "CzIRLkxpc3RSb29tc1JlcXVlc3RIABIwChJsaXN0X3Jvb21fcmVzcG9uc2UY",
+            "BSABKAsyEi5MaXN0Um9vbXNSZXNwb25zZUgAEi0KEWpvaW5fcm9vbV9yZXF1",
+            "ZXN0GAYgASgLMhAuSm9pblJvb21SZXF1ZXN0SAASLwoSam9pbl9yb29tX3Jl",
+            "c3BvbnNlGAcgASgLMhEuSm9pblJvb21SZXNwb25zZUgAEi8KEmxlYXZlX3Jv",
+            "b21fcmVxdWVzdBgIIAEoCzIRLkxlYXZlUm9vbVJlcXVlc3RIABIxChNsZWF2",
+            "ZV9yb29tX3Jlc3BvbnNlGAkgASgLMhIuTGVhdmVSb29tUmVzcG9uc2VIABIg",
+            "CgpjaGF0X2Vycm9yGAogASgLMgouQ2hhdEVycm9ySABCCQoHbWVzc2FnZSLQ",
+            "AQoPUHJvdG9jb2xNZXNzYWdlEi0KEGV4Y2hhbmdlX21lc3NhZ2UYASABKAsy",
+            "ES5Qcm90b2NvbEV4Y2hhbmdlSAASIwoLdXNlck1lc3NhZ2UYAiABKAsyDC5V",
+            "c2VyTWVzc2FnZUgAEi0KEGhhbmRzaGFrZVJlcXVlc3QYAyABKAsyES5IYW5k",
+            "c2hha2VSZXF1ZXN0SAASLwoRaGFuZHNoYWtlUmVzcG9uc2UYBCABKAsyEi5I",
+            "YW5kc2hha2VSZXNwb25zZUgAQgkKB21lc3NhZ2VCKKoCJUxlbXZpay5FeGFt",
+            "cGxlLkNoYXQuUHJvdG9jb2wuUHJvdG9idWZiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -70,7 +71,8 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest), global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomRequest.Parser, new[]{ "Room" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse), global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage), global::Lemvik.Example.Chat.Protocol.Protobuf.UserMessage.Parser, new[]{ "User", "Room", "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange.Parser, new[]{ "ExchangeId", "CreateRoomRequest", "CreateRoomResponse", "ListRoomRequest", "ListRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "LeaveRoomRequest", "LeaveRoomResponse" }, new[]{ "Message" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError), global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError.Parser, new[]{ "Message" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolExchange.Parser, new[]{ "ExchangeId", "CreateRoomRequest", "CreateRoomResponse", "ListRoomRequest", "ListRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "LeaveRoomRequest", "LeaveRoomResponse", "ChatError" }, new[]{ "Message" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolMessage), global::Lemvik.Example.Chat.Protocol.Protobuf.ProtocolMessage.Parser, new[]{ "ExchangeMessage", "UserMessage", "HandshakeRequest", "HandshakeResponse" }, new[]{ "Message" }, null, null, null)
           }));
     }
@@ -2463,6 +2465,178 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
 
   }
 
+  public sealed partial class ChatError : pb::IMessage<ChatError>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ChatError> _parser = new pb::MessageParser<ChatError>(() => new ChatError());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ChatError> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[13]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChatError() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChatError(ChatError other) : this() {
+      message_ = other.message_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChatError Clone() {
+      return new ChatError(this);
+    }
+
+    /// <summary>Field number for the "message" field.</summary>
+    public const int MessageFieldNumber = 1;
+    private string message_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Message {
+      get { return message_; }
+      set {
+        message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ChatError);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ChatError other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Message != other.Message) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Message.Length != 0) hash ^= Message.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Message.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Message);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Message.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Message);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Message.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ChatError other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Message.Length != 0) {
+        Message = other.Message;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Message = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Message = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class ProtocolExchange : pb::IMessage<ProtocolExchange>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2475,7 +2649,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2517,6 +2691,9 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
           break;
         case MessageOneofCase.LeaveRoomResponse:
           LeaveRoomResponse = other.LeaveRoomResponse.Clone();
+          break;
+        case MessageOneofCase.ChatError:
+          ChatError = other.ChatError.Clone();
           break;
       }
 
@@ -2627,6 +2804,17 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       }
     }
 
+    /// <summary>Field number for the "chat_error" field.</summary>
+    public const int ChatErrorFieldNumber = 10;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError ChatError {
+      get { return messageCase_ == MessageOneofCase.ChatError ? (global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.ChatError;
+      }
+    }
+
     private object message_;
     /// <summary>Enum of possible cases for the "message" oneof.</summary>
     public enum MessageOneofCase {
@@ -2639,6 +2827,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       JoinRoomResponse = 7,
       LeaveRoomRequest = 8,
       LeaveRoomResponse = 9,
+      ChatError = 10,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2674,6 +2863,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       if (!object.Equals(JoinRoomResponse, other.JoinRoomResponse)) return false;
       if (!object.Equals(LeaveRoomRequest, other.LeaveRoomRequest)) return false;
       if (!object.Equals(LeaveRoomResponse, other.LeaveRoomResponse)) return false;
+      if (!object.Equals(ChatError, other.ChatError)) return false;
       if (MessageCase != other.MessageCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -2690,6 +2880,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       if (messageCase_ == MessageOneofCase.JoinRoomResponse) hash ^= JoinRoomResponse.GetHashCode();
       if (messageCase_ == MessageOneofCase.LeaveRoomRequest) hash ^= LeaveRoomRequest.GetHashCode();
       if (messageCase_ == MessageOneofCase.LeaveRoomResponse) hash ^= LeaveRoomResponse.GetHashCode();
+      if (messageCase_ == MessageOneofCase.ChatError) hash ^= ChatError.GetHashCode();
       hash ^= (int) messageCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -2743,6 +2934,10 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         output.WriteRawTag(74);
         output.WriteMessage(LeaveRoomResponse);
       }
+      if (messageCase_ == MessageOneofCase.ChatError) {
+        output.WriteRawTag(82);
+        output.WriteMessage(ChatError);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2788,6 +2983,10 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
         output.WriteRawTag(74);
         output.WriteMessage(LeaveRoomResponse);
       }
+      if (messageCase_ == MessageOneofCase.ChatError) {
+        output.WriteRawTag(82);
+        output.WriteMessage(ChatError);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2823,6 +3022,9 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
       }
       if (messageCase_ == MessageOneofCase.LeaveRoomResponse) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(LeaveRoomResponse);
+      }
+      if (messageCase_ == MessageOneofCase.ChatError) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ChatError);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2886,6 +3088,12 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             LeaveRoomResponse = new global::Lemvik.Example.Chat.Protocol.Protobuf.LeaveRoomResponse();
           }
           LeaveRoomResponse.MergeFrom(other.LeaveRoomResponse);
+          break;
+        case MessageOneofCase.ChatError:
+          if (ChatError == null) {
+            ChatError = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError();
+          }
+          ChatError.MergeFrom(other.ChatError);
           break;
       }
 
@@ -2979,6 +3187,15 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             LeaveRoomResponse = subBuilder;
             break;
           }
+          case 82: {
+            global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError();
+            if (messageCase_ == MessageOneofCase.ChatError) {
+              subBuilder.MergeFrom(ChatError);
+            }
+            input.ReadMessage(subBuilder);
+            ChatError = subBuilder;
+            break;
+          }
         }
       }
     #endif
@@ -3069,6 +3286,15 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
             LeaveRoomResponse = subBuilder;
             break;
           }
+          case 82: {
+            global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError subBuilder = new global::Lemvik.Example.Chat.Protocol.Protobuf.ChatError();
+            if (messageCase_ == MessageOneofCase.ChatError) {
+              subBuilder.MergeFrom(ChatError);
+            }
+            input.ReadMessage(subBuilder);
+            ChatError = subBuilder;
+            break;
+          }
         }
       }
     }
@@ -3088,7 +3314,7 @@ namespace Lemvik.Example.Chat.Protocol.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Lemvik.Example.Chat.Protocol.Protobuf.MessagesReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

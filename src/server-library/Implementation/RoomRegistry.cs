@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Shared;
+using Nito.AsyncEx;
 
 namespace Lemvik.Example.Chat.Server.Implementation
 {
     public class RoomRegistry : IRoomRegistry
     {
-        private readonly IRoomSource roomSource;
+        private readonly AsyncLazy<IRoomSource> roomSource;
         private readonly AsyncRunnableTracker<string, IRoom> roomsTracker;
         private readonly CancellationTokenSource registryLifetime;
 
-        public RoomRegistry(IRoomSource roomSource)
+        public RoomRegistry(IRoomSourceFactory roomSourceFactory)
         {
-            this.roomSource = roomSource;
             this.registryLifetime = new CancellationTokenSource();
+            this.roomSource =
+                new AsyncLazy<IRoomSource>(async () => await roomSourceFactory.CreateAsync(registryLifetime.Token));
             this.roomsTracker = new AsyncRunnableTracker<string, IRoom>(registryLifetime.Token);
         }
 
         public async Task<IRoom> CreateRoom(string roomName, CancellationToken token = default)
         {
-            var newRoom = await roomSource.BuildRoom(roomName, token);
+            var source = await roomSource;
+            var newRoom = await source.BuildRoom(roomName, token);
             if (!roomsTracker.TryAdd(newRoom.ChatRoom.Id, newRoom))
             {
                 throw new Exception($"Failed to create [room={roomName}]");
@@ -30,33 +33,37 @@ namespace Lemvik.Example.Chat.Server.Implementation
             return newRoom;
         }
 
-        public Task<IRoom> GetRoom(string roomId, CancellationToken token = default)
+        public async Task<IRoom> GetRoom(string roomId, CancellationToken token = default)
         {
-            return roomsTracker.TryGet(roomId, out var room)
-                ? Task.FromResult(room)
-                : Task.FromResult<IRoom>(null);
+            // Need to make sure we are initialized.
+            await roomSource;
+            return roomsTracker.TryGet(roomId, out var room) ? room : null;
         }
 
-        public Task<IReadOnlyCollection<IRoom>> ListRooms()
+        public async Task<IReadOnlyCollection<IRoom>> ListRooms()
         {
+            await roomSource;
             var chatRooms = roomsTracker.GetAll();
-            return Task.FromResult(chatRooms);
+            return chatRooms;
         }
 
         public async Task RunAsync(CancellationToken token = default)
         {
-            token.Register(registryLifetime.Cancel);
-            var existingRooms = await roomSource.ExistingRooms(token);
-            foreach (var existingRoom in existingRooms)
+            using (token.Register(registryLifetime.Cancel))
             {
-                if (!roomsTracker.TryAdd(existingRoom.ChatRoom.Id, existingRoom))
+                var source = await roomSource;
+                var existingRooms = await source.ExistingRooms(token);
+                foreach (var existingRoom in existingRooms)
                 {
-                    throw new ChatException($"Failed to register existing [room={existingRoom}]");
+                    if (!roomsTracker.TryAdd(existingRoom.ChatRoom.Id, existingRoom))
+                    {
+                        throw new ChatException($"Failed to register existing [room={existingRoom}]");
+                    }
                 }
-            }
 
-            await token;
-            await roomsTracker.StopTracker();
+                await token;
+                await roomsTracker.StopTracker();
+            }
         }
     }
 }

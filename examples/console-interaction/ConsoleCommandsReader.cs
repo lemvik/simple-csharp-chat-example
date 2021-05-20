@@ -2,11 +2,11 @@ using System;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Lemvik.Example.Chat.Client.Example.TCP.Commands;
+using Lemvik.Example.Chat.Client.Examples.Commands;
 using Lemvik.Example.Chat.Shared;
 using Microsoft.Extensions.Logging;
 
-namespace Lemvik.Example.Chat.Client.Example.TCP
+namespace Lemvik.Example.Chat.Client.Examples
 {
     public class ConsoleCommandsReader : ICommandsSource, IAsyncRunnable
     {
@@ -82,6 +82,12 @@ namespace Lemvik.Example.Chat.Client.Example.TCP
             {
                 var roomName = trimmed[2..].Trim();
                 return new JoinRoomCommand(roomName);
+            }
+            
+            if (trimmed.StartsWith(":c"))
+            {
+                var roomName = trimmed[2..].Trim();
+                return new CreateRoomCommand(roomName);
             }
 
             if (trimmed.StartsWith(":s"))
