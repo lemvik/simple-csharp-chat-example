@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: websockets-chat-backend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: websockets-chat-backend
