@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Lemvik.Example.Chat.Protocol;
-using Lemvik.Example.Chat.Server.Implementation;
 using StackExchange.Redis;
 
 namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
@@ -16,17 +15,23 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
         private readonly IDatabaseAsync database;
         private readonly IMessageTrackerFactory messageTrackerFactory;
         private readonly IRoomBackplaneFactory roomBackplaneFactory;
+        private readonly TimeSpan presenceThreshold;
+        private readonly int roomSize;
         private readonly string roomsKey;
         private readonly ConcurrentDictionary<string, IRoom> rooms;
 
         public RedisRoomSource(IDatabaseAsync database,
                                IMessageTrackerFactory messageTrackerFactory,
                                IRoomBackplaneFactory roomBackplaneFactory,
+                               TimeSpan presenceThreshold,
+                               int roomSize, 
                                string roomsKey = "roomsList")
         {
             this.database = database;
             this.messageTrackerFactory = messageTrackerFactory;
             this.roomBackplaneFactory = roomBackplaneFactory;
+            this.presenceThreshold = presenceThreshold;
+            this.roomSize = roomSize;
             this.roomsKey = roomsKey;
             this.rooms = new ConcurrentDictionary<string, IRoom>();
         }
@@ -51,7 +56,7 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
         private async Task FetchRooms(CancellationToken token = default)
         {
             var redisRooms = await database.ListRangeAsync(roomsKey);
-            var parsedRooms = redisRooms.Select(room => JsonSerializer.Deserialize<RedisRoom>(room))
+            var parsedRooms = redisRooms.Select(room => JsonSerializer.Deserialize<RedisRoomRec>(room))
                                         .Where(room => room != null)
                                         .Select(room => new ChatRoom(room.Id, room.Name))
                                         .Select(room => BuildRoom(room, token));
@@ -68,9 +73,9 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
 
             var tracker = await messageTrackerFactory.Create(chatRoom, token);
             var backplane = await roomBackplaneFactory.CreateForRoom(chatRoom, token);
-            var room = new Room(chatRoom, tracker, backplane);
+            var room = new RedisRoom(chatRoom, tracker, backplane, database, presenceThreshold, roomSize);
             rooms.TryAdd(chatRoom.Id, room);
-            await database.ListLeftPushAsync(roomsKey, JsonSerializer.Serialize(new RedisRoom
+            await database.ListLeftPushAsync(roomsKey, JsonSerializer.Serialize(new RedisRoomRec
             {
                 Id = chatRoom.Id,
                 Name = chatRoom.Name
@@ -78,7 +83,7 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
             return room;
         }
 
-        private class RedisRoom
+        private class RedisRoomRec
         {
             public string Id { get; set; }
             public string Name { get; set; }

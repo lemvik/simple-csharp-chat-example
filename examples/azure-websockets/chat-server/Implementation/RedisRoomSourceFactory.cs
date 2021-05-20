@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using StackExchange.Redis;
@@ -27,6 +28,8 @@ namespace Lemvik.Example.Chat.Server.Examples.Azure.Implementation
             return Task.FromResult<IRoomSource>(new RedisRoomSource(database,
                                                                     messageTrackerFactory,
                                                                     roomBackplaneFactory,
+                                                                    TimeSpan.FromSeconds(10),
+                                                                    5,
                                                                     roomsKey));
         }
     }

@@ -16,6 +16,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: redis-rooms
+        # Taken from Azure example
         image: mcr.microsoft.com/oss/bitnami/redis:6.0.8
         env:
         - name: ALLOW_EMPTY_PASSWORD
