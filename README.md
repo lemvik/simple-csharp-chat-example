@@ -30,6 +30,7 @@ Implements test assignment from a company I was interviewing for.
    :l
    Barrens-General
    LFG
+   :c NewRoom
    :j LFG
    [room=LFG][user=Victor]: HEllo
    Joined ChatRoom[Id=2,Name=LFG]
@@ -48,3 +49,9 @@ Implements test assignment from a company I was interviewing for.
   will required something like `Task.WhenAny(rooms.Select(room => room.GetMessage()))` polling.
 - Polling - the API doesn't use callbacks as it's simpler to use polling on `Task`s and it gives more control. But implementing callback-based API on top of `Task` is entirely possible, just like it's possible to do the other way round.
 - ! First build after `dotnet clean` fails: see [non-reproducible issue on GitHub](https://github.com/grpc/grpc/issues/18625) that reproduces all-right on my machine.
+- Short description of client (admittedly poor) commands (found in [`examples/console-interaction`](./examples/console-interaction/ConsoleCommandsReader.cs)):
+  - `:l` - list available rooms
+  - `:c <RoomNameSingleWord>` - create room
+  - `:j <RoomNameSingleWord>` - join room
+  - `:s <RoomNameSingleWord> Message any number of words` - send message to the room
+
